@@ -1,0 +1,40 @@
+name: Sync from org to deployment repo
+
+on:
+    push:
+        branches:
+            - main
+            - dev
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        container: pandoc/latex
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Install Mustache
+              run: |
+                  apk add --no-cache ruby
+                  gem install mustache
+
+            - name: Generate output
+              run: sh ./build.sh
+
+            - name: Push to deployment repo
+              id: push_directory
+              uses: cpina/github-action-push-to-another-repository@main
+              env:
+                  API_TOKEN_GITHUB: ${{ secrets.PUSH_TARGET_SECRET }}
+              with:
+                  source-directory: "output"
+                  destination-github-username: dohyeoplim
+                  destination-repository-name: lionking-client-deployment
+                  user-email: ${{ secrets.PUSH_TARGET_EMAIL }}
+                  commit-message: ${{ github.event.head_commit.message }}
+                  target-branch: ${{ github.ref_name }}
+
+            - name: Debug pushed path
+              run: echo "Deployed into $DESTINATION_CLONED_DIRECTORY"
