@@ -17,12 +17,12 @@ const mockProjects: ProjectCardProps[] = Array.from({ length: 7 }, (_, i) => ({
 export default function Projects() {
     return (
         <Section displayName="Projects" displayTitle="과기대 멋사의 프로젝트들을 소개합니다">
-            <div className="flex flex-col items-center justify-center gap-[60px]">
+            <div className="flex flex-col items-center justify-center gap-[60px] -mt-[16px]">
                 <ProjectCardList items={mockProjects} />
 
                 <Link href="/projects">
-                    <button className="flex items-center justify-center gap-2 px-[25px] py-3.5 text-white bg-gray-7 hover:bg-gray-7/60 rounded-full transition-colors duration-200 cursor-pointer">
-                        <span className="sub1_sb">프로젝트 더보기</span>
+                    <button className="flex items-center justify-center gap-1 px-5 py-3 text-white transition-colors duration-200 rounded-full cursor-pointer bg-gray-7 hover:bg-gray-7/60">
+                        <span className="sub3_sb">프로젝트 더보기</span>
                         <LeftArrow />
                     </button>
                 </Link>

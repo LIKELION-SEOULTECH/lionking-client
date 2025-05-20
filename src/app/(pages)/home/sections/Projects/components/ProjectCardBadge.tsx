@@ -15,7 +15,7 @@ export default function ProjectCardBadge({ type }: ProjectCardBadgeProps) {
                 {type === "BEST" && (
                     <>
                         <CrownVector />
-                        <p className="body6_m text-gray-5">우수 프로젝트</p>
+                        <p className="body6_r text-gray-5">우수 프로젝트</p>
                     </>
                 )}
             </div>
