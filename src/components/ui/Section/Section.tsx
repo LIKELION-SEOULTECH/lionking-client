@@ -27,7 +27,7 @@ export default function Section({
                     <h2 className="sub1_sb text-orange-main">{displayName}</h2>
 
                     {Array.isArray(displayTitle) ? (
-                        <h1 className="text-center text-white head2_b">
+                        <h1 className="text-center text-white head3_sb">
                             {displayTitle.map((title, index) => (
                                 <span key={index} className="block">
                                     {title}
@@ -35,12 +35,12 @@ export default function Section({
                             ))}
                         </h1>
                     ) : (
-                        <h1 className="text-white head2_b">{displayTitle}</h1>
+                        <h1 className="text-white head3_sb">{displayTitle}</h1>
                     )}
                 </div>
 
                 {displayDescription && Array.isArray(displayDescription) ? (
-                    <p className="text-center body2_sb text-gray-2">
+                    <p className="text-center body3_r">
                         {displayDescription.map((description, index) => (
                             <span key={index} className="block">
                                 {description}
@@ -48,7 +48,7 @@ export default function Section({
                         ))}
                     </p>
                 ) : (
-                    <p className="body2_sb text-gray-2">{displayDescription}</p>
+                    <p className="body3_r text-gray-2">{displayDescription}</p>
                 )}
             </div>
             {children}
