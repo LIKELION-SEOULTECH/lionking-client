@@ -170,3 +170,16 @@
     letter-spacing: -0.02em;
     line-height: 100%;
 }
+
+@keyframes marquee {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+.animate-marquee {
+    animation: marquee var(--marquee-duration, 20s) linear infinite;
+}
