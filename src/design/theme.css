@@ -42,112 +42,131 @@
     font-weight: 700;
     font-size: 54px;
     letter-spacing: -0.02em;
+    line-height: 140%;
 }
 
 .head2_b {
     font-weight: 700;
     font-size: 40px;
     letter-spacing: -0.02em;
+    line-height: 140%;
 }
 
 .head3_b {
     font-weight: 700;
     font-size: 32px;
     letter-spacing: 0em;
+    line-height: 140%;
 }
 
 .head4_b {
     font-weight: 700;
     font-size: 28px;
     letter-spacing: -0.02em;
+    line-height: 140%;
 }
 
 .head5_sb {
     font-weight: 600;
     font-size: 28px;
     letter-spacing: -0.02em;
+    line-height: 140%;
 }
 
 .sub1_sb {
     font-weight: 600;
     font-size: 24px;
     letter-spacing: -0.02em;
+    line-height: 140%;
 }
 
 .sub2_sb {
     font-weight: 600;
     font-size: 20px;
     letter-spacing: -0.02em;
+    line-height: 140%;
 }
 
 .sub3_sb {
     font-weight: 600;
     font-size: 16px;
     letter-spacing: -0.02em;
+    line-height: 140%;
 }
 
 .sub4_sb {
     font-weight: 600;
     font-size: 14px;
     letter-spacing: -0.02em;
+    line-height: 140%;
 }
 
 .sub5_sb {
     font-weight: 600;
     font-size: 12px;
     letter-spacing: -0.02em;
+    line-height: 140%;
 }
 
 .body1_sb {
     font-weight: 600;
     font-size: 32px;
     letter-spacing: -0.02em;
+    line-height: 154%;
 }
 
 .body2_sb {
     font-weight: 600;
     font-size: 24px;
     letter-spacing: -0.02em;
+    line-height: 154%;
 }
 
 .body3_m {
     font-weight: 500;
     font-size: 20px;
     letter-spacing: -0.02em;
+    line-height: 154%;
 }
 
 .body4_m {
     font-weight: 500;
     font-size: 16px;
     letter-spacing: -0.02em;
+    line-height: 154%;
 }
 
 .body5_r {
     font-weight: 400;
     font-size: 16px;
     letter-spacing: -0.02em;
+    line-height: 154%;
 }
 
 .body6_m {
     font-weight: 500;
     font-size: 12px;
     letter-spacing: -0.02em;
+    line-height: 154%;
 }
 
 .caption6_m {
     font-weight: 500;
     font-size: 16px;
     letter-spacing: -0.02em;
+    line-height: 100%;
 }
 
 .caption7_m {
     font-weight: 500;
     font-size: 14px;
     letter-spacing: -0.02em;
+    line-height: 100%;
 }
 
 .caption8_sb {
     font-weight: 600;
     font-size: 12px;
     letter-spacing: -0.02em;
+    line-height: 100%;
 }
