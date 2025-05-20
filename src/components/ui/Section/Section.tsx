@@ -19,7 +19,7 @@ export default function Section({
         <section
             className={cn(
                 className,
-                "w-full h-screen flex flex-col items-center justify-center gap-18"
+                "w-full min-h-screen flex flex-col items-center justify-center gap-18"
             )}
         >
             <div className="flex flex-col gap-7 items-center justify-center">
