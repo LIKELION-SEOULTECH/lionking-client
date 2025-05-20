@@ -70,7 +70,7 @@ function ProjectCardBottomInformation({
     return (
         <div className="flex flex-col w-full gap-[3px] items-start justify-center px-4.5 py-5">
             <div className="flex items-center justify-between w-full">
-                <p className="text-white body3_m">{projectName}</p>
+                <p className="text-white body3_r">{projectName}</p>
 
                 <ProjectYearBadge projectYear={projectYear} />
             </div>

@@ -52,8 +52,8 @@
     line-height: 140%;
 }
 
-.head3_b {
-    font-weight: 700;
+.head3_sb {
+    font-weight: 600;
     font-size: 32px;
     letter-spacing: 0em;
     line-height: 140%;
@@ -122,8 +122,8 @@
     line-height: 154%;
 }
 
-.body3_m {
-    font-weight: 500;
+.body3_r {
+    font-weight: 400;
     font-size: 20px;
     letter-spacing: -0.02em;
     line-height: 154%;

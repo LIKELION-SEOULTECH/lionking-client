@@ -33,22 +33,8 @@ export default function ActivityCard({ title, description, backgroundImage }: Ac
             <div className="absolute inset-0 z-20 flex flex-col justify-end px-7 py-[30px] pointer-events-none">
                 <div className="flex flex-col items-start justify-between h-full">
                     <ActivityCardBadge text={title} focused={isHovered} />
-                    {/* <motion.h2
-                    className="text-lg font-bold text-white pointer-events-auto md:text-xl lg:text-2xl"
-                    animate={{
-                        y: isHovered ? -10 : 0,
-                        }}
-                        transition={{
-                            type: "spring",
-                            stiffness: 300,
-                            damping: 20,
-                            }}
-                            >
-                            {title}
-                            </motion.h2> */}
-
                     <motion.p
-                        className="overflow-hidden pointer-events-auto body3_m text-white/90"
+                        className="overflow-hidden pointer-events-auto body3_r text-white/90"
                         animate={{
                             opacity: isHovered ? 1 : 0,
                             height: isHovered ? "auto" : 0,
