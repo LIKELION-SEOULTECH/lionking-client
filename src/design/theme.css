@@ -122,6 +122,13 @@
     line-height: 154%;
 }
 
+.body3_m {
+    font-weight: 500;
+    font-size: 20px;
+    letter-spacing: -0.02em;
+    line-height: 154%;
+}
+
 .body3_r {
     font-weight: 400;
     font-size: 20px;
@@ -143,8 +150,8 @@
     line-height: 154%;
 }
 
-.body6_m {
-    font-weight: 500;
+.body6_r {
+    font-weight: 400;
     font-size: 12px;
     letter-spacing: -0.02em;
     line-height: 154%;
@@ -164,8 +171,8 @@
     line-height: 100%;
 }
 
-.caption8_sb {
-    font-weight: 600;
+.caption8_m {
+    font-weight: 500;
     font-size: 12px;
     letter-spacing: -0.02em;
     line-height: 100%;

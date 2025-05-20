@@ -39,6 +39,7 @@ export default function Activities() {
                 "파트별 실무 교육부터 실전 프로젝트까지,",
                 "다양한 프로그램을 통한 빠른 성장을 경험해보세요.",
             ]}
+            className="py-[200px]"
         >
             <ActivityGrid items={ActivityContents} />
         </Section>

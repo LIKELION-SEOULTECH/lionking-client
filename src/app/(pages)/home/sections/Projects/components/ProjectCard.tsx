@@ -70,12 +70,12 @@ function ProjectCardBottomInformation({
     return (
         <div className="flex flex-col w-full gap-[3px] items-start justify-center px-4.5 py-5">
             <div className="flex items-center justify-between w-full">
-                <p className="text-white body3_r">{projectName}</p>
+                <p className="text-white body3_m">{projectName}</p>
 
                 <ProjectYearBadge projectYear={projectYear} />
             </div>
 
-            <p className="body4_m text-gray-2">{projectDescription}</p>
+            <p className="body5_r text-gray-2">{projectDescription}</p>
         </div>
     );
 }
@@ -83,7 +83,7 @@ function ProjectCardBottomInformation({
 function ProjectYearBadge({ projectYear }: { projectYear: string }) {
     return (
         <div className="flex items-center justify-center px-2 py-1 bg-[#191919] rounded-[12px]">
-            <p className="text-white body6_m">{projectYear}</p>
+            <p className="text-white body6_r">{projectYear}</p>
         </div>
     );
 }
