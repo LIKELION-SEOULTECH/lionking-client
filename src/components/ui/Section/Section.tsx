@@ -30,7 +30,7 @@ export default function Section({
                         <StaggerChild>
                             <h2 className="sub1_sb text-orange-main">{displayName}</h2>
                         </StaggerChild>
-
+                        {/* eslint-disable indent */}
                         <StaggerChild>
                             {Array.isArray(displayTitle) ? (
                                 <h1
@@ -56,7 +56,6 @@ export default function Section({
                                 </h1>
                             )}
                         </StaggerChild>
-
                         {displayDescription && (
                             <StaggerChild>
                                 <p
@@ -78,7 +77,7 @@ export default function Section({
                     </div>
                 </div>
             </StaggerParent>
-
+            {/* eslint-enable indent */}
             {children}
         </section>
     );
