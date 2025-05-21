@@ -38,8 +38,8 @@
     );
 }
 
-.head1_b {
-    font-weight: 700;
+.head1_sb {
+    font-weight: 600;
     font-size: 54px;
     letter-spacing: -0.02em;
     line-height: 140%;
