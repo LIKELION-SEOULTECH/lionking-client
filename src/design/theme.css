@@ -14,6 +14,7 @@
     --color-gray-7: rgba(31, 31, 31, 1);
     --color-gray-8: rgba(21, 21, 21, 1);
     --color-static-white: rgba(255, 255, 255, 1);
+    --color-static-white-10: rgba(255, 255, 255, 0.1);
     --color-static-white-20: rgba(255, 255, 255, 0.2);
     --color-static-white-50: rgba(255, 255, 255, 0.5);
     --color-static-white-70: rgba(255, 255, 255, 0.7);
@@ -189,4 +190,20 @@
 
 .animate-marquee {
     animation: marquee var(--marquee-duration, 20s) linear infinite;
+}
+
+.bg-transition::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    z-index: 0;
+    background: linear-gradient(124deg, rgba(255, 240, 228, 0.7) 0%, rgba(117, 50, 0, 0.7) 100%);
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    pointer-events: none;
+}
+
+.bg-transition.focused::before {
+    opacity: 1;
 }
