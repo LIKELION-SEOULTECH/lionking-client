@@ -1,3 +1,6 @@
+"use client";
+
+import { StaggerChild, StaggerParent } from "@/components/animations/AppearStagger";
 import { cn } from "@/lib/utils";
 
 type SectionProps = {
@@ -21,54 +24,60 @@ export default function Section({
         <section
             className={cn(className, "w-full flex flex-col items-center justify-center gap-18")}
         >
-            <div className="flex flex-col items-center justify-center gap-7">
-                <div className="flex flex-col items-center justify-center gap-5">
-                    <h2 className="sub1_sb text-orange-main">{displayName}</h2>
-
-                    {Array.isArray(displayTitle) ? (
-                        <h1
-                            className={cn(
-                                "text-center head3_sb",
-                                theme === "DARK" ? "text-white" : "text-black"
+            <StaggerParent delay={0.1} stagger={0.2} once={false}>
+                <div className="flex flex-col items-center justify-center gap-7">
+                    <div className="flex flex-col items-center justify-center gap-5">
+                        <StaggerChild>
+                            <h2 className="sub1_sb text-orange-main">{displayName}</h2>
+                        </StaggerChild>
+                        {/* eslint-disable indent */}
+                        <StaggerChild>
+                            {Array.isArray(displayTitle) ? (
+                                <h1
+                                    className={cn(
+                                        "text-center head3_sb",
+                                        theme === "DARK" ? "text-white" : "text-black"
+                                    )}
+                                >
+                                    {displayTitle.map((title, index) => (
+                                        <span key={index} className="block">
+                                            {title}
+                                        </span>
+                                    ))}
+                                </h1>
+                            ) : (
+                                <h1
+                                    className={cn(
+                                        "text-center head3_sb",
+                                        theme === "DARK" ? "text-white" : "text-black"
+                                    )}
+                                >
+                                    {displayTitle}
+                                </h1>
                             )}
-                        >
-                            {displayTitle.map((title, index) => (
-                                <span key={index} className="block">
-                                    {title}
-                                </span>
-                            ))}
-                        </h1>
-                    ) : (
-                        <h1
-                            className={cn(
-                                "text-center head3_sb",
-                                theme === "DARK" ? "text-white" : "text-black"
-                            )}
-                        >
-                            {displayTitle}
-                        </h1>
-                    )}
-                </div>
-
-                {displayDescription && Array.isArray(displayDescription) ? (
-                    <p className="text-center body3_r">
-                        {displayDescription.map((description, index) => (
-                            <span key={index} className="block">
-                                {description}
-                            </span>
-                        ))}
-                    </p>
-                ) : (
-                    <p
-                        className={cn(
-                            "text-center body3_r",
-                            theme === "DARK" ? "text-gray-2" : "text-gray-5"
+                        </StaggerChild>
+                        {displayDescription && (
+                            <StaggerChild>
+                                <p
+                                    className={cn(
+                                        "text-center body3_r",
+                                        theme === "DARK" ? "text-gray-2" : "text-gray-5"
+                                    )}
+                                >
+                                    {Array.isArray(displayDescription)
+                                        ? displayDescription.map((desc, idx) => (
+                                              <span key={idx} className="block">
+                                                  {desc}
+                                              </span>
+                                          ))
+                                        : displayDescription}
+                                </p>
+                            </StaggerChild>
                         )}
-                    >
-                        {displayDescription}
-                    </p>
-                )}
-            </div>
+                    </div>
+                </div>
+            </StaggerParent>
+            {/* eslint-enable indent */}
             {children}
         </section>
     );

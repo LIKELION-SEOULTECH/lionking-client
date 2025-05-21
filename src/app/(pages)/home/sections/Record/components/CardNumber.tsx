@@ -35,7 +35,7 @@ export default function CardNumber({
         <div className="flex w-[294px] h-[271px] items-center justify-center bg-gray-6 rounded-[24px]">
             <div className="flex flex-col items-center justify-center gap-3.5">
                 <p className="body2_sb text-gray-1">{subheading}</p>
-                <p className="head1_b text-white">
+                <p className="head1_sb text-white">
                     <span ref={ref}></span>
                     {suffix && <span>{suffix}</span>}
                 </p>
