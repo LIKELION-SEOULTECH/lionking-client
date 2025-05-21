@@ -192,18 +192,43 @@
     animation: marquee var(--marquee-duration, 20s) linear infinite;
 }
 
-.bg-transition::before {
+.card-bg {
+    @apply relative overflow-hidden rounded-[20px] transition-all duration-500 origin-top-left;
+}
+
+.card-bg::before {
     content: "";
     position: absolute;
     inset: 0;
-    border-radius: inherit;
-    z-index: 0;
-    background: linear-gradient(124deg, rgba(255, 240, 228, 0.7) 0%, rgba(117, 50, 0, 0.7) 100%);
-    opacity: 0;
+    border-radius: 20px;
+    z-index: -1;
     transition: opacity 0.5s ease-in-out;
+    background: radial-gradient(
+        circle 600px at center,
+        rgba(135, 58, 0, 0.3) 0%,
+        rgba(255, 113, 0, 0.3) 100%
+    );
     pointer-events: none;
+    opacity: 0;
 }
 
-.bg-transition.focused::before {
+.card-bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 2px;
+    border-radius: 20px;
+    background: linear-gradient(129deg, rgba(255, 240, 228, 0.7), rgba(117, 50, 0, 0.7));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.card-bg.focused::before,
+.card-bg.focused::after {
     opacity: 1;
 }

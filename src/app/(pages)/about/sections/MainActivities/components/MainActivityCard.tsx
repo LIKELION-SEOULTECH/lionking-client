@@ -7,36 +7,20 @@ import { motion } from "motion/react";
 type MainActivityCardProps = {
     isFocused?: boolean;
 };
+
 export default function MainActivityCard({ isFocused }: MainActivityCardProps) {
     return (
         <motion.div
             layout
             className={cn(
-                "rounded-[20px] origin-left transition-all",
-                isFocused ? "shadow-[0px_10px_30px_rgba(0,0,0,0.3)]" : ""
+                "card-bg",
+                isFocused && "focused",
+                isFocused
+                    ? "shadow-[0px_10px_30px_rgba(0,0,0,0.3)] scale-[1.13] p-[30px]"
+                    : "opacity-70 scale-[1] p-[40px]"
             )}
-            style={{
-                background: isFocused
-                    ? "linear-gradient(124deg, rgba(255,240,228,0.7) 0%, rgba(117,50,0,0.7) 100%)"
-                    : "",
-                opacity: isFocused ? 1 : 0.7,
-                transform: `scale(${isFocused ? 1.13 : 1})`,
-                transition: "all 0.4s ease-in-out",
-            }}
         >
-            <motion.div
-                layout
-                style={{
-                    background: isFocused
-                        ? "radial-gradient(circle, rgba(255,113,0,0.3) 0%, rgba(135,58,0,0.3) 50%)"
-                        : "transparent",
-                    transition: "all 0.4s ease-in-out",
-                    padding: isFocused ? "30px" : "40px",
-                }}
-                className="rounded-[18px] flex items-center justify-center"
-            >
-                <CardContent isFocused={!!isFocused} />
-            </motion.div>
+            <CardContent isFocused={!!isFocused} />
         </motion.div>
     );
 }
