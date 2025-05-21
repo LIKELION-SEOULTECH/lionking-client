@@ -1,19 +1,31 @@
+"use client";
+
 import type { Parts } from "@/types";
 import { partCurriculumData } from "@/contents/partCurriculumData";
+import { motion, AnimatePresence } from "motion/react";
 
 export default function Curriculum({ part }: { part: Parts }) {
     const { roleDescription, curriculum } = partCurriculumData[part];
 
     return (
-        <div className="w-full flex flex-col items-center justify-center mx-auto gap-10">
-            <PartRoles roleDescription={roleDescription} />
+        <AnimatePresence mode="wait">
+            <motion.div
+                key={part}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -16 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="w-full flex flex-col items-center justify-center gap-10"
+            >
+                <PartRoles roleDescription={roleDescription} />
 
-            <div className="w-full flex flex-col gap-5 items-center justify-center">
-                {curriculum.map((item, i) => (
-                    <CurriculumItem key={i} text={item} index={i + 1} />
-                ))}
-            </div>
-        </div>
+                <div className="w-full flex flex-col gap-5 items-center justify-center">
+                    {curriculum.map((item, i) => (
+                        <CurriculumItem key={i} text={item} index={i + 1} />
+                    ))}
+                </div>
+            </motion.div>
+        </AnimatePresence>
     );
 }
 

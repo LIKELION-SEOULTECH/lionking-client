@@ -13,15 +13,17 @@ const allParts: Parts[] = ["기획", "디자인", "프론트엔드", "백엔드"
 
 export default function PartSelector({ selectedPart, onChange }: PartSelectorProps) {
     return (
-        <div className="flex items-center justify-center rounded-full bg-gray-1 gap-[23px]">
-            {allParts.map((part) => (
-                <PartSelectorItem
-                    key={part}
-                    name={part}
-                    isSelected={selectedPart === part}
-                    onClick={() => onChange(part)}
-                />
-            ))}
+        <div className="w-full flex items-center justify-center max-w-[1058px] mx-auto">
+            <div className="w-fit flex items-center justify-center rounded-full bg-gray-1 gap-[23px]">
+                {allParts.map((part) => (
+                    <PartSelectorItem
+                        key={part}
+                        name={part}
+                        isSelected={selectedPart === part}
+                        onClick={() => onChange(part)}
+                    />
+                ))}
+            </div>
         </div>
     );
 }

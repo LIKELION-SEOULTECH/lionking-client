@@ -5,6 +5,7 @@ import type { Parts } from "@/types";
 import Section from "@/components/ui/Section";
 import PartSelector from "./components/PartSelector";
 import Curriculum from "./components/Curriculum";
+import Appear from "@/components/animations/Appear";
 
 export default function PartsNCurriculum() {
     const [selectedPart, setSelectedPart] = useState<Parts>("기획");
@@ -16,11 +17,15 @@ export default function PartsNCurriculum() {
             theme="LIGHT"
             className="py-[200px]"
         >
-            <PartSelector selectedPart={selectedPart} onChange={setSelectedPart} />
+            <Appear>
+                <div>
+                    <PartSelector selectedPart={selectedPart} onChange={setSelectedPart} />
 
-            <div className="w-[1050px] mx-auto">
-                <Curriculum part={selectedPart} />
-            </div>
+                    <div className="w-[1050px] mx-auto mt-10">
+                        <Curriculum part={selectedPart} />
+                    </div>
+                </div>
+            </Appear>
         </Section>
     );
 }
