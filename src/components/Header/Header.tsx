@@ -8,8 +8,12 @@ type HeaderProps = {
 
 export default function Header({ isLoggedIn = false }: HeaderProps) {
     return (
-        <header className="w-full flex justify-center py-6" role="banner" aria-label="Header">
-            <div className="flex w-full items-center justify-between">
+        <header
+            className="w-full flex justify-center items-center"
+            role="banner"
+            aria-label="Header"
+        >
+            <div className="flex w-full items-center justify-between  py-3 px-6 max-w-[1100px]">
                 <TypeLogo />
 
                 <div className="flex items-center gap-12.5">
