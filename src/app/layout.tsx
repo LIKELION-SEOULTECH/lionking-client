@@ -3,8 +3,8 @@ import "./globals.css";
 import { Pretendard } from "@/fonts/loadFonts";
 import WithMockServer from "@/mocks/msw/WithMockServer";
 
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import Header from "@/components/ui/Header";
+import Footer from "@/components/ui/Footer";
 
 export default function RootLayout({
     children,

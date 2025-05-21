@@ -1,48 +1,29 @@
 "use client";
 
-import { motion } from "motion/react";
-import TypeLogo from "@/components/TypeLogo";
+import { StaggerParent, StaggerChild } from "@/components/animations/AppearStagger";
+import TypeLogo from "@/components/ui/TypeLogo";
 import ArrowRightIcon from "@/assets/ic_arrow2_right_white.svg";
-
-const itemVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: (i: number) => ({
-        opacity: 1,
-        y: 0,
-        transition: {
-            delay: i * 0.2,
-            duration: 0.7,
-            ease: "easeInOut",
-        },
-    }),
-};
 
 export default function HeroText() {
     return (
-        <div className="w-full flex flex-col items-center justify-center gap-10">
-            {[
-                TypeLogo,
-                () => (
+        <StaggerParent delay={0.1} stagger={0.2}>
+            <div className="w-full flex flex-col items-center justify-center gap-10">
+                <StaggerChild>
+                    <TypeLogo heightPx={32} />
+                </StaggerChild>
+
+                <StaggerChild>
                     <h1 className="head1_sb text-center text-gray-1">
                         실전으로 성장하는 최고의 경험,
                         <br /> 멋사와 함께 A to Z
                     </h1>
-                ),
-                ApplicationLetterButton,
-            ].map((Component, i) => (
-                <motion.div
-                    key={i}
-                    custom={i}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, amount: 0.6 }}
-                    variants={itemVariants}
-                    className="w-full flex justify-center"
-                >
-                    <Component {...(i === 0 ? { heightPx: 32 } : {})} />
-                </motion.div>
-            ))}
-        </div>
+                </StaggerChild>
+
+                <StaggerChild>
+                    <ApplicationLetterButton />
+                </StaggerChild>
+            </div>
+        </StaggerParent>
     );
 }
 
