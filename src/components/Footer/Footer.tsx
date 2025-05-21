@@ -1,57 +1,91 @@
+import TypeLogo from "../TypeLogo";
 import ArrowUpRightIcon from "@/assets/arrow-up-right.svg";
 import InstagramIcon from "@/assets/btn_instagram.svg";
 import GithubIcon from "@/assets/btn_github.svg";
 
 export default function Footer() {
     return (
-        <footer className="bg-stone-800 text-neutral-100">
-            <div className="max-w-screen-xl px-6 py-20 mx-auto sm:px-8 lg:px-28">
-                <div className="flex flex-col justify-between gap-16 md:flex-row">
-                    <div className="flex flex-col space-y-4">
-                        <h2 className="text-xl font-medium leading-loose">
-                            서울과학기술대학교 멋쟁이사자처럼
-                        </h2>
-                        <p className="text-base">ⓒ2025 SEOULTECH LIKELION All rights reserved.</p>
-                    </div>
+        <footer className="w-screen flex items-center justify-center bg-gray-6 text-gray-1 h-[382px] py-[78px]">
+            <div className="flex items-center justify-between w-full max-w-[1200px] h-full">
+                <FooterLeft />
 
-                    <div className="flex flex-col space-y-8">
-                        <div className="space-y-2">
-                            <h3 className="text-xl font-medium leading-loose">FAMILY SITE</h3>
-                            <ul className="space-y-1">
-                                {[
-                                    { name: "멋쟁이사자처럼 대학", href: "#" },
-                                    { name: "멋쟁이사자처럼", href: "#" },
-                                ].map((link) => (
-                                    <li key={link.name}>
-                                        <a
-                                            href={link.href}
-                                            className="flex items-center gap-2 transition-colors hover:text-orange-500"
-                                        >
-                                            <span>{link.name}</span>
-                                            <ArrowUpRightIcon />
-                                        </a>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-
-                        <div className="flex items-center gap-4">
-                            <a
-                                href="#"
-                                className="flex items-center justify-center transition-colors rounded-full w-14 h-14 bg-neutral-900 hover:bg-neutral-700"
-                            >
-                                <InstagramIcon />
-                            </a>
-                            <a
-                                href="#"
-                                className="flex items-center justify-center transition-colors rounded-full w-14 h-14 bg-neutral-900 hover:bg-neutral-700"
-                            >
-                                <GithubIcon />
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                <FooterRight />
             </div>
         </footer>
+    );
+}
+
+function FooterLeft() {
+    return (
+        <div className="flex flex-col items-start justify-between h-full">
+            <TypeLogo heightPx={28} />
+
+            <p className="body5_r">
+                서울과학기술대학교 멋쟁이사자처럼
+                <br />ⓒ{new Date().getFullYear()} SEOULTECH LIKELION All rights reserved.
+            </p>
+        </div>
+    );
+}
+
+function FooterRight() {
+    return (
+        <div className="flex flex-col items-start justify-between h-full">
+            <div className="flex flex-col items-start justify-start gap-3">
+                <p className="body3_r">FAMILY SITE</p>
+                <ul className="flex flex-col items-start justify-start gap-3">
+                    {[
+                        {
+                            displayText: "멋쟁이사자처럼 대학",
+                            url: "https://likelion.university/",
+                        },
+                        {
+                            displayText: "멋쟁이사자처럼",
+                            url: "https://likelion.net/",
+                        },
+                    ].map((item, index) => (
+                        <FamilySite key={index} {...item} />
+                    ))}
+                </ul>
+            </div>
+
+            <FooterRightSocial />
+        </div>
+    );
+}
+
+function FamilySite({ displayText, url }: { displayText: string; url: string }) {
+    return (
+        <li>
+            <a href={url} target="_blank" className="flex items-center justify-start gap-2">
+                <span className="body5_r text-gray-1 hover:text-white hover:underline">
+                    {displayText}
+                </span>
+                <ArrowUpRightIcon />
+            </a>
+        </li>
+    );
+}
+
+function FooterRightSocial() {
+    return (
+        <ul className="flex items-center justify-start gap-3">
+            {[
+                {
+                    accessibilityText: "Link to Instagram",
+                    url: "https://www.instagram.com/likelion_st/",
+                    icon: <InstagramIcon />,
+                },
+                {
+                    accessibilityText: "Link to Github",
+                    url: "https://github.com/LIKELION-SEOULTECH",
+                    icon: <GithubIcon />,
+                },
+            ].map((item, index) => (
+                <a key={index} href={item.url} aria-label={item.accessibilityText} target="_blank">
+                    {item.icon}
+                </a>
+            ))}
+        </ul>
     );
 }

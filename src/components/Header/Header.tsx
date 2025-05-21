@@ -9,7 +9,7 @@ type HeaderProps = {
 export default function Header({ isLoggedIn = false }: HeaderProps) {
     return (
         <header
-            className="w-full flex justify-center items-center"
+            className="w-screen flex justify-center items-center"
             role="banner"
             aria-label="Header"
         >

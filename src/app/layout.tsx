@@ -13,7 +13,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="ko">
-            <body className={`${Pretendard.className} mx-auto px-4`}>
+            <body className={`${Pretendard.className} mx-auto overflow-x-hidden`}>
                 <Header />
                 <main role="main">{children}</main>
                 <Footer />
