@@ -2,8 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { motion } from "motion/react";
-
-export type Parts = "기획" | "디자인" | "프론트엔드" | "백엔드" | "AI";
+import type { Parts } from "@/types";
 
 type PartSelectorProps = {
     selectedPart: Parts;
@@ -39,7 +38,7 @@ function PartSelectorItem({
     return (
         <button
             onClick={onClick}
-            className="relative z-10 px-8 py-2 rounded-full sub1_sb text-sm transition-colors duration-200"
+            className="relative z-10 px-8 py-2 rounded-full sub1_sb text-sm transition-colors duration-200 cursor-pointer"
         >
             {isSelected && (
                 <motion.div
