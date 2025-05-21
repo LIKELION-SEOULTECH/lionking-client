@@ -3,8 +3,8 @@ import "./globals.css";
 import { Pretendard } from "@/fonts/loadFonts";
 import WithMockServer from "@/mocks/msw/WithMockServer";
 
-// Components
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 export default function RootLayout({
     children,
@@ -13,9 +13,10 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="ko">
-            <body className={`${Pretendard.className} max-w-6xl mx-auto px-4`}>
+            <body className={`${Pretendard.className} mx-auto overflow-x-hidden`}>
                 <Header />
                 <main role="main">{children}</main>
+                <Footer />
                 <WithMockServer />
             </body>
         </html>

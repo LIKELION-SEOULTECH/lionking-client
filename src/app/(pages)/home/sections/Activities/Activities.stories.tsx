@@ -1,20 +1,20 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import Record from "./Record";
+import Activities from "./Activities";
 
-const meta: Meta<typeof Record> = {
-    title: "Home/Record",
-    component: Record,
+const meta: Meta<typeof Activities> = {
+    title: "Home/Activities",
+    component: Activities,
     // tags: ["autodocs"],
 };
 
 export default meta;
 
-type Story = StoryObj<typeof Record>;
+type Story = StoryObj<typeof Activities>;
 
 export const Default: Story = {
     render: () => (
         <div className="bg-gray-8">
-            <Record />
+            <Activities />
         </div>
     ),
 };

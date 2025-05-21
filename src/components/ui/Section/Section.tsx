@@ -4,6 +4,7 @@ type SectionProps = {
     displayName: string;
     displayTitle: string | string[];
     displayDescription?: string | string[];
+    theme?: "DARK" | "LIGHT";
     children: React.ReactNode;
     className?: string;
 };
@@ -12,22 +13,25 @@ export default function Section({
     displayName,
     displayTitle,
     displayDescription,
+    theme = "DARK",
     children,
     className = "",
 }: SectionProps) {
     return (
         <section
-            className={cn(
-                className,
-                "w-full min-h-screen flex flex-col items-center justify-center gap-18"
-            )}
+            className={cn(className, "w-full flex flex-col items-center justify-center gap-18")}
         >
             <div className="flex flex-col items-center justify-center gap-7">
-                <div className="flex flex-col items-center justify-center gap-6">
+                <div className="flex flex-col items-center justify-center gap-5">
                     <h2 className="sub1_sb text-orange-main">{displayName}</h2>
 
                     {Array.isArray(displayTitle) ? (
-                        <h1 className="text-center text-white head3_sb">
+                        <h1
+                            className={cn(
+                                "text-center head3_sb",
+                                theme === "DARK" ? "text-white" : "text-black"
+                            )}
+                        >
                             {displayTitle.map((title, index) => (
                                 <span key={index} className="block">
                                     {title}
@@ -35,7 +39,14 @@ export default function Section({
                             ))}
                         </h1>
                     ) : (
-                        <h1 className="text-white head3_sb">{displayTitle}</h1>
+                        <h1
+                            className={cn(
+                                "text-center head3_sb",
+                                theme === "DARK" ? "text-white" : "text-black"
+                            )}
+                        >
+                            {displayTitle}
+                        </h1>
                     )}
                 </div>
 
@@ -48,7 +59,14 @@ export default function Section({
                         ))}
                     </p>
                 ) : (
-                    <p className="body3_r text-gray-2">{displayDescription}</p>
+                    <p
+                        className={cn(
+                            "text-center body3_r",
+                            theme === "DARK" ? "text-gray-2" : "text-gray-5"
+                        )}
+                    >
+                        {displayDescription}
+                    </p>
                 )}
             </div>
             {children}

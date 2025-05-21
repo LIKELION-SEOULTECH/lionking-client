@@ -16,7 +16,11 @@ const mockProjects: ProjectCardProps[] = Array.from({ length: 7 }, (_, i) => ({
 
 export default function Projects() {
     return (
-        <Section displayName="Projects" displayTitle="과기대 멋사의 프로젝트들을 소개합니다">
+        <Section
+            displayName="Projects"
+            displayTitle="과기대 멋사의 프로젝트들을 소개합니다"
+            className="py-[130px]"
+        >
             <div className="flex flex-col items-center justify-center gap-[60px] -mt-[16px]">
                 <ProjectCardList items={mockProjects} />
 

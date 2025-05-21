@@ -11,7 +11,7 @@ export default function Record() {
             <Section
                 displayName="Record"
                 displayTitle={["서울과학기술대학교", "멋쟁이사자처럼이 걸어온 길"]}
-                className="relative z-10"
+                className="relative z-10 min-h-screen"
             >
                 <div className="relative">
                     <MainPageBackground className="absolute top-0 left-1/2 -translate-x-1/2 w-screen pointer-events-none select-none z-0" />
