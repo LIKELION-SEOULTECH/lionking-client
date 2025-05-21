@@ -22,7 +22,11 @@ export default function Section({
 }: SectionProps) {
     return (
         <section
-            className={cn(className, "w-full flex flex-col items-center justify-center gap-18")}
+            className={cn(
+                className,
+                theme == "DARK" ? "bg-gray-8" : "bg-white",
+                "w-full flex flex-col items-center justify-center gap-18"
+            )}
         >
             <StaggerParent delay={0.1} stagger={0.2} once={false}>
                 <div className="flex flex-col items-center justify-center gap-7">
