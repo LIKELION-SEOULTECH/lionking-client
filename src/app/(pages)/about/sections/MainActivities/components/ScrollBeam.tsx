@@ -25,7 +25,7 @@ export default function ScrollBeam({
 
     const { scrollYProgress } = useScroll({
         target: targetRef,
-        offset: ["start 10%", "end 100%"],
+        offset: ["start 10%", "end 180%"],
     });
 
     const fillHeight = useTransform(scrollYProgress, [0.1, 0.9], [0, beamHeight]);
