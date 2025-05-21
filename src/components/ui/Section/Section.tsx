@@ -19,10 +19,7 @@ export default function Section({
 }: SectionProps) {
     return (
         <section
-            className={cn(
-                className,
-                "w-full min-h-screen flex flex-col items-center justify-center gap-18"
-            )}
+            className={cn(className, "w-full flex flex-col items-center justify-center gap-18")}
         >
             <div className="flex flex-col items-center justify-center gap-7">
                 <div className="flex flex-col items-center justify-center gap-5">
