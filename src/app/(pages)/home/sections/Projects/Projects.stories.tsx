@@ -4,7 +4,7 @@ import Projects from "./Projects";
 const meta: Meta<typeof Projects> = {
     title: "Home/Projects",
     component: Projects,
-    tags: ["autodocs"],
+    // tags: ["autodocs"],
 };
 
 export default meta;
