@@ -3,11 +3,14 @@
 import { useEffect, useRef, useState } from "react";
 import Section from "@/components/ui/Section";
 import MainActivityCard from "./components/MainActivityCard";
+import ScrollBeam from "./components/ScrollBeam";
 
 export default function MainActivities() {
     const cardCount = 5;
     const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
     const [focusedIndex, setFocusedIndex] = useState(0);
+    const stackRef = useRef<HTMLDivElement>(null);
+    const [circleTops, setCircleTops] = useState<number[]>([]);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -31,10 +34,30 @@ export default function MainActivities() {
             setFocusedIndex(closestIndex);
         };
 
-        window.addEventListener("scroll", handleScroll, { passive: true });
-        handleScroll();
+        const measureCirclePositions = () => {
+            const tops: number[] = [];
+            if (stackRef.current) {
+                const containerTop = stackRef.current.getBoundingClientRect().top + window.scrollY;
+                cardRefs.current.forEach((ref) => {
+                    if (ref) {
+                        const rect = ref.getBoundingClientRect();
+                        const center = rect.top + rect.height / 2 + window.scrollY - containerTop;
+                        tops.push(center);
+                    }
+                });
+            }
+            setCircleTops(tops);
+        };
 
-        return () => window.removeEventListener("scroll", handleScroll);
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        window.addEventListener("resize", measureCirclePositions);
+        handleScroll();
+        measureCirclePositions();
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+            window.removeEventListener("resize", measureCirclePositions);
+        };
     }, []);
 
     return (
@@ -43,18 +66,22 @@ export default function MainActivities() {
             displayTitle="배우고, 상상하고, 실현하다"
             className="py-[200px]"
         >
-            <div className="flex flex-col items-center justify-center gap-[120px]">
-                {[...Array(cardCount)].map((_, index) => (
-                    <div
-                        key={index}
-                        ref={(el) => {
-                            cardRefs.current[index] = el;
-                        }}
-                        className="w-full"
-                    >
-                        <MainActivityCard isFocused={focusedIndex === index} />
-                    </div>
-                ))}
+            <div className="relative flex">
+                <ScrollBeam targetRef={stackRef} circleTops={circleTops} />
+
+                <div ref={stackRef} className="flex flex-col gap-[120px] ml-[60px] w-full relative">
+                    {[...Array(cardCount)].map((_, index) => (
+                        <div
+                            key={index}
+                            ref={(el) => {
+                                cardRefs.current[index] = el;
+                            }}
+                            className="w-full pl-8"
+                        >
+                            <MainActivityCard isFocused={focusedIndex === index} />
+                        </div>
+                    ))}
+                </div>
             </div>
         </Section>
     );

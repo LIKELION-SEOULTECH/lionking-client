@@ -50,7 +50,7 @@ function MainActivityCardRightInfo({ isFocused }: { isFocused: boolean }) {
                     className="text-white"
                     style={{
                         fontWeight: 600,
-                        fontSize: isFocused ? "32px" : "24x",
+                        fontSize: isFocused ? "32px" : "24px",
                         lineHeight: isFocused ? "140%" : "150%",
                     }}
                     transition={{ duration: 0.4, ease: "easeInOut" }}
