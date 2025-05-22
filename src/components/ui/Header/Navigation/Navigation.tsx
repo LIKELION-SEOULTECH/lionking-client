@@ -22,13 +22,13 @@ export default function Navigation() {
 
     return (
         <NavigationMenu.Root className="relative z-50 flex items-center" delayDuration={0}>
-            <NavigationMenu.List className="flex gap-10 items-center">
+            <NavigationMenu.List className="flex gap-0 items-center">
                 {navigationLinks.map((item) =>
                     item.children ? (
                         <NavigationMenu.Item key={item.key} className="relative">
                             <NavigationMenu.Trigger
                                 className={cn(
-                                    "sub3_sb hover:text-orange-main transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-orange-main",
+                                    "sub3_sb hover:text-orange-main transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-orange-main py-5 px-5",
                                     isTriggerActive(
                                         pathname,
                                         item.children.map((child) => child.href)
@@ -40,7 +40,7 @@ export default function Navigation() {
                                 {item.label}
                             </NavigationMenu.Trigger>
 
-                            <NavigationMenu.Content className="absolute top-full left-0 mt-1 rounded-[8px] bg-gray-7 p-4 animate-in fade-in zoom-in-95 min-w-[150px]">
+                            <NavigationMenu.Content className="absolute top-full left-0 mt-4 rounded-[8px] bg-gray-6 p-4 animate-in fade-in zoom-in-95 min-w-[150px]">
                                 <ul className="w-full flex flex-col gap-3">
                                     {item.children.map((child) => (
                                         <li key={child.key}>
@@ -77,7 +77,7 @@ export default function Navigation() {
                                         "sub3_sb transition-colors",
                                         isActiveClass(item.href!, pathname),
                                         "hover:text-orange-main",
-                                        "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-orange-main"
+                                        "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-orange-main py-5 px-5"
                                     )}
                                 >
                                     {item.label}
