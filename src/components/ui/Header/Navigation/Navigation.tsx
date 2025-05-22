@@ -8,11 +8,16 @@ import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 
 export default function Navigation() {
     const pathname = usePathname();
-    function isActive(pathname: string, href: string) {
+    function isActive(pathname: string, href: string): boolean {
         return pathname === href;
     }
-    function isActiveClass(href: string, pathname: string) {
+
+    function isActiveClass(pathname: string, href: string): string {
         return isActive(pathname, href) ? "text-orange-main" : "text-gray-1";
+    }
+
+    function isTriggerActive(pathname: string, childHrefs: string[]): boolean {
+        return childHrefs.some((href) => pathname.startsWith(href));
     }
 
     return (
@@ -21,7 +26,17 @@ export default function Navigation() {
                 {navigationLinks.map((item) =>
                     item.children ? (
                         <NavigationMenu.Item key={item.key} className="relative">
-                            <NavigationMenu.Trigger className="sub3_sb text-gray-2 hover:text-orange-main transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-orange-main">
+                            <NavigationMenu.Trigger
+                                className={cn(
+                                    "sub3_sb hover:text-orange-main transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-orange-main",
+                                    isTriggerActive(
+                                        pathname,
+                                        item.children.map((child) => child.href)
+                                    )
+                                        ? "text-orange-main"
+                                        : "text-gray-2"
+                                )}
+                            >
                                 {item.label}
                             </NavigationMenu.Trigger>
 
