@@ -1,1 +1,1 @@
-export type { Parts } from "./types";
+export type { Parts, RoleFilters } from "./types";
