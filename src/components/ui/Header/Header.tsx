@@ -6,7 +6,7 @@ type HeaderProps = {
     isLoggedIn?: boolean;
 };
 
-export default function Header({ isLoggedIn = false }: HeaderProps) {
+export default function Header({ isLoggedIn = true }: HeaderProps) {
     return (
         <header
             className="w-screen fixed flex justify-center items-center h-[60px] bg-gray-8 z-[10000]"
@@ -18,7 +18,7 @@ export default function Header({ isLoggedIn = false }: HeaderProps) {
 
                 <div className="flex items-center gap-12.5">
                     <Navigation />
-                    <Actions isLoggedIn={true} />
+                    <Actions isLoggedIn={isLoggedIn} />
                 </div>
             </div>
         </header>
