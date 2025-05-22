@@ -13,6 +13,7 @@
         "deploy-storybook": "gh-pages -d storybook-static"
     },
     "dependencies": {
+        "@radix-ui/react-navigation-menu": "^1.2.13",
         "@radix-ui/react-slot": "^1.2.0",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
@@ -20,6 +21,7 @@
         "lucide-react": "^0.503.0",
         "motion": "^12.12.1",
         "next": "15.3.0",
+        "nextjs-toploader": "^3.8.16",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",
         "swr": "^2.3.3",

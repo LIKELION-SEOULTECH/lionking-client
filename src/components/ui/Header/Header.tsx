@@ -6,14 +6,14 @@ type HeaderProps = {
     isLoggedIn?: boolean;
 };
 
-export default function Header({ isLoggedIn = false }: HeaderProps) {
+export default function Header({ isLoggedIn = true }: HeaderProps) {
     return (
         <header
-            className="w-screen fixed flex justify-center items-center bg-static-black-70 z-[10000]"
+            className="w-screen fixed flex justify-center items-center h-[60px] bg-gray-8 z-[10000]"
             role="banner"
             aria-label="Header"
         >
-            <div className="flex w-full items-center justify-between py-3 px-6 max-w-[1100px]">
+            <div className="flex w-full items-center justify-between px-6 max-w-[1100px]">
                 <TypeLogo />
 
                 <div className="flex items-center gap-12.5">

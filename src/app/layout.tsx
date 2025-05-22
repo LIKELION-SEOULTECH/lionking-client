@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Pretendard } from "@/fonts/loadFonts";
+import NextTopLoader from "nextjs-toploader";
 import WithMockServer from "@/mocks/msw/WithMockServer";
 
 import Header from "@/components/ui/Header";
@@ -14,6 +15,7 @@ export default function RootLayout({
     return (
         <html lang="ko">
             <body className={`${Pretendard.className} mx-auto overflow-x-hidden`}>
+                <NextTopLoader color="#FF7710" showSpinner={false} height={1} zIndex={50000} />
                 <Header />
                 <main role="main">{children}</main>
                 <Footer />
