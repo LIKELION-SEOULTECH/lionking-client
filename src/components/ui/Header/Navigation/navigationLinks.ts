@@ -28,8 +28,8 @@ export const navigationLinks: NavigationLink[] = [
     },
     {
         label: "활동기록",
-        key: "activities",
-        href: "/activities",
+        key: "gallery",
+        href: "/gallery",
     },
     {
         label: "공지사항",
