@@ -40,7 +40,7 @@ export default function Navigation() {
                                 {item.label}
                             </NavigationMenu.Trigger>
 
-                            <NavigationMenu.Content className="absolute top-full left-0 mt-4 rounded-[8px] bg-gray-6 p-4 animate-in fade-in zoom-in-95 min-w-[150px]">
+                            <NavigationMenu.Content className="absolute top-full left-0 mt-2 rounded-[8px] bg-gray-6 p-4 animate-in fade-in zoom-in-95 min-w-[150px]">
                                 <ul className="w-full flex flex-col gap-3">
                                     {item.children.map((child) => (
                                         <li key={child.key}>
