@@ -11,27 +11,18 @@ export default function MembersGrid() {
         <>
             <RoleSelector selectedRole={selectedRole} onChange={setSelectedRole} />
 
-            <ProfileCard
-                name="김사자"
-                major="금속공에디자인학과"
-                userTags={["기획", "운영진", "홍보부"]}
-            />
-
-            <ProfileCard
-                name="김사자"
-                major="금속공에디자인학과"
-                userTags={["기획", "운영진", "홍보부"]}
-                size="large"
-                transparency="transparent"
-            />
-
-            <ProfileCard
-                name="김사자"
-                major="금속공에디자인학과"
-                userTags={["기획", "운영진", "홍보부"]}
-                size="small"
-                transparency="transparent"
-            />
+            <div className="w-full flex flex-col items-center justify-center px-4 md:px-0 py-16 md:py-[200px]">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-x-[29px] gap-y-8">
+                    {Array.from({ length: 9 }, (_, index) => (
+                        <ProfileCard
+                            key={index}
+                            name="김사자"
+                            major="인공지능학과"
+                            userTags={["프론트엔드", "아기사자"]}
+                        />
+                    ))}
+                </div>
+            </div>
         </>
     );
 }

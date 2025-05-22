@@ -10,7 +10,7 @@ const roleFilters: RoleFilters[] = ["전체", "운영진", "아기사자"];
 
 export default function RoleSelector({ selectedRole, onChange }: RoleSelectorProps) {
     return (
-        <div className="w-full h-8 flex items-center justify-center py-4 bg-gray-6">
+        <div className="w-full flex items-center justify-center py-4 bg-gray-6">
             <div className="flex items-center justify-center gap-[60px] sub2_sb">
                 {roleFilters.map((filter) => (
                     <button
