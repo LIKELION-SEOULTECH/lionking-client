@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import PostPreviewItem, { PostPreviewItemProps } from "./PostPreviewItem";
+import PostPreviewItem from "./PostPreviewItem";
+import { PostPreviewMetadata } from "@/types";
 
 const meta: Meta<typeof PostPreviewItem> = {
     title: "Components/PostPreviewItem",
@@ -24,7 +25,7 @@ export default meta;
 
 type Story = StoryObj<typeof PostPreviewItem>;
 
-const baseArgs: PostPreviewItemProps = {
+const baseArgs: PostPreviewMetadata = {
     part: "프론트엔드",
     title: "피그마 필수 기능 1시간 만에 정복하기",
     description:
