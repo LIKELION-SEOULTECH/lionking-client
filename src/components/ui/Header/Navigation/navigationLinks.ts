@@ -21,7 +21,7 @@ export const navigationLinks: NavigationLink[] = [
     },
     {
         label: "아카이빙",
-        href: "/archive",
+        href: "/archive/projects",
         key: "archive",
         children: [
             { label: "프로젝트", key: "archive-projects", href: "/archive/projects" },

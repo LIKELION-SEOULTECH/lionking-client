@@ -3,19 +3,11 @@
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import { Parts } from "@/types";
+import { PostPreviewMetadata } from "@/types";
 import { previewItemVariants, PostPreviewLayout, styleMap } from "./PostPreviewItemVariants";
 
-export type PostPreviewItemProps = {
-    layout?: PostPreviewLayout;
-    part: Parts | string;
-    title: string;
-    description: string;
-    date: string;
-    authorName: string;
-    authorId: string;
-    imageUrl?: string;
-    postHref?: string;
+export type PostPreviewItemProps = PostPreviewMetadata & {
+    layout: PostPreviewLayout;
 };
 
 export default function PostPreviewItem({

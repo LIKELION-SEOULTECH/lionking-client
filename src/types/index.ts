@@ -8,6 +8,17 @@ export type RoleFilters = "전체" | "운영진" | "아기사자";
 
 export type BlogTypeFilters = "세션" | "아티클";
 
+export type PostPreviewMetadata = {
+    part: Parts | string;
+    title: string;
+    description: string;
+    date: string;
+    authorName: string;
+    authorId: string;
+    imageUrl?: string;
+    postHref?: string;
+};
+
 export type Member = {
     id: number;
     name: string;

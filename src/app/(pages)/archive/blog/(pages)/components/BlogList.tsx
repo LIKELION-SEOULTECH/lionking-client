@@ -2,25 +2,28 @@
 
 import { useState } from "react";
 import { BlogTypeFilters, PartFilters } from "@/types";
-import BlogTypeSelector from "./components/BlogTypeSelector";
-import BlogPreviewSectionHeader from "./components/BlogPreviewSectionHeader";
-import PartSelector from "./components/PartSelector";
+import BlogTypeSelector from "./BlogTypeSelector";
+import BlogPreviewSectionHeader from "./BlogPreviewSectionHeader";
+import PartSelector from "./PartSelector";
 import PostPreviewItem from "@/components/ui/PostPreviewItem";
-import BlogPreviewListEmpty from "./components/BlogPreviewListEmpty";
+import BlogPreviewListEmpty from "./BlogPreviewListEmpty";
 
 import blogMock from "@/__mocks__/blogMock";
 
-export default function BlogList() {
-    const [selectedBlogType, setSelectedBlogType] = useState<BlogTypeFilters>("세션");
+type BlogListProps = {
+    selectedBlogType: BlogTypeFilters;
+};
+
+export default function BlogList({ selectedBlogType }: BlogListProps) {
     const [selectedPart, setSelectedPart] = useState<PartFilters>("파트");
 
     const filteredPosts = blogMock
-        .filter((post) => post.blogType === selectedBlogType)
-        .filter((post) => selectedPart === "파트" || post.part === selectedPart);
+        .filter((post) => selectedPart === "파트" || post.part === selectedPart)
+        .filter((post) => post.blogType === selectedBlogType);
 
     return (
         <>
-            <BlogTypeSelector selectedBlogType={selectedBlogType} onChange={setSelectedBlogType} />
+            <BlogTypeSelector selectedBlogType={selectedBlogType} />
 
             <div className="max-w-[1100px] mx-auto py-[160px]">
                 <div className="flex flex-col w-full items-end justify-between mb-[120px]">

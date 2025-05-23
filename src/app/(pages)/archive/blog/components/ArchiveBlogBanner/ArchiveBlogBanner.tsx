@@ -1,6 +1,6 @@
 import Icons from "@/assets/banner/archive/blog/icons.svg";
 
-export default function ArchiveBlogBanner() {
+export default function ArchiveBanner() {
     return (
         <div className="pt-[62px] w-screen h-[352px] overflow-hidden relative flex items-center justify-center bg-gray-1">
             <div className="relative flex items-center justify-start w-full max-w-[1100px] h-full px-6">
