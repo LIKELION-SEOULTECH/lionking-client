@@ -6,7 +6,7 @@ type BlogTypeSelectorProps = {
     onChange: (part: BlogTypeFilters) => void;
 };
 
-const blogTypeFilters: BlogTypeFilters[] = ["세션", "블로그"];
+const blogTypeFilters: BlogTypeFilters[] = ["세션", "아티클"];
 
 export default function BlogTypeSelector({ selectedBlogType, onChange }: BlogTypeSelectorProps) {
     return (
