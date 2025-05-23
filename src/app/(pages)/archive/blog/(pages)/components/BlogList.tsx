@@ -25,8 +25,8 @@ export default function BlogList({ selectedBlogType }: BlogListProps) {
         <>
             <BlogTypeSelector selectedBlogType={selectedBlogType} />
 
-            <div className="max-w-[1100px] mx-auto py-[160px]">
-                <div className="flex flex-col w-full items-end justify-between mb-[120px]">
+            <div className="w-full max-w-full lg:max-w-[1100px] mx-auto py-[120px] px-6 lg:px-4 xl:px-0">
+                <div className="flex flex-col lg:flex-row w-full items-end justify-start lg:justify-between gap-4 lg:gap-0 mb-[60px] lg:mb-[120px]">
                     <BlogPreviewSectionHeader selectedBlogType={selectedBlogType} />
 
                     <PartSelector value={selectedPart} onChange={setSelectedPart} />

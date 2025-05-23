@@ -36,7 +36,9 @@ export default function PostPreviewItem({
 
     return (
         <div className="w-full relative flex flex-col items-center justify-center">
-            {layout === "horizontal_fill_large" && <div className="w-full h-[1px] bg-gray-2" />}
+            {layout === "horizontal_fill_large" && (
+                <div className="w-full h-[1px] bg-gray-2 hidden lg:block" />
+            )}
             <div className={cn(previewItemVariants({ layout }))}>
                 <div className={imageWrapperClass}>
                     <Link href={postHref}>
