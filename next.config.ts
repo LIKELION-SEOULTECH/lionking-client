@@ -18,6 +18,11 @@ const nextConfig: NextConfig = {
             destination: "/",
             permanent: true,
         },
+        {
+            source: "/archive",
+            destination: "/archive/projects",
+            permanent: true,
+        },
     ],
     rewrites: async () => [
         {
