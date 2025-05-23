@@ -1,45 +1,45 @@
-"use client";
-
-import { motion } from "motion/react";
-import useHoverAnimation from "@/hooks/animations/useHoverAnimation";
 import type { BadgeType } from "@/components/ui/ProjectCardBadge";
 import ProjectCardBadge from "@/components/ui/ProjectCardBadge";
 import Image from "next/image";
 
-export type ProjectCardProps = {
-    imageSrc?: string;
-    information: ProjectCardBottomInformationProps;
-    badge?: BadgeType;
+type Badge = {
+    type: BadgeType;
+    text?: string;
 };
 
-export default function ProjectCard({
-    imageSrc = "/static/images/330x186.svg",
+export type ProjectCardStaticProps = {
+    imageSrc?: string;
+    information: ProjectCardBottomInformationProps;
+    badges?: Badge[];
+};
+
+export default function ProjectCardStatic({
+    imageSrc = "/static/images/placeholder.png",
     information = {
         projectName: "서비스명",
         projectDescription: "서비스 한 줄 설명을 적어주세요",
         projectYear: "13기",
     },
-    badge = "NONE",
-}: ProjectCardProps) {
-    const { ref } = useHoverAnimation<HTMLDivElement>();
-
+    badges = [],
+}: ProjectCardStaticProps) {
     return (
-        <motion.div
-            ref={ref}
-            className="relative flex flex-col w-[330px] bg-gray-6 hover:bg-gray-6/50 rounded-[20px] overflow-hidden cursor-pointer transition-colors duration-200"
-        >
-            <div className="absolute z-10 top-3 left-3">
-                <ProjectCardBadge type={badge} />
-            </div>
-
+        <div className="relative flex flex-col w-full bg-gray-6 hover:bg-gray-6/50 rounded-[20px] overflow-hidden cursor-pointer transition-colors duration-200">
             <ProjectCardTopImage imageSrc={imageSrc} />
 
-            <ProjectCardBottomInformation
-                projectName={information.projectName}
-                projectDescription={information.projectDescription}
-                projectYear={information.projectYear}
-            />
-        </motion.div>
+            <div className="flex flex-col items-start justify-center px-4.5 py-4 gap-4">
+                <ProjectCardBottomInformation
+                    projectName={information.projectName}
+                    projectDescription={information.projectDescription}
+                    projectYear={information.projectYear}
+                />
+
+                <div className="flex items-center justify-start gap-[3px]">
+                    {badges.map((badge, index) => (
+                        <ProjectCardBadge key={index} type={badge.type} text={badge.text} dark />
+                    ))}
+                </div>
+            </div>
+        </div>
     );
 }
 
@@ -70,7 +70,7 @@ function ProjectCardBottomInformation({
     projectYear,
 }: ProjectCardBottomInformationProps) {
     return (
-        <div className="flex flex-col w-full gap-[3px] items-start justify-center px-4.5 py-5">
+        <div className="flex flex-col w-full gap-2 items-start justify-center">
             <div className="flex items-center justify-between w-full">
                 <p className="text-white body3_m">{projectName}</p>
 

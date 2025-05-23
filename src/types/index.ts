@@ -1,6 +1,6 @@
 export type Parts = "기획" | "디자인" | "프론트엔드" | "백엔드" | "AI";
 
-export type PartFilters = "파트" | "기획" | "디자인" | "프론트엔드" | "백엔드" | "AI";
+export type PartFilters = "전체" | "기획" | "디자인" | "프론트엔드" | "백엔드" | "AI";
 
 export type Role = "운영진" | "아기사자" | "휴면사자";
 
@@ -35,3 +35,11 @@ export type News = {
     date: string;
     thumbnailUrl: string;
 };
+
+export type ProjectTypeFilters =
+    | "활동"
+    | "아이디어톤"
+    | "중앙 헤커톤"
+    | "연합 해커톤"
+    | "장기 프로젝트"
+    | "기타";

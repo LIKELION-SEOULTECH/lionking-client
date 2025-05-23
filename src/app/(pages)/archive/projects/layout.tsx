@@ -1,4 +1,4 @@
-import ArchiveBlogBanner from "./components/ArchiveBlogBanner";
+import ArchiveProjectsBanner from "./components/ArchiveProjectsBanner";
 
 export default function ArchiveLayout({
     children,
@@ -6,8 +6,8 @@ export default function ArchiveLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <div className="bg-white w-full">
-            <ArchiveBlogBanner />
+        <div className="w-full">
+            <ArchiveProjectsBanner />
             {children}
         </div>
     );
