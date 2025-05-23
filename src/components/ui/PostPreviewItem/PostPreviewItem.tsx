@@ -1,5 +1,3 @@
-"use client";
-
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
@@ -28,16 +26,16 @@ export default function PostPreviewItem({
 
     const imageWrapperClass = cn(
         "relative overflow-hidden shrink-0",
-        layout === "horizontal_fill_large" && "w-[361px] h-[217px]",
-        layout === "horizontal_fill_small" && "w-[273px] h-[193px]",
-        layout === "horizontal_compact" && "w-[286px] h-[172px]",
+        layout === "horizontal_fill_large" && "w-full sm:w-[361px] h-[217px]",
+        layout === "horizontal_fill_small" && "w-full sm:w-[273px] h-[193px]",
+        layout === "horizontal_compact" && "w-full sm:w-[286px] h-[172px]",
         layout === "vertical_large" && "w-full h-[268px]",
         layout === "vertical_small" && "w-full h-[200px]",
         layout === "vertical_compact" && "w-full h-[200px]"
     );
 
     return (
-        <div className="relative w-full">
+        <div className="w-full relative flex flex-col items-center justify-center">
             {layout === "horizontal_fill_large" && <div className="w-full h-[1px] bg-gray-2" />}
             <div className={cn(previewItemVariants({ layout }))}>
                 <div className={imageWrapperClass}>
@@ -53,16 +51,18 @@ export default function PostPreviewItem({
 
                 <div
                     className={cn(
-                        "flex flex-col",
+                        "flex flex-col w-full",
                         isHorizontal ? (isCompact ? "gap-2" : "gap-10") : "gap-2"
                     )}
                 >
                     <div className="flex flex-col gap-2">
                         {styles.partPosition == "TOP" && <p className={styles.part}>{part}</p>}
-                        <Link href={postHref} className={cn(styles.title, "hover:underline")}>
-                            <p className={styles.title}>{title}</p>
-                        </Link>
-                        <p className={styles.desc}>{description}</p>
+                        <div className="flex flex-col gap-4">
+                            <Link href={postHref} className={cn(styles.title, "hover:underline")}>
+                                <p className={styles.title}>{title}</p>
+                            </Link>
+                            <p className={styles.desc}>{description}</p>
+                        </div>
                     </div>
 
                     <div
