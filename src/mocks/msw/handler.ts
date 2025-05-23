@@ -1,4 +1,5 @@
 import { http, HttpResponse } from "msw";
+import news from "./data/news.json";
 
 export const handlers = [
     http.get("/api/v1/member", () => {
@@ -36,5 +37,14 @@ export const handlers = [
                 },
             ],
         });
+    }),
+    http.get("/api/gallery/news", () => {
+        return HttpResponse.json(news);
+    }),
+
+    http.get("/api/gallery/news/:id", ({ params }) => {
+        const { id } = params;
+        const item = news.find((n) => n.id === id);
+        return item ? HttpResponse.json(item) : new HttpResponse(null, { status: 404 });
     }),
 ];
