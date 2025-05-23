@@ -4,6 +4,8 @@ export type Role = "운영진" | "아기사자" | "휴면사자";
 
 export type RoleFilters = "전체" | "운영진" | "아기사자";
 
+export type BlogTypeFilters = "전체" | "세션" | "블로그";
+
 export type Member = {
     id: number;
     name: string;
