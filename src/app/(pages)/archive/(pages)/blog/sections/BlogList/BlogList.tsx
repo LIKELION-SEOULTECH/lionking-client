@@ -3,12 +3,12 @@
 import { useState } from "react";
 import { BlogTypeFilters, PartFilters } from "@/types";
 import BlogTypeSelector from "./components/BlogTypeSelector";
-import BlogPreviewListItem from "./components/BlogPreviewListItem";
-
-import blogMock from "@/__mocks__/blogMock";
 import BlogPreviewSectionHeader from "./components/BlogPreviewSectionHeader";
 import PartSelector from "./components/PartSelector";
+import PostPreviewItem from "@/components/ui/PostPreviewItem";
 import BlogPreviewListEmpty from "./components/BlogPreviewListEmpty";
+
+import blogMock from "@/__mocks__/blogMock";
 
 export default function BlogList() {
     const [selectedBlogType, setSelectedBlogType] = useState<BlogTypeFilters>("세션");
@@ -31,7 +31,8 @@ export default function BlogList() {
 
                 {filteredPosts.length > 0 ? (
                     filteredPosts.map((post) => (
-                        <BlogPreviewListItem
+                        <PostPreviewItem
+                            layout="horizontal_fill_large"
                             key={post.title}
                             part={post.part}
                             title={post.title}
