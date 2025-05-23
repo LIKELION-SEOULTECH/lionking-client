@@ -26,7 +26,6 @@ export default function NewsList() {
         px-0             /* 여긴 무조건 0 */
       "
         >
-            {/* 제목 */}
             <h2
                 className="
           text-2xl font-bold text-white 
@@ -38,7 +37,6 @@ export default function NewsList() {
                 멋사의 최근 소식
             </h2>
 
-            {/* Swiper 래퍼: 높이 490, 무조건 padding:0 */}
             <div className="h-[490px] w-full overflow-visible px-0">
                 <Swiper
                     modules={[Autoplay]}
