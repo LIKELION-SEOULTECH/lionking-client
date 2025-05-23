@@ -35,3 +35,11 @@ export type News = {
     date: string;
     thumbnailUrl: string;
 };
+
+export type ProjectTypeFilters =
+    | "활동"
+    | "아이디어톤"
+    | "중앙 헤커톤"
+    | "연합 해커톤"
+    | "장기 프로젝트"
+    | "기타";

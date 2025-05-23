@@ -21,7 +21,7 @@ export default function DropdownSelector<T extends string>({
     dark = false,
 }: DropdownSelectorProps<T>) {
     const triggerClass = cn(
-        "flex items-center justify-between rounded-sm lg:rounded-full px-5 py-2 body4_m cursor-pointer transition",
+        "flex items-center justify-between rounded-full px-5 py-2 body4_m cursor-pointer transition",
         dark
             ? "text-white bg-gray-5 hover:bg-gray-5/85"
             : "text-gray-5 bg-gray-2 hover:bg-gray-2/85"
