@@ -1,7 +1,7 @@
 import blogMock from "@/__mocks__/blogMock";
 import ArchivePostPreviewDisplay from "./components/ArchiveBlogPreviewDisplay";
 
-export default function ArchivePage() {
+export default function ArchiveBlogPage() {
     return (
         <div className="flex flex-col items-center justify-center w-full gap-[120px] py-[120px]">
             <ArchivePostPreviewDisplay

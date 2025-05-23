@@ -1,4 +1,4 @@
-import ArchiveBanner from "./components/ArchiveBlogBanner";
+import ArchiveBlogBanner from "./components/ArchiveBlogBanner";
 
 export default function ArchiveLayout({
     children,
@@ -7,7 +7,7 @@ export default function ArchiveLayout({
 }>) {
     return (
         <div className="bg-white w-full">
-            <ArchiveBanner />
+            <ArchiveBlogBanner />
             {children}
         </div>
     );
