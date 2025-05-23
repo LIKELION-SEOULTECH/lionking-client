@@ -12,3 +12,11 @@ export type Member = {
     role: Role;
     // imageUrl: string;
 };
+
+export type News = {
+    id: string;
+    title: string;
+    description: string;
+    date: string;
+    thumbnailUrl: string;
+};
