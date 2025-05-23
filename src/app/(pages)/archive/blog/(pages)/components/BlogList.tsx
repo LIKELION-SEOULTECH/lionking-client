@@ -15,10 +15,10 @@ type BlogListProps = {
 };
 
 export default function BlogList({ selectedBlogType }: BlogListProps) {
-    const [selectedPart, setSelectedPart] = useState<PartFilters>("파트");
+    const [selectedPart, setSelectedPart] = useState<PartFilters>("전체");
 
     const filteredPosts = blogMock
-        .filter((post) => selectedPart === "파트" || post.part === selectedPart)
+        .filter((post) => selectedPart === "전체" || post.part === selectedPart)
         .filter((post) => post.blogType === selectedBlogType);
 
     return (

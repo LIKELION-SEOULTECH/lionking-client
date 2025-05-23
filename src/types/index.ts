@@ -1,6 +1,6 @@
 export type Parts = "기획" | "디자인" | "프론트엔드" | "백엔드" | "AI";
 
-export type PartFilters = "파트" | "기획" | "디자인" | "프론트엔드" | "백엔드" | "AI";
+export type PartFilters = "전체" | "기획" | "디자인" | "프론트엔드" | "백엔드" | "AI";
 
 export type Role = "운영진" | "아기사자" | "휴면사자";
 
