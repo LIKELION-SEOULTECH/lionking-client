@@ -6,25 +6,11 @@ type ProfilePanelProps = {
     member: Member;
 };
 export default function ProfilePanel({ member }: ProfilePanelProps) {
-    const {
-        name,
-        major,
-        userTags,
-        profileIntro,
-        profileIntroTags,
-        profileIntroSkills,
-        profileExternalLinks,
-    } = member;
+    const { profileIntro, profileIntroTags, profileIntroSkills, profileExternalLinks } = member;
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-[1fr_1.2fr] lg:grid-cols-1 gap-4 lg:gap-6 w-full lg:max-w-[350px]">
-            <ProfileCard
-                name={name}
-                major={major}
-                userTags={userTags}
-                size="large"
-                transparency="transparent"
-            />
+            <ProfileCard member={member} size="large" transparency="transparent" />
 
             <div className="grid grid-cols-1 gap-4 lg:gap-6 w-full">
                 <ProfilePanelSection>
@@ -73,7 +59,7 @@ export default function ProfilePanel({ member }: ProfilePanelProps) {
 
 function ProfilePanelSection({ children }: { children: React.ReactNode }) {
     return (
-        <div className="w-full flex flex-col items-start justify-start p-6.5 gap-8 rounded-[20px] border border-gray-5">
+        <div className="w-full flex flex-col items-start justify-start p-6.5 gap-8 rounded-[8px] lg:rounded-[20px] border border-gray-5">
             {children}
         </div>
     );

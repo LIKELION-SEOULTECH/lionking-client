@@ -23,6 +23,7 @@ export default function PostPreviewItem({
 
     const isHorizontal = layout.startsWith("horizontal");
     const isCompact = layout.includes("compact");
+    const isVerticalCompactDark = layout === "vertical_compact_dark";
 
     const imageWrapperClass = cn(
         "relative overflow-hidden shrink-0",
@@ -31,7 +32,8 @@ export default function PostPreviewItem({
         layout === "horizontal_compact" && "w-full sm:w-[286px] h-[172px]",
         layout === "vertical_large" && "w-full h-[268px]",
         layout === "vertical_small" && "w-full h-[200px]",
-        layout === "vertical_compact" && "w-full h-[200px]"
+        layout === "vertical_compact" && "w-full h-[200px]",
+        layout === "vertical_compact_dark" && "w-full h-[186px]"
     );
 
     return (
@@ -42,19 +44,15 @@ export default function PostPreviewItem({
             <div className={cn(previewItemVariants({ layout }))}>
                 <div className={imageWrapperClass}>
                     <Link href={postHref}>
-                        <Image
-                            src={imageUrl}
-                            alt={title}
-                            fill
-                            className="object-cover rounded-sm"
-                        />
+                        <Image src={imageUrl} alt={title} fill className="object-cover" />
                     </Link>
                 </div>
 
                 <div
                     className={cn(
                         "flex flex-col w-full",
-                        isHorizontal ? (isCompact ? "gap-2" : "gap-10") : "gap-2"
+                        isHorizontal ? (isCompact ? "gap-2" : "gap-10") : "gap-2",
+                        isVerticalCompactDark && "px-4.5 pb-4"
                     )}
                 >
                     <div className="flex flex-col gap-2">
@@ -74,7 +72,7 @@ export default function PostPreviewItem({
                         )}
                     >
                         <p className={styles.meta}>{date}</p>
-                        {authorName && (
+                        {authorName && styles.partPosition !== "NONE" && (
                             <>
                                 <div className="h-[17px] w-[1.5px] bg-gray-3" />
                                 <div className="flex items-center gap-1">

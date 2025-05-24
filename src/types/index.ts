@@ -51,3 +51,22 @@ export type ProjectTypeFilters =
     | "연합 해커톤"
     | "장기 프로젝트"
     | "기타";
+
+export type ProjectCardVariants = "PROJECT_PAGE" | "MEMBER_PAGE";
+
+export type ProjectPreviewBadgeType = "NONE" | "BEST" | "TEXT";
+
+export type ProjectPreviewMetadata = {
+    title: string;
+    description: string;
+    projectYear: string;
+    imageUrl?: string;
+    postHref?: string;
+    badges?: {
+        type: ProjectPreviewBadgeType;
+        text?: string;
+        dark?: boolean;
+    }[];
+};
+
+export type MemberPublishedPostFilters = "참여 프로젝트" | "작성한 글";

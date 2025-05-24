@@ -18,18 +18,44 @@ const Template: Story = {
 export const Default: Story = {
     ...Template,
     args: {
-        name: "김사자",
-        major: "인공지능학과",
-        userTags: ["프론트엔드", "아기사자"],
+        member: {
+            id: 1,
+            name: "김사자",
+            major: "인공지능학과",
+            position: "프론트엔드",
+            userTags: ["프론트엔드", "아기사자"],
+            profileIntro: "안녕하시렵니까",
+            profileIntroTags: ["위엄", "라잌어", "라이옹"],
+            profileIntroSkills: ["잠자기", "공부하기"],
+            profileExternalLinks: [
+                { label: "GitHub", url: "https://github.com" },
+                { label: "Portfolio", url: "https://portfolio.com" },
+            ],
+            imageUrl: "/static/images/placeholder.png",
+            role: "아기사자",
+        },
     },
 };
 
 export const SmallTransparent: Story = {
     ...Template,
     args: {
-        name: "김사자",
-        major: "인공지능학과",
-        userTags: ["프론트엔드", "아기사자"],
+        member: {
+            id: 1,
+            name: "김사자",
+            major: "인공지능학과",
+            position: "프론트엔드",
+            userTags: ["프론트엔드", "아기사자"],
+            profileIntro: "안녕하시렵니까",
+            profileIntroTags: ["위엄", "라잌어", "라이옹"],
+            profileIntroSkills: ["잠자기", "공부하기"],
+            profileExternalLinks: [
+                { label: "GitHub", url: "https://github.com" },
+                { label: "Portfolio", url: "https://portfolio.com" },
+            ],
+            imageUrl: "/static/images/placeholder.png",
+            role: "아기사자",
+        },
         size: "small",
         transparency: "transparent",
     },
@@ -38,9 +64,22 @@ export const SmallTransparent: Story = {
 export const LargeTransparent: Story = {
     ...Template,
     args: {
-        name: "김사자",
-        major: "인공지능학과",
-        userTags: ["프론트엔드", "아기사자"],
+        member: {
+            id: 1,
+            name: "김사자",
+            major: "인공지능학과",
+            position: "프론트엔드",
+            userTags: ["프론트엔드", "아기사자"],
+            profileIntro: "안녕하시렵니까",
+            profileIntroTags: ["위엄", "라잌어", "라이옹"],
+            profileIntroSkills: ["잠자기", "공부하기"],
+            profileExternalLinks: [
+                { label: "GitHub", url: "https://github.com" },
+                { label: "Portfolio", url: "https://portfolio.com" },
+            ],
+            imageUrl: "/static/images/placeholder.png",
+            role: "아기사자",
+        },
         size: "large",
         transparency: "transparent",
     },
