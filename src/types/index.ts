@@ -22,10 +22,18 @@ export type PostPreviewMetadata = {
 export type Member = {
     id: number;
     name: string;
-    major: string;
+    major?: string;
     position: Parts;
     role: Role;
-    // imageUrl: string;
+    imageUrl?: string;
+    userTags?: string[]; // <파트> <운영진/아기사자> <부서>, 주황색으로 나오는 부분
+    profileIntro?: string;
+    profileIntroTags?: string[]; // 맴버프로필-소개 섹션에 들어가는 태그
+    profileIntroSkills?: string[];
+    profileExternalLinks?: {
+        label: string;
+        url: string;
+    }[];
 };
 
 export type News = {
@@ -43,3 +51,22 @@ export type ProjectTypeFilters =
     | "연합 해커톤"
     | "장기 프로젝트"
     | "기타";
+
+export type ProjectCardVariants = "PROJECT_PAGE" | "MEMBER_PAGE";
+
+export type ProjectPreviewBadgeType = "NONE" | "BEST" | "TEXT";
+
+export type ProjectPreviewMetadata = {
+    title: string;
+    description: string;
+    projectYear: string;
+    imageUrl?: string;
+    postHref?: string;
+    badges?: {
+        type: ProjectPreviewBadgeType;
+        text?: string;
+        dark?: boolean;
+    }[];
+};
+
+export type MemberPublishedPostFilters = "참여 프로젝트" | "작성한 글";

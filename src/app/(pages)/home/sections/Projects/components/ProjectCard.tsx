@@ -1,15 +1,15 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "motion/react";
 import useHoverAnimation from "@/hooks/animations/useHoverAnimation";
-import type { BadgeType } from "@/components/ui/ProjectCardBadge";
 import ProjectCardBadge from "@/components/ui/ProjectCardBadge";
-import Image from "next/image";
+import { ProjectPreviewBadgeType } from "@/types";
 
 export type ProjectCardProps = {
     imageSrc?: string;
     information: ProjectCardBottomInformationProps;
-    badge?: BadgeType;
+    badge?: ProjectPreviewBadgeType;
 };
 
 export default function ProjectCard({

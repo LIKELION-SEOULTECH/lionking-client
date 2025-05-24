@@ -1,13 +1,13 @@
 import { cva } from "class-variance-authority";
 
 export const ProfileCardVariants = cva(
-    "relative flex flex-col items-center justify-center overflow-hidden rounded-[20px] cursor-pointer",
+    "relative flex flex-col items-center justify-center overflow-hidden rounded-[20px]",
     {
         variants: {
             size: {
-                default: "w-[334px] h-[454px] px-10 py-12 gap-6",
-                small: "w-[241px] px-[26px] py-9 gap-[23px]",
-                large: "w-[350px] px-[52px] py-[42px] gap-9",
+                default: "w-[334px] h-[454px] px-10 py-12 gap-6 cursor-pointer",
+                small: "w-[241px] px-[26px] py-9 gap-[23px] cursor-pointer",
+                large: "w-full px-[52px] py-[42px] gap-9 rounded-[8px] lg:rounded-[20px] cursor-default",
             },
             transparency: {
                 solid: "bg-gray-6 border-0",

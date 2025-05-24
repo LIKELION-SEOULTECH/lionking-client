@@ -16,5 +16,5 @@ type ProjectTypeSelectorProps = {
 };
 
 export default function ProjectTypeSelector({ value, onChange }: ProjectTypeSelectorProps) {
-    return <DropdownSelector value={value} onChange={onChange} options={projectTypeOptions} />;
+    return <DropdownSelector value={value} onChange={onChange} options={projectTypeOptions} dark />;
 }

@@ -8,5 +8,5 @@ type ProjectYearSelectorProps = {
 };
 
 export default function ProjectYearSelector({ value, onChange }: ProjectYearSelectorProps) {
-    return <DropdownSelector value={value} onChange={onChange} options={projectYearOptions} />;
+    return <DropdownSelector value={value} onChange={onChange} options={projectYearOptions} dark />;
 }

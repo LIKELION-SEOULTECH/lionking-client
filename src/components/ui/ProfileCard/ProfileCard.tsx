@@ -14,57 +14,60 @@ import {
     ProfileCardInfoGlobalLayoutVariants,
     ProfileCardInfoTextLayoutVariants,
 } from "./ProfileCardVariants";
+import Link from "next/link";
 
-export default function ProfileCardDefault({
-    name,
-    major,
-    userTags,
-    size,
-    transparency,
-}: ProfileCardProps) {
+export default function ProfileCard({ member, size, transparency }: ProfileCardProps) {
+    const { id } = member;
     const [isHovered, setIsHovered] = useState(false);
 
     return (
-        <motion.div
-            onHoverStart={() => setIsHovered(true)}
-            onHoverEnd={() => setIsHovered(false)}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            className={cn(ProfileCardVariants({ size, transparency }))}
-        >
+        <Link href={`/about/members/${id}`} passHref>
             <motion.div
-                className="absolute inset-0 bg-black z-10"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: isHovered ? 0.4 : 0 }}
-                transition={{ duration: 0.3 }}
-            />
+                onHoverStart={() => setIsHovered(true)}
+                onHoverEnd={() => setIsHovered(false)}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className={cn(ProfileCardVariants({ size, transparency }))}
+            >
+                {size !== "large" && (
+                    <motion.div
+                        className="absolute inset-0 bg-black z-10"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: isHovered ? 0.4 : 0 }}
+                        transition={{ duration: 0.3 }}
+                    />
+                )}
 
-            <div className={cn(ProfileCardImageVariants({ size }))}>
-                <motion.div
-                    className="absolute inset-0 flex items-center justify-center z-10"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{
-                        opacity: isHovered ? 1 : 0,
-                        y: isHovered ? 0 : 20,
-                    }}
-                    transition={{ duration: 0.3, ease: "easeOut" }}
-                >
-                    <div className="flex items-center justify-center hover:underline">
-                        <span className={cn(size === "small" ? "sub4_sb" : "sub2_sb")}>
-                            프로젝트 보기
-                        </span>
-                        <ArrowUpRightIcon />
-                    </div>
-                </motion.div>
+                <div className={cn(ProfileCardImageVariants({ size }))}>
+                    {size !== "large" && (
+                        <motion.div
+                            className="absolute inset-0 flex items-center justify-center z-10"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{
+                                opacity: isHovered ? 1 : 0,
+                                y: isHovered ? 0 : 20,
+                            }}
+                            transition={{ duration: 0.3, ease: "easeOut" }}
+                        >
+                            <div className="flex items-center justify-center hover:underline">
+                                <span className={cn(size === "small" ? "sub4_sb" : "sub2_sb")}>
+                                    프로필 보기
+                                </span>
+                                <ArrowUpRightIcon />
+                            </div>
+                        </motion.div>
+                    )}
 
-                <Image src="/static/images/placeholder.png" alt="Profile Image" fill />
-            </div>
+                    <Image src="/static/images/placeholder.png" alt="Profile Image" fill />
+                </div>
 
-            <MembersGridItemInfo name={name} major={major} userTags={userTags} size={size} />
-        </motion.div>
+                <MembersGridItemInfo member={member} size={size} />
+            </motion.div>
+        </Link>
     );
 }
 
-function MembersGridItemInfo({ name, major, userTags, size }: ProfileCardInfoProps) {
+function MembersGridItemInfo({ member, size }: ProfileCardInfoProps) {
+    const { name, major, userTags } = member;
     return (
         <div className={cn(ProfileCardInfoGlobalLayoutVariants({ size }))}>
             <div className="w-full flex items-center justify-center gap-2.5">

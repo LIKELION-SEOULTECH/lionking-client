@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import ProjectCardStatic from "../ProjectCardStatic";
+import ProjectCardStatic from "@/components/ui/ProjectCardStatic";
 import ProjectTypeSelector from "../Selectors/ProjectTypeSelector";
 import ProjectYearSelector from "../Selectors/ProjectYearSelector";
 import { ProjectTypeFilters } from "@/types";
@@ -28,12 +28,14 @@ export default function ProjectCardGrid() {
                     {Array.from({ length: 6 }, (_, index) => (
                         <ProjectCardStatic
                             key={index}
-                            information={{
-                                projectName: "Project Name",
-                                projectDescription: "Project Description",
-                                projectYear: "12기",
-                            }}
-                            badges={[{ type: "BEST" }, { type: "TEXT", text: "아이디어톤" }]}
+                            title="Project Name"
+                            description="Project Description"
+                            projectYear="12기"
+                            badges={[
+                                { type: "BEST", dark: true },
+                                { type: "TEXT", text: "아이디어톤", dark: true },
+                            ]}
+                            variant="PROJECT_PAGE"
                         />
                     ))}
                 </div>
