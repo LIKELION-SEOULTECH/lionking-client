@@ -7,7 +7,7 @@ export const ProfileCardVariants = cva(
             size: {
                 default: "w-[334px] h-[454px] px-10 py-12 gap-6",
                 small: "w-[241px] px-[26px] py-9 gap-[23px]",
-                large: "w-[350px] px-[52px] py-[42px] gap-9",
+                large: "w-full px-[52px] py-[42px] gap-9",
             },
             transparency: {
                 solid: "bg-gray-6 border-0",

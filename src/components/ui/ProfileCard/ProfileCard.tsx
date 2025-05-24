@@ -15,7 +15,7 @@ import {
     ProfileCardInfoTextLayoutVariants,
 } from "./ProfileCardVariants";
 
-export default function ProfileCardDefault({
+export default function ProfileCard({
     name,
     major,
     userTags,
