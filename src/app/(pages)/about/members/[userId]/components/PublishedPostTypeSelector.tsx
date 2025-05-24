@@ -37,7 +37,7 @@ function SelectorItem({
 }) {
     return (
         <div
-            className={`w-full lg:w-[170px] flex items-center justify-center cursor-pointer py-3 ${
+            className={`w-full lg:w-[170px] flex items-center justify-center cursor-pointer py-3 sub2_sb ${
                 selected
                     ? "text-orange-main hover:text-orange-main/80 border-b-4 border-orange-main"
                     : "text-gray-4 hover:text-gray-4/80 border-b-2 border-gray-4"
