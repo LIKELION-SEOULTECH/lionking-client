@@ -2,7 +2,7 @@ import NotFoundSVG from "@/assets/icons/not_found.svg";
 
 export default function NotFound() {
     return (
-        <div className="w-full h-[80vh] bg-white flex items-center justify-center">
+        <div className="w-full h-[90vh] bg-white flex items-center justify-center pt-16">
             <div className="flex flex-col items-center justify-center gap-6">
                 <NotFoundSVG />
 
