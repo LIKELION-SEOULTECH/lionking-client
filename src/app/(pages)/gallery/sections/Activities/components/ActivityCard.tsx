@@ -1,9 +1,8 @@
-// src/app/(pages)/gallery/sections/Activities/components/ActivityCard.tsx
 "use client";
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { News } from "@/types";
 
 interface Props {
