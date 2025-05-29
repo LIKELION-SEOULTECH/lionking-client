@@ -32,8 +32,8 @@ export default function DashboardMetricCard({
     }, [num, decimals, isInView]);
 
     return (
-        <div className="flex size-[241px] items-center justify-center bg-gray-1 rounded-[20px]">
-            <div className="flex flex-col items-center justify-center gap-6">
+        <div className="flex w-full py-4 md:py-0 md:size-[241px] items-center justify-center lg:bg-gray-1 rounded-[20px]">
+            <div className="flex flex-col items-center justify-center gap-4 md:gap-6">
                 <p className="sub2_sb text-gray-8">{subheading}</p>
                 <p className="head1_sb text-orange-main">
                     <span ref={ref}></span>

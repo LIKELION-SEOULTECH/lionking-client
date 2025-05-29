@@ -10,7 +10,7 @@ export default function DashboardProfileCard({ member }: DashboardProfileCardPro
     // 원래 프로필카드 variant로 해야할거같은데... 디자인도 따로고 그냥 귀찮아서 만듦 ㅎㅎㅎ;;
 
     return (
-        <div className="w-full max-w-[241px] h-fit bg-gray-1 rounded-[20px] p-8">
+        <div className="w-full lg:max-w-[241px] h-fit lg:bg-gray-1 rounded-[20px] p-8">
             <div className="w-full flex flex-col items-center justify-center gap-4">
                 <div className="relative flex items-center justify-center rounded-full overflow-hidden size-[177px]">
                     <Image src="/static/images/placeholder.png" alt="Profile Image" fill />

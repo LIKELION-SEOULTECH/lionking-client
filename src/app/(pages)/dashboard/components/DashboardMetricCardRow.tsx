@@ -6,7 +6,7 @@ type DashboardMetricCardRowProps = {
 
 export default function DashboardMetricCardRow({ metrics }: DashboardMetricCardRowProps) {
     return (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-8">
             {metrics.map((metric, index) => (
                 <DashboardMetricCard
                     key={index}

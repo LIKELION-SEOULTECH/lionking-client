@@ -57,23 +57,36 @@ export default function DashboardPage() {
                         }}
                     />
 
-                    <div className="w-full flex flex-col items-start justify-start gap-2.5">
-                        <DashboardActionButton label="새 글 작성하기" />
-                        {/* <DashboardActionButton label="회원 관리" /> */}
-                    </div>
+                    <div className="w-full hidden lg:flex flex-col items-start justify-start gap-4">
+                        <div className="w-full flex flex-col items-start justify-start gap-2.5">
+                            <DashboardActionButton label="새 글 작성하기" />
+                            {/* <DashboardActionButton label="회원 관리" /> */}
+                        </div>
 
-                    <div className="w-full flex flex-col items-center justify-center">
-                        <button className="sub3_sb text-gray-4 underline hover:text-gray-5 transition-colors duration-200 cursor-pointer">
-                            아이디/비밀번호 변경
-                        </button>
+                        <div className="w-full flex flex-col items-center justify-center">
+                            <button className="sub3_sb text-gray-4 underline hover:text-gray-5 transition-colors duration-200 cursor-pointer">
+                                아이디/비밀번호 변경
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div className="w-full flex flex-col items-start justify-start gap-10 mt-8 md:mt-0">
+            <div className="w-full flex flex-col items-start justify-start gap-10 pb-16">
+                <div className="w-full lg:hidden flex flex-col items-start justify-start gap-2.5">
+                    <DashboardActionButton label="새 글 작성하기" />
+                    {/* <DashboardActionButton label="회원 관리" /> */}
+                </div>
+
                 <DashboardMetricCardRow metrics={mockMetrics} />
 
                 <DashboardPublishedBlogs publishedBlogs={mockPublishedBlogs} />
+
+                <div className="w-full lg:hidden flex flex-col items-center justify-center">
+                    <button className="sub3_sb text-gray-4 underline hover:text-gray-5 transition-colors duration-200 cursor-pointer">
+                        아이디/비밀번호 변경
+                    </button>
+                </div>
             </div>
         </div>
     );
