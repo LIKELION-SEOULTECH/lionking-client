@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Pretendard } from "@/fonts/loadFonts";
+import NextTopLoader from "nextjs-toploader";
 import WithMockServer from "@/mocks/msw/WithMockServer";
 
-// Components
-import Header from "@/components/Header";
+import Header from "@/components/ui/Header";
+import Footer from "@/components/ui/Footer";
+import { QueryProvider } from "./providers/QueryProvider";
 
 export default function RootLayout({
     children,
@@ -12,10 +15,14 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="ko">
-            <body className="max-w-6xl mx-auto px-4">
-                <Header />
-                <main role="main">{children}</main>
-                <WithMockServer />
+            <body className={`${Pretendard.className} mx-auto overflow-x-hidden`}>
+                <QueryProvider>
+                    <NextTopLoader color="#FF7710" showSpinner={false} height={1} zIndex={50000} />
+                    <Header />
+                    <main role="main">{children}</main>
+                    <Footer />
+                    <WithMockServer />
+                </QueryProvider>
             </body>
         </html>
     );

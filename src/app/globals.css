@@ -44,14 +44,14 @@
 
 :root {
     --radius: 0.625rem;
-    --background: oklch(1 0 0);
+    --background: var(--color-gray-8);
     --foreground: var(--color-primary);
     --card: var(--color-surface);
     --card-foreground: oklch(0.145 0 0);
     --popover: oklch(1 0 0);
     --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.205 0 0);
-    --primary-foreground: oklch(0.985 0 0);
+    --primary: var(--color-white);
+    --primary-foreground: var(--color-white);
     --secondary: var(--color-secondary);
     --secondary-foreground: oklch(0.205 0 0);
     --muted: oklch(0.97 0 0);

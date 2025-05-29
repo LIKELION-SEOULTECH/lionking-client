@@ -13,39 +13,6 @@
 
 <br/>
 
-## Workflow
-
-### Branch Naming
-`[type]/[issue-number]-[short-description]`
-
-> 예시:
-> - `feature/1-intro-layout`
-> - `bugfix/21-card-image-align`
-
-### Commit Message
-`[#issue-number] [Type]: Summary`
-
-> 예시:
-> - `[#2] UI: Build layout for Intro section`
-> - `[#16] SEO: Add Open Graph meta tags`
-
-### Pull Request
-
-> 예시:
-> - `[#1] Build Home Page`
-> - `[#2] Build Intro Section Layout`
-
-<br/>
-
-## 개발 서버 시작하기
-
-```bash
-pnpm install
-pnpm dev
-```
-
-<br/>
-
 ## Storybook
 
 [Storybook 가이드 >](https://github.com/LIKELION-SEOULTECH/lionking-client/tree/main/docs/storybook.md)
@@ -53,7 +20,7 @@ pnpm dev
 Storybook 배포 주소:
 |브랜치|주소|
 |---|---|
-|main|[TO BE DEPLOYED]()|
-|develop|[TO BE DEPLOYED]()|
+|main|[storybook](https://likelion-seoultech.github.io/lionking-client/storybook/)|
+|develop|[storybook-dev](https://likelion-seoultech.github.io/lionking-client/storybook-dev/)|
 
 <br/>

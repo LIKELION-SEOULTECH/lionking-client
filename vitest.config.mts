@@ -11,6 +11,8 @@ export default defineConfig({
         alias: {
             "@/assets/likelion_univ_orange.svg": "@/__mocks__/svgMock.ts",
             "@/assets/st.svg": "@/__mocks__/svgMock.ts",
+            "@/assets/st_type_logo.svg": "@/__mocks__/svgMock.ts",
+            "@/assets/profile_empty.svg": "@/__mocks__/svgMock.ts",
         },
     },
 });
