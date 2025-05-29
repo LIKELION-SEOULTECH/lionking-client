@@ -3,9 +3,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { PostPreviewMetadata } from "@/types";
 import { previewItemVariants, PostPreviewLayout, styleMap } from "./PostPreviewItemVariants";
+import KebabMenuDropdown from "../KebabMenuDropdown";
 
 export type PostPreviewItemProps = PostPreviewMetadata & {
     layout: PostPreviewLayout;
+    withAction?: boolean;
 };
 
 export default function PostPreviewItem({
@@ -18,6 +20,7 @@ export default function PostPreviewItem({
     authorId,
     imageUrl = "/static/images/placeholder.png",
     postHref = "",
+    withAction = false,
 }: PostPreviewItemProps) {
     const styles = styleMap[layout];
 
@@ -55,8 +58,27 @@ export default function PostPreviewItem({
                         isVerticalCompactDark && "px-4.5 pb-4"
                     )}
                 >
-                    <div className="flex flex-col gap-2">
-                        {styles.partPosition == "TOP" && <p className={styles.part}>{part}</p>}
+                    <div className="w-full flex flex-col gap-2">
+                        {styles.partPosition == "TOP" && (
+                            <div className="w-full flex items-center justify-between">
+                                <p className={styles.part}>{part}</p>
+
+                                {withAction && (
+                                    <KebabMenuDropdown
+                                        items={[
+                                            {
+                                                label: "수정하기",
+                                                onClick: () => alert("수정!"),
+                                            },
+                                            {
+                                                label: "삭제하기",
+                                                onClick: () => alert("삭제!"),
+                                            },
+                                        ]}
+                                    />
+                                )}
+                            </div>
+                        )}
                         <div className="flex flex-col gap-4">
                             <Link href={postHref} className={cn(styles.title, "hover:underline")}>
                                 <p className={styles.title}>{title}</p>

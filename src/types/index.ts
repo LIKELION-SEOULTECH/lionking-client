@@ -14,7 +14,7 @@ export type PostPreviewMetadata = {
     description: string;
     date: string;
     authorName: string;
-    authorId: string;
+    authorId: string | number;
     imageUrl?: string;
     postHref?: string;
 };
