@@ -60,18 +60,16 @@ export default function ProfileButton() {
                         className="absolute right-0 top-full mt-7 min-w-[241px]"
                     >
                         <ProfileDropdown
-                            name="김사자"
-                            role="운영진"
-                            imageSrc="/static/images/placeholder.png"
+                            member={{
+                                id: 1,
+                                name: "김먀옹",
+                                major: "인공지능학과",
+                                position: "프론트엔드",
+                                role: "운영진",
+                                userTags: ["프론트엔드", "운영진"],
+                            }}
                             onClicks={{
-                                myPage: () => {
-                                    console.log("마이페이지");
-                                    setIsOpen(false);
-                                },
-                                logout: () => {
-                                    console.log("로그아웃");
-                                    setIsOpen(false);
-                                },
+                                signout: () => alert("ㅂ2"),
                             }}
                         />
                     </motion.div>
