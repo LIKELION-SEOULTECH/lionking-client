@@ -1,4 +1,6 @@
+// NewsCards.tsx
 import Image from "next/image";
+import Link from "next/link";
 import { News } from "@/types";
 
 interface NewsCardProps {
@@ -7,12 +9,17 @@ interface NewsCardProps {
 
 export default function NewsCards({ item }: NewsCardProps) {
     return (
-        <div className="rounded-xl overflow-hidden bg-[#1c1c1c] text-white h-full flex flex-col">
+        <Link
+            href={`/gallery/${item.id}`}
+            className="block h-full rounded-xl overflow-hidden bg-[#111] text-white flex flex-col cursor-pointer"
+        >
+            {/* 썸네일 */}
             <div className="relative h-[320px] w-full">
                 <Image src={item.thumbnailUrl} alt={item.title} fill className="object-cover" />
             </div>
 
-            <div className="p-4 px-4 pt-4 pb-2 flex flex-col flex-1">
+            {/* 제목 · 날짜 · 설명 */}
+            <div className="p-4 flex flex-col flex-1">
                 <div className="flex items-center justify-between mb-6">
                     <h3 className="text-2xl font-semibold truncate">{item.title}</h3>
                     <span className="px-3 py-1 bg-gray-700/50 text-sm font-medium rounded-full text-white/60 whitespace-nowrap">
@@ -24,6 +31,6 @@ export default function NewsCards({ item }: NewsCardProps) {
                     {item.description}
                 </p>
             </div>
-        </div>
+        </Link>
     );
 }
