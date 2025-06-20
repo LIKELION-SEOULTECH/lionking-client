@@ -1,5 +1,5 @@
 import Image from "next/image";
-import type { ProfileDropdownProps } from "./types";
+import type { ProfileDropdownProps } from "@/components/ui/Header/types";
 import { ProfileDropdownActionButtonGroup } from "./ProfileDropdownActionButton";
 import { profileDropdownActionMap } from "./profileDropdownActionMap";
 

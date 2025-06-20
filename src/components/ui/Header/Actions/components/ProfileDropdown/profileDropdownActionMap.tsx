@@ -1,5 +1,8 @@
 import type { Member } from "@/types";
-import type { ProfileDropdownActionButtonProps, ProfileDropdownProps } from "./types";
+import type {
+    ProfileDropdownActionButtonProps,
+    ProfileDropdownProps,
+} from "@/components/ui/Header/types";
 
 import AddGallerySVG from "@/assets/icons/profile_dropdowns/add_gallery.svg";
 import DashboardSVG from "@/assets/icons/profile_dropdowns/dashboard.svg";
