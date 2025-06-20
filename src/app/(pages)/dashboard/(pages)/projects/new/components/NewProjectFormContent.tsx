@@ -1,0 +1,181 @@
+"use client";
+
+import { useEffect } from "react";
+import { Form, useFormikContext } from "formik";
+import { NewProjectForm as F } from "./NewProjectForm";
+import type { ProjectRecap } from "../types";
+import ImageDropZone from "./ImageDropZone";
+import MemberSelector from "./MemberSelector";
+
+export default function ProjectFormContent() {
+    const _currentYear = new Date().getFullYear();
+    const _startYear = 2024;
+    const yearOptions = Array.from({ length: _currentYear - _startYear + 1 }, (_, i) => {
+        const label = `${12 + i}기`;
+        return {
+            value: label,
+            label,
+        };
+    });
+
+    const { values, setFieldValue, isValid, isSubmitting, dirty } = useFormikContext<{
+        projectName: string;
+        projectType: string;
+        projectDescription: string;
+        projectYear: string;
+        projectVideo: string;
+        projectMembers: Array<{
+            id: string;
+            name: string;
+            part: string;
+            profileImage?: string;
+        }>;
+        projectThumbnail: string;
+        projectLandingImages: string[];
+        projectRecaps: ProjectRecap[];
+    }>();
+
+    useEffect(() => {
+        const currentRecaps = values.projectRecaps;
+        const members = values.projectMembers;
+
+        const recapMap = new Map(currentRecaps.map((recap) => [recap.author.id, recap]));
+
+        const newRecaps = members.map((member) => {
+            const existingRecap = recapMap.get(member.id);
+            return (
+                existingRecap || {
+                    author: {
+                        id: member.id,
+                        part: member.part,
+                        name: member.name,
+                    },
+                    content: "",
+                }
+            );
+        });
+
+        if (JSON.stringify(newRecaps) !== JSON.stringify(currentRecaps)) {
+            setFieldValue("projectRecaps", newRecaps);
+        }
+    }, [values.projectMembers, values.projectRecaps, setFieldValue]);
+
+    return (
+        <Form className="flex flex-col gap-12">
+            <F.FormSection title="프로젝트명" isRequired>
+                <F.Input
+                    name="projectName"
+                    placeholder="제목을 입력하세요"
+                    className="w-full"
+                    limit={30}
+                />
+            </F.FormSection>
+
+            <F.FormSection title="활동 유형 선택" isRequired>
+                <F.ProjectTypeRadioGroup
+                    name="projectType"
+                    options={[
+                        { label: "아이디어톤", value: "아이디어톤" },
+                        { label: "중앙 해커톤", value: "중앙 해커톤" },
+                        { label: "연합 해커톤", value: "연합 해커톤" },
+                        { label: "장기 프로젝트", value: "장기 프로젝트" },
+                        { label: "기타", value: "기타" },
+                    ]}
+                />
+            </F.FormSection>
+
+            <F.FormSection title="활동 기수 선택" isRequired>
+                <F.Select
+                    name="projectYear"
+                    options={[{ value: "", label: "기수 선택" }, ...yearOptions]}
+                />
+            </F.FormSection>
+
+            <F.FormSection title="프로젝트 소개" isRequired>
+                <F.TextArea
+                    name="projectDescription"
+                    placeholder="내용을 입력하세요"
+                    className="w-full"
+                    limit={300}
+                />
+            </F.FormSection>
+
+            <F.FormSection title="시연 영상 링크">
+                <F.Input name="projectVideo" placeholder="시연 영상 링크" className="w-full" />
+            </F.FormSection>
+
+            <F.FormSection title="참여 멤버" isRequired>
+                <MemberSelector name="projectMembers" />
+            </F.FormSection>
+
+            <F.FormSection title="썸네일" description="권장 이미지 크기: 1920 x 1080 px" isRequired>
+                <ImageDropZone name="projectThumbnail" multiple={false} />
+            </F.FormSection>
+
+            <F.FormSection
+                title="랜딩 이미지"
+                description="최대 20장까지 업로드할 수 있습니다."
+                isRequired
+            >
+                <ImageDropZone name="projectLandingImages" multiple={true} maxFiles={20} />
+            </F.FormSection>
+
+            {values.projectRecaps.length > 0 && (
+                <F.FormSection title="프로젝트 회고" isRequired>
+                    <div className="w-full flex flex-col gap-8">
+                        {values.projectRecaps.map((recap, index) => (
+                            <div key={recap.author.id} className="w-full">
+                                <div className="mb-2 flex gap-2 body3_m">
+                                    <span className="text-orange-main">{recap.author.part}</span>
+                                    <span className="text-black">{recap.author.name}</span>
+                                </div>
+                                <F.TextArea
+                                    name={`projectRecaps[${index}].content`}
+                                    placeholder="내용을 입력하세요"
+                                    className="w-full"
+                                    limit={300}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                </F.FormSection>
+            )}
+
+            <div className="w-full flex justify-center mt-50">
+                <button
+                    type="submit"
+                    disabled={!isValid || isSubmitting || !dirty}
+                    className="py-3 px-22.5 bg-orange-main sub3_sb text-white rounded-[8px] hover:bg-orange-main/85 transition-colors duration-200 cursor-pointer disabled:bg-gray-3 disabled:cursor-not-allowed disabled:hover:bg-gray-3 flex items-center justify-center gap-2 min-w-[120px] h-[48px]"
+                >
+                    {isSubmitting ? (
+                        <>
+                            <svg
+                                className="animate-spin h-5 w-5 text-white"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                            >
+                                <circle
+                                    className="opacity-25"
+                                    cx="12"
+                                    cy="12"
+                                    r="10"
+                                    stroke="currentColor"
+                                    strokeWidth="4"
+                                />
+                                <path
+                                    className="opacity-75"
+                                    fill="currentColor"
+                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                />
+                            </svg>
+                            <span>등록 중...</span>
+                        </>
+                    ) : (
+                        <span className="inline-block w-[72px] text-center">등록하기</span>
+                    )}
+                </button>
+            </div>
+        </Form>
+    );
+}
