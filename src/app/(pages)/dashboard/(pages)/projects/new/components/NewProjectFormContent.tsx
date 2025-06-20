@@ -109,7 +109,7 @@ export default function ProjectFormContent() {
             </F.FormSection>
 
             <F.FormSection title="썸네일" description="권장 이미지 크기: 1920 x 1080 px" isRequired>
-                <ImageDropZone name="projectThumbnail" multiple={false} dimensions="1920 * 1080" />
+                <ImageDropZone name="projectThumbnail" multiple={false} />
             </F.FormSection>
 
             <F.FormSection
@@ -117,12 +117,7 @@ export default function ProjectFormContent() {
                 description="최대 20장까지 업로드할 수 있습니다."
                 isRequired
             >
-                <ImageDropZone
-                    name="projectLandingImages"
-                    multiple={true}
-                    maxFiles={20}
-                    dimensions="1920 * 1080"
-                />
+                <ImageDropZone name="projectLandingImages" multiple={true} maxFiles={20} />
             </F.FormSection>
 
             {values.projectRecaps.length > 0 && (

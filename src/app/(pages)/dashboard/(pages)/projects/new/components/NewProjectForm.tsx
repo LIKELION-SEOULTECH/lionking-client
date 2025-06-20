@@ -92,12 +92,12 @@ function ProjectTypeRadioGroup({
                                 className="hidden"
                             />
                             <div
-                                className={`flex items-center justify-center px-3 py-2 gap-1 body4_m rounded-full transition-colors duration-200 whitespace-nowrap min-w-fit
-                                ${
+                                className={cn(
+                                    "flex items-center justify-center px-3 py-2 gap-1 body4_m rounded-full transition-colors duration-200 whitespace-nowrap min-w-fit",
                                     isChecked
                                         ? "bg-orange-light-1 border border-orange-main text-orange-main"
                                         : "bg-gray-1 border border-gray-3 text-gray-3"
-                                }`}
+                                )}
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"

@@ -9,14 +9,12 @@ export default function ImageDropZone({
     multiple = false,
     maxFiles = 1,
     accept = "image/*",
-    dimensions = "0000 * 0000",
     defaultLayout = "grid",
 }: {
     name: string;
     multiple?: boolean;
     maxFiles?: number;
     accept?: string;
-    dimensions?: string;
     defaultLayout?: LayoutMode;
 }) {
     const [field, meta, helpers] = useField<string | string[]>(name);
@@ -24,11 +22,12 @@ export default function ImageDropZone({
     const [layout, setLayout] = useState<LayoutMode>(defaultLayout);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    const images = multiple
-        ? (field.value as string[]) || []
-        : field.value
-        ? [field.value as string]
-        : [];
+    let images: string[] = [];
+    if (multiple) {
+        images = (field.value as string[]) || [];
+    } else if (field.value) {
+        images = [field.value as string];
+    }
 
     const handleDrop = useCallback((e: React.DragEvent) => {
         e.preventDefault();
