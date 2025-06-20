@@ -27,30 +27,34 @@ export default function DashboardViewAllPublishedPage() {
     const publishedBlogs = mockPublishedBlogs;
 
     return (
-        <>
-            <h1 className="head3_sb text-black w-full">내 블로그 관리</h1>
+        <div className="bg-white text-black overflow-hidden">
+            <div className="w-full max-w-[1100px] mx-auto px-6 lg:px-4 xl:px-0 pt-30 pb-32">
+                <div className="flex flex-col items-center justify-center w-full gap-12.5">
+                    <h1 className="head3_sb text-black w-full">내 블로그 관리</h1>
 
-            <div className="w-full flex flex-col items-center justify-center gap-9">
-                {publishedBlogs && publishedBlogs.length > 0 ? (
-                    publishedBlogs.map((blog, idx) => (
-                        <PostPreviewItem
-                            key={idx}
-                            layout="horizontal_fill_small"
-                            part={blog.part}
-                            title={blog.title}
-                            description={blog.description}
-                            date={blog.date}
-                            authorId={blog.authorId}
-                            authorName={blog.authorName}
-                            withAction
-                        />
-                    ))
-                ) : (
-                    <div className="w-full flex items-center justify-center h-[50vh]">
-                        <EmptyViews for="blogs" />
+                    <div className="w-full flex flex-col items-center justify-center gap-9">
+                        {publishedBlogs && publishedBlogs.length > 0 ? (
+                            publishedBlogs.map((blog, idx) => (
+                                <PostPreviewItem
+                                    key={idx}
+                                    layout="horizontal_fill_small"
+                                    part={blog.part}
+                                    title={blog.title}
+                                    description={blog.description}
+                                    date={blog.date}
+                                    authorId={blog.authorId}
+                                    authorName={blog.authorName}
+                                    withAction
+                                />
+                            ))
+                        ) : (
+                            <div className="w-full flex items-center justify-center h-[50vh]">
+                                <EmptyViews for="blogs" />
+                            </div>
+                        )}
                     </div>
-                )}
+                </div>
             </div>
-        </>
+        </div>
     );
 }
