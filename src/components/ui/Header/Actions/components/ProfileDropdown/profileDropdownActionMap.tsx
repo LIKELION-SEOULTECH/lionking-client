@@ -20,12 +20,12 @@ export const profileDropdownActionMap: Record<Role, GroupedActionBuilder> = {
             {
                 label: "프로젝트 등록",
                 icon: <NewProjectSVG />,
-                href: "/dashboard/project/new",
+                href: "/dashboard/projects/new",
             },
             {
                 label: "블로그 작성",
                 icon: <WriteBlogSVG />,
-                href: "/dashboard/new",
+                href: "/dashboard/blog/new",
             },
         ],
         [
