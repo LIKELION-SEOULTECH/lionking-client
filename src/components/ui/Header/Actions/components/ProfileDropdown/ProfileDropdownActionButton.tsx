@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import type { ProfileDropdownActionButtonProps } from "./types";
+import type { ProfileDropdownActionButtonProps } from "@/components/ui/Header/types";
 
 export function ProfileDropdownActionButtonGroup({
     buttonGroups,

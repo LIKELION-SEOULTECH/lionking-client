@@ -6,10 +6,12 @@ import GithubIcon from "@/assets/btn_github.svg";
 export default function Footer() {
     return (
         <footer className="w-screen flex items-center justify-center bg-gray-6 text-gray-1 h-[382px] py-[78px]">
-            <div className="flex items-center justify-between w-full max-w-[1200px] h-full">
+            <div className="flex items-center justify-between w-full max-w-[1200px] h-full px-6 lg:px-0">
                 <FooterLeft />
 
-                <FooterRight />
+                <div className="hidden lg:block">
+                    <FooterRight />
+                </div>
             </div>
         </footer>
     );
@@ -18,7 +20,7 @@ export default function Footer() {
 function FooterLeft() {
     return (
         <div className="flex flex-col items-start justify-between h-full">
-            <TypeLogo heightPx={28} />
+            <TypeLogo heightPx={24} />
 
             <p className="body5_r">
                 서울과학기술대학교 멋쟁이사자처럼
@@ -30,7 +32,7 @@ function FooterLeft() {
 
 function FooterRight() {
     return (
-        <div className="flex flex-col items-start justify-between h-full">
+        <div className="flex flex-col items-start justify-between h-full gap-18">
             <div className="flex flex-col items-start justify-start gap-3">
                 <p className="body3_r">FAMILY SITE</p>
                 <ul className="flex flex-col items-start justify-start gap-3">
