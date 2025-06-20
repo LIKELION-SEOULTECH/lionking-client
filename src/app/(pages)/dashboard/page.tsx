@@ -3,6 +3,7 @@ import DashboardMetricCardRow from "./components/DashboardMetricCardRow";
 import DashboardProfileCard from "./components/DashboardProfileCard";
 import DashboardPublishedBlogs from "./components/DashboardPublishedBlogs";
 import DashboardActionButton from "./components/DashboardActionButton";
+import Link from "next/link";
 
 const mockMetrics = [
     {
@@ -64,7 +65,9 @@ export default function DashboardPage() {
                                 <div className="w-full hidden lg:flex flex-col items-start justify-start gap-4">
                                     <div className="w-full flex flex-col items-start justify-start gap-2.5">
                                         <DashboardActionButton label="새 글 작성하기" />
-                                        {/* <DashboardActionButton label="회원 관리" /> */}
+                                        <Link className="w-full" href="/dashboard/settings/profile">
+                                            <DashboardActionButton label="프로필 수정하기" />
+                                        </Link>
                                     </div>
 
                                     <div className="w-full flex flex-col items-center justify-center">
@@ -79,7 +82,10 @@ export default function DashboardPage() {
                         <div className="w-full flex flex-col items-start justify-start gap-10">
                             <div className="w-full lg:hidden flex flex-col items-start justify-start gap-2.5">
                                 <DashboardActionButton label="새 글 작성하기" />
-                                {/* <DashboardActionButton label="회원 관리" /> */}
+
+                                <Link className="w-full" href="/dashboard/settings/profile">
+                                    <DashboardActionButton label="프로필 수정하기" />
+                                </Link>
                             </div>
 
                             <DashboardMetricCardRow metrics={mockMetrics} />
