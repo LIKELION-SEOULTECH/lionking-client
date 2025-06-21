@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback } from "react";
 import { useField, useFormikContext } from "formik";
-import { Upload, X, Grid3X3, Rows } from "lucide-react";
+import { Upload, X, Grid3X3, Rows, GripVertical } from "lucide-react";
 
 type LayoutMode = "full" | "grid";
 
@@ -22,6 +22,8 @@ export default function ImageDropZone({
     const [isDragging, setIsDragging] = useState(false);
     const [layout, setLayout] = useState<LayoutMode>(defaultLayout);
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+    const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
 
     let images: string[] = [];
     if (multiple) {
@@ -70,9 +72,10 @@ export default function ImageDropZone({
         (e: React.DragEvent) => {
             e.preventDefault();
             setIsDragging(false);
-
-            const files = Array.from(e.dataTransfer.files);
-            handleFiles(files);
+            if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                const files = Array.from(e.dataTransfer.files);
+                handleFiles(files);
+            }
         },
         [handleFiles]
     );
@@ -87,6 +90,36 @@ export default function ImageDropZone({
         }
     };
 
+    const handleImageDragStart = (index: number) => {
+        setDraggedIndex(index);
+    };
+
+    const handleImageDragOver = (e: React.DragEvent, index: number) => {
+        e.preventDefault();
+        if (draggedIndex === null) return;
+        setDragOverIndex(index);
+    };
+
+    const handleImageDragEnd = () => {
+        if (draggedIndex !== null && dragOverIndex !== null && draggedIndex !== dragOverIndex) {
+            const newImages = [...(field.value as string[])];
+            const draggedImage = newImages[draggedIndex];
+
+            newImages.splice(draggedIndex, 1);
+
+            if (dragOverIndex > draggedIndex) {
+                newImages.splice(dragOverIndex - 1, 0, draggedImage);
+            } else {
+                newImages.splice(dragOverIndex, 0, draggedImage);
+            }
+
+            helpers.setValue(newImages);
+        }
+
+        setDraggedIndex(null);
+        setDragOverIndex(null);
+    };
+
     const canAddMore = multiple ? images.length < maxFiles : images.length === 0;
 
     return (
@@ -98,9 +131,15 @@ export default function ImageDropZone({
                     }`}
                     onDragOver={(e) => {
                         e.preventDefault();
-                        setIsDragging(true);
+                        if (draggedIndex === null) {
+                            setIsDragging(true);
+                        }
                     }}
-                    onDragLeave={() => setIsDragging(false)}
+                    onDragLeave={() => {
+                        if (draggedIndex === null) {
+                            setIsDragging(false);
+                        }
+                    }}
                     onDrop={handleDrop}
                     onClick={() => fileInputRef.current?.click()}
                 >
@@ -132,31 +171,37 @@ export default function ImageDropZone({
             {images.length > 0 && (
                 <>
                     {multiple && images.length > 1 && (
-                        <div className="flex items-center gap-2 justify-end">
-                            <button
-                                type="button"
-                                onClick={() => setLayout("full")}
-                                className={`p-2 rounded-lg transition-colors cursor-pointer ${
-                                    layout === "full"
-                                        ? "bg-gray-200 text-gray-700"
-                                        : "text-gray-400 hover:text-gray-600"
-                                }`}
-                                title="Full width view"
-                            >
-                                <Rows className="w-4 h-4" />
-                            </button>
-                            <button
-                                type="button"
-                                onClick={() => setLayout("grid")}
-                                className={`p-2 rounded-lg transition-colors cursor-pointer ${
-                                    layout === "grid"
-                                        ? "bg-gray-200 text-gray-700"
-                                        : "text-gray-400 hover:text-gray-600"
-                                }`}
-                                title="Grid view"
-                            >
-                                <Grid3X3 className="w-4 h-4" />
-                            </button>
+                        <div className="flex items-center justify-between">
+                            <p className="text-sm text-gray-500 flex items-center gap-1">
+                                <GripVertical className="w-4 h-4" />
+                                드래그하여 순서 변경
+                            </p>
+                            <div className="flex items-center gap-2">
+                                <button
+                                    type="button"
+                                    onClick={() => setLayout("full")}
+                                    className={`p-2 rounded-lg transition-colors cursor-pointer ${
+                                        layout === "full"
+                                            ? "bg-gray-200 text-gray-700"
+                                            : "text-gray-400 hover:text-gray-600"
+                                    }`}
+                                    title="Full width view"
+                                >
+                                    <Rows className="w-4 h-4" />
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => setLayout("grid")}
+                                    className={`p-2 rounded-lg transition-colors cursor-pointer ${
+                                        layout === "grid"
+                                            ? "bg-gray-200 text-gray-700"
+                                            : "text-gray-400 hover:text-gray-600"
+                                    }`}
+                                    title="Grid view"
+                                >
+                                    <Grid3X3 className="w-4 h-4" />
+                                </button>
+                            </div>
                         </div>
                     )}
 
@@ -165,15 +210,27 @@ export default function ImageDropZone({
                             {images.map((image, index) => (
                                 <div
                                     key={index}
-                                    className="relative group overflow-hidden"
+                                    className={`relative group overflow-hidden ${
+                                        multiple ? "cursor-move" : ""
+                                    } ${
+                                        dragOverIndex === index && draggedIndex !== index
+                                            ? "ring-2 ring-orange-main ring-offset-2"
+                                            : ""
+                                    }`}
                                     style={{
                                         marginBottom: index < images.length - 1 ? "1px" : "0",
+                                        opacity: draggedIndex === index ? 0.5 : 1,
                                     }}
+                                    draggable={multiple}
+                                    onDragStart={() => handleImageDragStart(index)}
+                                    onDragOver={(e) => handleImageDragOver(e, index)}
+                                    onDragEnd={handleImageDragEnd}
                                 >
                                     <img
                                         src={image}
                                         alt={`Preview ${index + 1}`}
                                         className="w-full h-auto object-cover"
+                                        draggable={false}
                                     />
                                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-all duration-300" />
                                     <button
@@ -188,6 +245,13 @@ export default function ImageDropZone({
                                             {index + 1} / {images.length}
                                         </p>
                                     </div>
+                                    {multiple && (
+                                        <div className="absolute top-4 left-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                            <div className="text-white bg-black/50 backdrop-blur-sm p-2 rounded-full">
+                                                <GripVertical className="w-5 h-5" />
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             ))}
                         </div>
@@ -198,12 +262,26 @@ export default function ImageDropZone({
                             {images.map((image, index) => (
                                 <div
                                     key={index}
-                                    className="relative group aspect-square overflow-hidden rounded-[8px]"
+                                    className={`relative group aspect-square overflow-hidden rounded-[8px] ${
+                                        multiple ? "cursor-move" : ""
+                                    } ${
+                                        dragOverIndex === index && draggedIndex !== index
+                                            ? "ring-2 ring-orange-main"
+                                            : ""
+                                    }`}
+                                    style={{
+                                        opacity: draggedIndex === index ? 0.5 : 1,
+                                    }}
+                                    draggable={multiple}
+                                    onDragStart={() => handleImageDragStart(index)}
+                                    onDragOver={(e) => handleImageDragOver(e, index)}
+                                    onDragEnd={handleImageDragEnd}
                                 >
                                     <img
                                         src={image}
                                         alt={`Preview ${index + 1}`}
                                         className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.05]"
+                                        draggable={false}
                                     />
                                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-all duration-300" />
                                     <button
@@ -218,6 +296,13 @@ export default function ImageDropZone({
                                             {index + 1} / {images.length}
                                         </p>
                                     </div>
+                                    {multiple && (
+                                        <div className="absolute top-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                            <div className="text-white bg-black/50 backdrop-blur-sm p-1.5 rounded-full">
+                                                <GripVertical className="w-4 h-4" />
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             ))}
                         </div>
