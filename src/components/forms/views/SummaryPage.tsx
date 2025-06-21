@@ -1,12 +1,11 @@
 import GenericFormPage from "../common/GenericFormPage";
-import { blogSummaryEditFormConfig } from "../configs/blogSummaryEditFormConfig";
 import { GenericFormPageConfig } from "../types/FormConfig.types";
 import * as Yup from "yup";
 import Icons from "@/assets/banner/archive/blog/icons.svg";
 
-type SummaryPageProps = {
-    content: string;
-};
+// type SummaryPageProps = {
+//     content: string;
+// };
 
 export default function SummaryPage() {
     return (
@@ -16,20 +15,20 @@ export default function SummaryPage() {
     );
 }
 
-function Pending() {
-    return (
-        <div className="w-full h-[90vh] bg-white flex items-center justify-center">
-            <div className="flex flex-col items-center justify-center gap-8">
-                <div className="flex flex-col items-center justify-center gap-3">
-                    <div className="size-30 rounded-full bg-orange-main" />
-                    <h1 className="body1_sb text-gray-8">블로그 내용을 분석하고 있어요</h1>
-                </div>
+// function Pending() {
+//     return (
+//         <div className="w-full h-[90vh] bg-white flex items-center justify-center">
+//             <div className="flex flex-col items-center justify-center gap-8">
+//                 <div className="flex flex-col items-center justify-center gap-3">
+//                     <div className="size-30 rounded-full bg-orange-main" />
+//                     <h1 className="body1_sb text-gray-8">블로그 내용을 분석하고 있어요</h1>
+//                 </div>
 
-                <p>멋사 AI가 블로그 내용을 빠르게 요약 정리 해드려요</p>
-            </div>
-        </div>
-    );
-}
+//                 <p>멋사 AI가 블로그 내용을 빠르게 요약 정리 해드려요</p>
+//             </div>
+//         </div>
+//     );
+// }
 
 const blogSummaryEditSchema = Yup.object({
     goal: Yup.string().required("내용을 입력해주세요."),
