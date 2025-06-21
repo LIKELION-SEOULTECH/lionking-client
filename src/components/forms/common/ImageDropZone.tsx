@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback } from "react";
-import { useField } from "formik";
+import { useField, useFormikContext } from "formik";
 import { Upload, X, Grid3X3, Rows } from "lucide-react";
 
 type LayoutMode = "full" | "grid";
@@ -18,6 +18,7 @@ export default function ImageDropZone({
     defaultLayout?: LayoutMode;
 }) {
     const [field, meta, helpers] = useField<string | string[]>(name);
+    const { getFieldProps } = useFormikContext();
     const [isDragging, setIsDragging] = useState(false);
     const [layout, setLayout] = useState<LayoutMode>(defaultLayout);
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -29,41 +30,52 @@ export default function ImageDropZone({
         images = [field.value as string];
     }
 
-    const handleDrop = useCallback((e: React.DragEvent) => {
-        e.preventDefault();
-        setIsDragging(false);
+    const handleFiles = useCallback(
+        (files: File[]) => {
+            const imageFiles = files.filter((file) => file.type.startsWith("image/"));
 
-        const files = Array.from(e.dataTransfer.files);
-        handleFiles(files);
-    }, []);
+            if (!multiple && imageFiles.length > 0) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    helpers.setValue(e.target?.result as string);
+                };
+                reader.readAsDataURL(imageFiles[0]);
+            } else if (multiple) {
+                const currentFieldProps = getFieldProps(name);
+                const currentImages = (currentFieldProps.value as string[]) || [];
+                const remainingSlots = maxFiles - currentImages.length;
+                const filesToProcess = imageFiles.slice(0, remainingSlots);
 
-    const handleFiles = (files: File[]) => {
-        const imageFiles = files.filter((file) => file.type.startsWith("image/"));
+                if (filesToProcess.length === 0) return;
 
-        if (!multiple && imageFiles.length > 0) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                helpers.setValue(e.target?.result as string);
-            };
-            reader.readAsDataURL(imageFiles[0]);
-        } else if (multiple) {
-            const currentImages = (field.value as string[]) || [];
-            const remainingSlots = maxFiles - currentImages.length;
-            const filesToProcess = imageFiles.slice(0, remainingSlots);
+                Promise.all(
+                    filesToProcess.map((file) => {
+                        return new Promise<string>((resolve) => {
+                            const reader = new FileReader();
+                            reader.onload = (e) => resolve(e.target?.result as string);
+                            reader.readAsDataURL(file);
+                        });
+                    })
+                ).then((newImages) => {
+                    const latestFieldProps = getFieldProps(name);
+                    const latestImages = (latestFieldProps.value as string[]) || [];
+                    helpers.setValue([...latestImages, ...newImages]);
+                });
+            }
+        },
+        [helpers, maxFiles, multiple, getFieldProps, name]
+    );
 
-            Promise.all(
-                filesToProcess.map((file) => {
-                    return new Promise<string>((resolve) => {
-                        const reader = new FileReader();
-                        reader.onload = (e) => resolve(e.target?.result as string);
-                        reader.readAsDataURL(file);
-                    });
-                })
-            ).then((newImages) => {
-                helpers.setValue([...currentImages, ...newImages]);
-            });
-        }
-    };
+    const handleDrop = useCallback(
+        (e: React.DragEvent) => {
+            e.preventDefault();
+            setIsDragging(false);
+
+            const files = Array.from(e.dataTransfer.files);
+            handleFiles(files);
+        },
+        [handleFiles]
+    );
 
     const removeImage = (index: number) => {
         if (multiple) {
