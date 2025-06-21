@@ -10,14 +10,14 @@ export type FieldType =
     | "imageDropzone"
     | "memberSelector";
 
-export interface FormFieldConfig {
+export interface FormFieldConfig<TField = unknown> {
     name: string;
     type: FieldType;
     label: string;
     description?: string;
     placeholder?: string;
     required?: boolean;
-    validation?: Yup.Schema<any>;
+    validation?: Yup.Schema<TField>;
     limit?: number;
     options?: { label: string; value: string }[];
     customComponent?: ReactNode;
@@ -27,17 +27,17 @@ export interface FormFieldConfig {
     defaultLayout?: "full" | "grid";
 }
 
-export interface FormSectionConfig {
+export interface FormSectionConfig<V extends Record<string, unknown>> {
     title: string;
     description?: string;
-    fields: FormFieldConfig[];
+    fields: FormFieldConfig<V[keyof V]>[];
 }
 
-export interface FormConfig {
-    sections: FormSectionConfig[];
-    initialValues: Record<string, any>;
-    validationSchema?: Yup.ObjectSchema<any>;
-    onSubmit: (values: any) => Promise<void> | void;
+export interface FormConfig<V extends Record<string, unknown>> {
+    sections: FormSectionConfig<V>[];
+    initialValues: V;
+    validationSchema?: Yup.ObjectSchema<V>;
+    onSubmit: (values: V) => Promise<void> | void;
     submitButtonText?: string;
     successConfig?: {
         title: string;
@@ -46,10 +46,10 @@ export interface FormConfig {
     };
 }
 
-export interface GenericFormPageConfig {
+export interface GenericFormPageConfig<V extends Record<string, unknown>> {
     banner: {
         title: string;
         icon?: ReactNode;
     };
-    form: FormConfig;
+    form: FormConfig<V>;
 }
