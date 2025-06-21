@@ -2,20 +2,22 @@
 
 import { useEffect } from "react";
 import { Form, useFormikContext } from "formik";
-import { NewProjectForm as F } from "./NewProjectForm";
-import type { ProjectRecap } from "../types";
-import ImageDropZone from "./ImageDropZone";
-import MemberSelector from "./MemberSelector";
+import { FormSection, Input, TextArea, Select, RadioGroup } from "../common/FormComponents";
+import ImageDropZone from "../common/ImageDropZone";
+import MemberSelector from "../common/MemberSelector";
+import type { Member } from "@/types";
 
-export default function ProjectFormContent() {
+type ProjectRecap = {
+    author: Member;
+    content: string;
+};
+
+export default function ProjectFormWithRecaps() {
     const _currentYear = new Date().getFullYear();
     const _startYear = 2024;
     const yearOptions = Array.from({ length: _currentYear - _startYear + 1 }, (_, i) => {
         const label = `${12 + i}기`;
-        return {
-            value: label,
-            label,
-        };
+        return { value: label, label };
     });
 
     const { values, setFieldValue, isValid, isSubmitting, dirty } = useFormikContext<{
@@ -24,12 +26,7 @@ export default function ProjectFormContent() {
         projectDescription: string;
         projectYear: string;
         projectVideo: string;
-        projectMembers: Array<{
-            id: string;
-            name: string;
-            part: string;
-            profileImage?: string;
-        }>;
+        projectMembers: Member[];
         projectThumbnail: string;
         projectLandingImages: string[];
         projectRecaps: ProjectRecap[];
@@ -47,7 +44,7 @@ export default function ProjectFormContent() {
                 existingRecap || {
                     author: {
                         id: member.id,
-                        part: member.part,
+                        part: member.position,
                         name: member.name,
                     },
                     content: "",
@@ -62,17 +59,17 @@ export default function ProjectFormContent() {
 
     return (
         <Form className="flex flex-col gap-12">
-            <F.FormSection title="프로젝트명" isRequired>
-                <F.Input
+            <FormSection title="프로젝트명" isRequired>
+                <Input
                     name="projectName"
                     placeholder="제목을 입력하세요"
                     className="w-full"
                     limit={30}
                 />
-            </F.FormSection>
+            </FormSection>
 
-            <F.FormSection title="활동 유형 선택" isRequired>
-                <F.ProjectTypeRadioGroup
+            <FormSection title="활동 유형 선택" isRequired>
+                <RadioGroup
                     name="projectType"
                     options={[
                         { label: "아이디어톤", value: "아이디어톤" },
@@ -82,54 +79,56 @@ export default function ProjectFormContent() {
                         { label: "기타", value: "기타" },
                     ]}
                 />
-            </F.FormSection>
+            </FormSection>
 
-            <F.FormSection title="활동 기수 선택" isRequired>
-                <F.Select
+            <FormSection title="활동 기수 선택" isRequired>
+                <Select
                     name="projectYear"
                     options={[{ value: "", label: "기수 선택" }, ...yearOptions]}
                 />
-            </F.FormSection>
+            </FormSection>
 
-            <F.FormSection title="프로젝트 소개" isRequired>
-                <F.TextArea
+            <FormSection title="프로젝트 소개" isRequired>
+                <TextArea
                     name="projectDescription"
                     placeholder="내용을 입력하세요"
                     className="w-full"
                     limit={300}
                 />
-            </F.FormSection>
+            </FormSection>
 
-            <F.FormSection title="시연 영상 링크">
-                <F.Input name="projectVideo" placeholder="시연 영상 링크" className="w-full" />
-            </F.FormSection>
+            <FormSection title="시연 영상 링크">
+                <Input name="projectVideo" placeholder="시연 영상 링크" className="w-full" />
+            </FormSection>
 
-            <F.FormSection title="참여 멤버" isRequired>
+            <FormSection title="참여 멤버" isRequired>
                 <MemberSelector name="projectMembers" />
-            </F.FormSection>
+            </FormSection>
 
-            <F.FormSection title="썸네일" description="권장 이미지 크기: 1920 x 1080 px" isRequired>
+            <FormSection title="썸네일" description="권장 이미지 크기: 1920 x 1080 px" isRequired>
                 <ImageDropZone name="projectThumbnail" multiple={false} />
-            </F.FormSection>
+            </FormSection>
 
-            <F.FormSection
+            <FormSection
                 title="랜딩 이미지"
                 description="최대 20장까지 업로드할 수 있습니다."
                 isRequired
             >
                 <ImageDropZone name="projectLandingImages" multiple={true} maxFiles={20} />
-            </F.FormSection>
+            </FormSection>
 
             {values.projectRecaps.length > 0 && (
-                <F.FormSection title="프로젝트 회고" isRequired>
+                <FormSection title="프로젝트 회고" isRequired>
                     <div className="w-full flex flex-col gap-8">
                         {values.projectRecaps.map((recap, index) => (
                             <div key={recap.author.id} className="w-full">
                                 <div className="mb-2 flex gap-2 body3_m">
-                                    <span className="text-orange-main">{recap.author.part}</span>
+                                    <span className="text-orange-main">
+                                        {recap.author.position}
+                                    </span>
                                     <span className="text-black">{recap.author.name}</span>
                                 </div>
-                                <F.TextArea
+                                <TextArea
                                     name={`projectRecaps[${index}].content`}
                                     placeholder="내용을 입력하세요"
                                     className="w-full"
@@ -138,7 +137,7 @@ export default function ProjectFormContent() {
                             </div>
                         ))}
                     </div>
-                </F.FormSection>
+                </FormSection>
             )}
 
             <div className="w-full flex justify-center mt-50">

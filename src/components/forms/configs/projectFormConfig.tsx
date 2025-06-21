@@ -1,6 +1,8 @@
 import * as Yup from "yup";
+import { GenericFormPageConfig } from "../types/FormConfig.types";
+import Icons from "@/assets/banner/archive/projects/icons.svg";
 
-export const validationSchema = Yup.object({
+const projectValidationSchema = Yup.object({
     projectName: Yup.string()
         .required("프로젝트명을 입력해주세요")
         .max(30, "최대 30자까지 입력 가능합니다"),
@@ -26,3 +28,35 @@ export const validationSchema = Yup.object({
         })
     ),
 });
+
+export const projectFormConfig: GenericFormPageConfig = {
+    banner: {
+        title: "프로젝트 등록하기",
+        icon: <Icons />,
+    },
+    form: {
+        sections: [], // 프젝회고 기능때문에 별도로 custom 처리함
+        initialValues: {
+            projectName: "",
+            projectType: "",
+            projectDescription: "",
+            projectYear: "",
+            projectVideo: "",
+            projectMembers: [],
+            projectThumbnail: "",
+            projectLandingImages: [],
+            projectRecaps: [],
+        },
+        validationSchema: projectValidationSchema,
+        onSubmit: async (values) => {
+            console.log("Project submitted:", values);
+            await new Promise((resolve) => setTimeout(resolve, 2000));
+        },
+        submitButtonText: "등록하기",
+        successConfig: {
+            title: "프로젝트 등록이 완료되었습니다.",
+            buttonLabel: "프로젝트 보러가기",
+            href: "/archive/projects",
+        },
+    },
+};

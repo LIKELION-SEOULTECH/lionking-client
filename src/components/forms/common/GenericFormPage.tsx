@@ -5,12 +5,12 @@ import { Formik } from "formik";
 import { AnimatePresence, motion } from "motion/react";
 import SuccessPage from "@/components/ui/SuccessPage";
 import GenericBanner from "@/components/banners/GenericBanner";
-import ProjectForm from "@/components/forms/custom/ProjectForm";
-import { projectFormConfig } from "@/components/forms/configs/projectFormConfig";
+import GenericFormBuilder from "./GenericFormBuilder";
+import { GenericFormPageConfig } from "../types/FormConfig.types";
 
-export default function NewProjectPage() {
+export default function GenericFormPage({ config }: { config: GenericFormPageConfig }) {
     const [isSuccess, setIsSuccess] = useState(false);
-    const { banner, form } = projectFormConfig;
+    const { banner, form } = config;
 
     return (
         <AnimatePresence mode="wait">
@@ -96,7 +96,10 @@ export default function NewProjectPage() {
                                 }
                             }}
                         >
-                            <ProjectForm />
+                            <GenericFormBuilder
+                                sections={form.sections}
+                                submitButtonText={form.submitButtonText}
+                            />
                         </Formik>
                     </div>
                 </motion.div>
