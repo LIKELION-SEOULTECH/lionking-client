@@ -93,4 +93,5 @@ export const blogFormConfig: GenericFormPageConfig<BlogFormValues> = {
             href: "/archive/blog",
         },
     },
+    isBlog: true,
 };

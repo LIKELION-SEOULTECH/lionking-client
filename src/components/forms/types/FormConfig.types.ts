@@ -53,4 +53,5 @@ export interface GenericFormPageConfig<V extends Record<string, unknown>> {
         icon?: ReactNode;
     };
     form: FormConfig<V>;
+    isBlog?: boolean;
 }

@@ -15,6 +15,7 @@ const BlogEditor = dynamic(() => import("./BlogEditor/BlogEditor"), {
 interface GenericFormBuilderProps<V extends Record<string, unknown>> {
     sections: FormSectionConfig<V>[];
     submitButtonText?: string;
+    isEditMode?: boolean;
 }
 
 function renderField(field: FormFieldConfig) {
@@ -78,6 +79,7 @@ function renderField(field: FormFieldConfig) {
 export default function GenericFormBuilder<V extends Record<string, unknown>>({
     sections,
     submitButtonText = "등록하기",
+    isEditMode = false,
 }: GenericFormBuilderProps<V>) {
     const { isValid, isSubmitting, dirty } = useFormikContext();
 
@@ -97,7 +99,7 @@ export default function GenericFormBuilder<V extends Record<string, unknown>>({
             <div className="w-full flex justify-center mt-50">
                 <button
                     type="submit"
-                    disabled={!isValid || isSubmitting || !dirty}
+                    disabled={!isValid || isSubmitting || (!dirty && !isEditMode)}
                     className="py-3 px-22.5 bg-orange-main sub3_sb text-white rounded-[8px] hover:bg-orange-main/85 transition-colors duration-200 cursor-pointer disabled:bg-gray-3 disabled:cursor-not-allowed disabled:hover:bg-gray-3 flex items-center justify-center gap-2 min-w-[120px] h-[48px]"
                 >
                     {isSubmitting ? (

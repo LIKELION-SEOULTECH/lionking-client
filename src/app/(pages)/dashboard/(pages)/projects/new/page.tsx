@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Formik } from "formik";
 import { AnimatePresence, motion } from "motion/react";
-import SuccessPage from "@/components/ui/SuccessPage";
+import SuccessPage from "@/components/forms/views/SuccessPage";
 import GenericBanner from "@/components/banners/GenericBanner";
 import ProjectForm from "@/components/forms/custom/ProjectForm";
 import { projectFormConfig } from "@/components/forms/configs/projectFormConfig";
