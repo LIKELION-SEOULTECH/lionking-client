@@ -1,10 +1,16 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { Form, useFormikContext } from "formik";
 import { FormFieldConfig, FormSectionConfig } from "../types/FormConfig.types";
 import { FormSection, Input, TextArea, Select, RadioGroup } from "./FormComponents";
 import ImageDropZone from "./ImageDropZone";
 import MemberSelector from "./MemberSelector";
+
+const BlogEditor = dynamic(() => import("./BlogEditor/BlogEditor"), {
+    ssr: false,
+    loading: () => <div className="w-full h-[400px] bg-gray-50 animate-pulse rounded-[10px]" />,
+});
 
 interface GenericFormBuilderProps<V extends Record<string, unknown>> {
     sections: FormSectionConfig<V>[];
@@ -55,6 +61,11 @@ function renderField(field: FormFieldConfig) {
 
         case "memberSelector":
             return <MemberSelector key={field.name} name={field.name} />;
+
+        case "blogEditor":
+            return (
+                <BlogEditor key={field.name} name={field.name} placeholder={field.placeholder} />
+            );
 
         case "custom":
             return field.customComponent;

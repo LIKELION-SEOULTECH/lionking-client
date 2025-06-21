@@ -8,7 +8,8 @@ export type FieldType =
     | "radio"
     | "custom"
     | "imageDropzone"
-    | "memberSelector";
+    | "memberSelector"
+    | "blogEditor";
 
 export interface FormFieldConfig<TField = unknown> {
     name: string;
