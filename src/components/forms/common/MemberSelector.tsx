@@ -104,7 +104,7 @@ export default function MemberSelector({ name }: { name: string }) {
     return (
         <div className="w-full relative" ref={containerRef}>
             <div
-                className="h-[55px] px-7 border border-gray-2 rounded-[10px] focus-within:ring-1 focus-within:ring-orange-main focus-within:border-transparent transition-all duration-200 cursor-text flex items-center flex-wrap gap-2"
+                className="min-h-[55px] px-7 py-3 border border-gray-2 rounded-[10px] focus-within:ring-1 focus-within:ring-orange-main focus-within:border-transparent transition-all duration-200 cursor-text flex items-center flex-wrap gap-2"
                 onClick={handleContainerClick}
             >
                 {selectedMembers.map((member) => (

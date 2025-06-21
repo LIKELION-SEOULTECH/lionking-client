@@ -3,14 +3,14 @@
 import { useState } from "react";
 import { Formik } from "formik";
 import { AnimatePresence, motion } from "motion/react";
-import NewProjectBanner from "./components/NewProjectBanner";
-import { ProjectRecap } from "./types";
-import { validationSchema } from "./utils/FormValidationSchema";
-import ProjectFormContent from "./components/NewProjectFormContent";
-import SuccessPage from "@/components/ui/SuccessPage";
+import SuccessPage from "@/components/forms/views/SuccessPage";
+import GenericBanner from "@/components/banners/GenericBanner";
+import ProjectForm from "@/components/forms/custom/ProjectForm";
+import { projectFormConfig } from "@/components/forms/configs/projectFormConfig";
 
 export default function NewProjectPage() {
     const [isSuccess, setIsSuccess] = useState(false);
+    const { banner, form } = projectFormConfig;
 
     return (
         <AnimatePresence mode="wait">
@@ -40,9 +40,9 @@ export default function NewProjectPage() {
                             }}
                         >
                             <SuccessPage
-                                title="프로젝트 등록이 완료되었습니다."
-                                buttonLabel="프로젝트 보러가기"
-                                href="/archive/projects"
+                                title={form.successConfig?.title || "등록이 완료되었습니다."}
+                                buttonLabel={form.successConfig?.buttonLabel || "목록 보기"}
+                                href={form.successConfig?.href || "/"}
                             />
                         </motion.div>
 
@@ -77,42 +77,16 @@ export default function NewProjectPage() {
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.4 }}
                 >
-                    <NewProjectBanner />
+                    <GenericBanner title={banner.title} icon={banner.icon} />
 
                     <div className="w-full max-w-[1100px] mx-auto px-6 lg:px-4 xl:px-0 py-16">
-                        <Formik<{
-                            projectName: string;
-                            projectType: string;
-                            projectDescription: string;
-                            projectYear: string;
-                            projectVideo: string;
-                            projectMembers: Array<{
-                                id: string;
-                                name: string;
-                                part: string;
-                                profileImage?: string;
-                            }>;
-                            projectThumbnail: string;
-                            projectLandingImages: string[];
-                            projectRecaps: ProjectRecap[];
-                        }>
-                            initialValues={{
-                                projectName: "",
-                                projectType: "",
-                                projectDescription: "",
-                                projectYear: "",
-                                projectVideo: "",
-                                projectMembers: [],
-                                projectThumbnail: "",
-                                projectLandingImages: [],
-                                projectRecaps: [],
-                            }}
-                            validationSchema={validationSchema}
+                        <Formik
+                            initialValues={form.initialValues}
+                            validationSchema={form.validationSchema}
                             validateOnMount={true}
                             onSubmit={async (values, { setSubmitting }) => {
                                 try {
-                                    await new Promise((resolve) => setTimeout(resolve, 2000));
-                                    console.log("submitted:", values);
+                                    await form.onSubmit(values);
                                     setIsSuccess(true);
                                     window.scrollTo({ top: 0, behavior: "smooth" });
                                 } catch (error) {
@@ -122,7 +96,7 @@ export default function NewProjectPage() {
                                 }
                             }}
                         >
-                            <ProjectFormContent />
+                            <ProjectForm />
                         </Formik>
                     </div>
                 </motion.div>

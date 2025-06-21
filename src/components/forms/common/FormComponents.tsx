@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { useField } from "formik";
 import { InputHTMLAttributes } from "react";
 
-function FormSection({
+export function FormSection({
     title,
     description,
     isRequired = false,
@@ -29,7 +29,7 @@ function FormSection({
     );
 }
 
-function Input({
+export function Input({
     name,
     className,
     limit,
@@ -66,7 +66,7 @@ function Input({
     );
 }
 
-function ProjectTypeRadioGroup({
+export function RadioGroup({
     name,
     className,
     options,
@@ -128,7 +128,7 @@ function ProjectTypeRadioGroup({
     );
 }
 
-function Select({
+export function Select({
     name,
     className,
     options,
@@ -176,7 +176,7 @@ function Select({
     );
 }
 
-function TextArea({
+export function TextArea({
     name,
     placeholder,
     limit,
@@ -214,11 +214,3 @@ function TextArea({
         </div>
     );
 }
-
-export const NewProjectForm = {
-    FormSection,
-    Input,
-    Select,
-    ProjectTypeRadioGroup,
-    TextArea,
-};
