@@ -2,7 +2,16 @@ import * as Yup from "yup";
 import { GenericFormPageConfig } from "../types/FormConfig.types";
 import Icons from "@/assets/banner/notice/icons.svg";
 
-export const noticeFormConfig: GenericFormPageConfig = {
+const noticeSchema = Yup.object({
+    noticeType: Yup.string().required("공지 유형을 선택해주세요"),
+    title: Yup.string().required("제목을 입력해주세요"),
+    content: Yup.string().required("내용을 입력해주세요"),
+    attachments: Yup.array().of(Yup.string()).required("첨부파일을 업로드해주세요"),
+});
+
+type NoticeFormValues = Yup.InferType<typeof noticeSchema>;
+
+export const noticeFormConfig: GenericFormPageConfig<NoticeFormValues> = {
     banner: {
         title: "공지사항 작성하기",
         icon: <Icons />,
@@ -69,11 +78,7 @@ export const noticeFormConfig: GenericFormPageConfig = {
             content: "",
             attachments: [],
         },
-        validationSchema: Yup.object({
-            noticeType: Yup.string().required("공지 유형을 선택해주세요"),
-            title: Yup.string().required("제목을 입력해주세요"),
-            content: Yup.string().required("내용을 입력해주세요"),
-        }),
+        validationSchema: noticeSchema,
         onSubmit: async (values) => {
             console.log("Notice submitted:", values);
             await new Promise((resolve) => setTimeout(resolve, 2000));

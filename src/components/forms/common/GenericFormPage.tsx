@@ -8,7 +8,11 @@ import GenericBanner from "@/components/banners/GenericBanner";
 import GenericFormBuilder from "./GenericFormBuilder";
 import { GenericFormPageConfig } from "../types/FormConfig.types";
 
-export default function GenericFormPage({ config }: { config: GenericFormPageConfig }) {
+export default function GenericFormPage<V extends Record<string, unknown>>({
+    config,
+}: {
+    config: GenericFormPageConfig<V>;
+}) {
     const [isSuccess, setIsSuccess] = useState(false);
     const { banner, form } = config;
 

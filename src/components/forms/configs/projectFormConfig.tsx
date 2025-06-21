@@ -2,7 +2,7 @@ import * as Yup from "yup";
 import { GenericFormPageConfig } from "../types/FormConfig.types";
 import Icons from "@/assets/banner/archive/projects/icons.svg";
 
-const projectValidationSchema = Yup.object({
+export const projectValidationSchema = Yup.object({
     projectName: Yup.string()
         .required("프로젝트명을 입력해주세요")
         .max(30, "최대 30자까지 입력 가능합니다"),
@@ -29,7 +29,9 @@ const projectValidationSchema = Yup.object({
     ),
 });
 
-export const projectFormConfig: GenericFormPageConfig = {
+export type ProjectFormValues = Yup.InferType<typeof projectValidationSchema>;
+
+export const projectFormConfig: GenericFormPageConfig<ProjectFormValues> = {
     banner: {
         title: "프로젝트 등록하기",
         icon: <Icons />,

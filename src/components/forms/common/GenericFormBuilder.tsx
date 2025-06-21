@@ -6,8 +6,8 @@ import { FormSection, Input, TextArea, Select, RadioGroup } from "./FormComponen
 import ImageDropZone from "./ImageDropZone";
 import MemberSelector from "./MemberSelector";
 
-interface GenericFormBuilderProps {
-    sections: FormSectionConfig[];
+interface GenericFormBuilderProps<V extends Record<string, unknown>> {
+    sections: FormSectionConfig<V>[];
     submitButtonText?: string;
 }
 
@@ -64,10 +64,10 @@ function renderField(field: FormFieldConfig) {
     }
 }
 
-export default function GenericFormBuilder({
+export default function GenericFormBuilder<V extends Record<string, unknown>>({
     sections,
     submitButtonText = "등록하기",
-}: GenericFormBuilderProps) {
+}: GenericFormBuilderProps<V>) {
     const { isValid, isSubmitting, dirty } = useFormikContext();
 
     return (
