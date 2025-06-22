@@ -22,7 +22,7 @@ export default function Header({ isLoggedIn = true }: HeaderProps) {
                 aria-label="Header"
             >
                 <div className="flex w-full items-center justify-between px-6 max-w-[1100px]">
-                    <TypeLogo />
+                    <TypeLogo heightPx={20} />
 
                     <div className="hidden lg:flex items-center gap-12.5">
                         <Navigation />

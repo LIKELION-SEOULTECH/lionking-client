@@ -24,7 +24,7 @@ export default function Section({
         <section
             className={cn(
                 className,
-                theme == "DARK" ? "bg-gray-8" : "bg-white",
+                theme == "DARK" ? "" : "bg-white",
                 "w-full flex flex-col items-center justify-center gap-18"
             )}
         >
@@ -32,7 +32,7 @@ export default function Section({
                 <div className="flex flex-col items-center justify-center gap-7">
                     <div className="flex flex-col items-center justify-center gap-5">
                         <StaggerChild>
-                            <h2 className="sub1_sb text-orange-main">{displayName}</h2>
+                            <h2 className="sub1_sb text-orange-main break-keep">{displayName}</h2>
                         </StaggerChild>
                         {/* eslint-disable indent */}
                         <StaggerChild>
@@ -44,7 +44,7 @@ export default function Section({
                                     )}
                                 >
                                     {displayTitle.map((title, index) => (
-                                        <span key={index} className="block">
+                                        <span key={index} className="block break">
                                             {title}
                                         </span>
                                     ))}
@@ -52,7 +52,7 @@ export default function Section({
                             ) : (
                                 <h1
                                     className={cn(
-                                        "text-center head3_sb",
+                                        "text-center head3_sb break-keep",
                                         theme === "DARK" ? "text-white" : "text-black"
                                     )}
                                 >
@@ -70,7 +70,7 @@ export default function Section({
                                 >
                                     {Array.isArray(displayDescription)
                                         ? displayDescription.map((desc, idx) => (
-                                              <span key={idx} className="block">
+                                              <span key={idx} className="block break-keep">
                                                   {desc}
                                               </span>
                                           ))
