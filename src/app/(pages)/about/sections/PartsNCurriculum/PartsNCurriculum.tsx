@@ -15,7 +15,7 @@ export default function PartsNCurriculum() {
             displayName="Parts & Curriculum"
             displayTitle="5개의 파트로 운영되고 있어요"
             theme="LIGHT"
-            className="py-32 overflow-hidden"
+            className="py-50 overflow-hidden"
         >
             <Appear>
                 <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
