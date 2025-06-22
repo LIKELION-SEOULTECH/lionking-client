@@ -10,6 +10,7 @@ type SectionProps = {
     theme?: "DARK" | "LIGHT";
     children: React.ReactNode;
     className?: string;
+    ref?: React.Ref<HTMLDivElement>;
 };
 
 export default function Section({
@@ -19,6 +20,7 @@ export default function Section({
     theme = "DARK",
     children,
     className = "",
+    ref,
 }: SectionProps) {
     return (
         <section
@@ -27,6 +29,7 @@ export default function Section({
                 theme == "DARK" ? "" : "bg-white",
                 "w-full flex flex-col items-center justify-center gap-18"
             )}
+            ref={ref}
         >
             <StaggerParent delay={0.1} stagger={0.2} once={true}>
                 <div className="flex flex-col items-center justify-center gap-7">

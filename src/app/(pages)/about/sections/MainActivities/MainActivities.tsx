@@ -9,6 +9,7 @@ export default function MainActivities() {
     const cardCount = 5;
     const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
     const [focusedIndex, setFocusedIndex] = useState(0);
+    const contentRef = useRef<HTMLDivElement>(null);
     const stackRef = useRef<HTMLDivElement>(null);
     const [circleTops, setCircleTops] = useState<number[]>([]);
 
@@ -65,9 +66,10 @@ export default function MainActivities() {
             displayName="Main Activities"
             displayTitle="배우고, 상상하고, 실현하다"
             className="py-[200px]"
+            ref={contentRef}
         >
             <div className="relative flex">
-                <ScrollBeam targetRef={stackRef} circleTops={circleTops} />
+                <ScrollBeam targetRef={contentRef} circleTops={circleTops} />
 
                 <div ref={stackRef} className="flex flex-col gap-[120px] ml-[60px] w-full relative">
                     {[...Array(cardCount)].map((_, index) => (

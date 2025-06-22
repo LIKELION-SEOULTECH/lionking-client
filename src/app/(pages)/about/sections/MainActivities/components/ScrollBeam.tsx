@@ -1,13 +1,13 @@
 "use client";
 
-import { useScroll, useTransform, motion } from "motion/react";
+import { motion, useScroll, useTransform } from "motion/react";
 import { RefObject, useEffect, useState } from "react";
 
 export default function ScrollBeam({
     targetRef,
     circleTops,
 }: {
-    targetRef: RefObject<HTMLDivElement | null>;
+    targetRef: RefObject<HTMLElement | null>;
     circleTops: number[];
 }) {
     const [beamHeight, setBeamHeight] = useState(0);
@@ -18,6 +18,7 @@ export default function ScrollBeam({
                 setBeamHeight(targetRef.current.scrollHeight);
             }
         };
+
         measure();
         window.addEventListener("resize", measure);
         return () => window.removeEventListener("resize", measure);
@@ -25,14 +26,17 @@ export default function ScrollBeam({
 
     const { scrollYProgress } = useScroll({
         target: targetRef,
-        offset: ["start 10%", "end 300%"],
+        offset: ["start 10%", "end 100%"],
     });
 
     const fillHeight = useTransform(scrollYProgress, [0.1, 0.9], [0, beamHeight]);
 
     return (
-        <div className="absolute top-0 left-0 w-[60px] pointer-events-none">
-            <div style={{ height: beamHeight }} className="relative mx-auto w-[2px] bg-transparent">
+        <div className="absolute top-0 left-0 sm:left-4 lg:left-0 w-8 sm:w-12 lg:w-[60px] pointer-events-none hidden sm:block">
+            <div
+                style={{ height: beamHeight }}
+                className="relative mx-auto w-[2px] bg-transparent overflow-hidden"
+            >
                 <motion.div
                     style={{
                         height: fillHeight,
@@ -44,7 +48,6 @@ export default function ScrollBeam({
                     className="absolute top-0 left-0 w-full bg-[linear-gradient(to_bottom,_#FF6B00_0%,_#AE5410_80%,_#0F0F0F_100%)] rounded-full"
                 />
             </div>
-
             {circleTops.map((top, i) => (
                 <div
                     key={i}
