@@ -21,7 +21,7 @@ export default function AboutPage() {
 
             <Reviews />
 
-            <ApplicationBottomBanner theme="MEDIUM" year="14기" />
+            <ApplicationBottomBanner theme="LIGHT" year="14기" />
         </>
     );
 }

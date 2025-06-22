@@ -14,7 +14,7 @@ export const gradientDark: GradientPaint = {
                 r: 0.5294117647058824,
                 g: 0.23137254901960785,
                 b: 0.00392156862745098,
-                a: 0.7,
+                a: 0.65,
             },
         },
         {
@@ -24,7 +24,7 @@ export const gradientDark: GradientPaint = {
                 r: 0.8392156862745098,
                 g: 0.3607843137254902,
                 b: 0.0,
-                a: 0.7,
+                a: 0.65,
             },
         },
     ],
@@ -33,8 +33,8 @@ export const gradientDark: GradientPaint = {
 export const gradientMedium: GradientPaint = {
     type: "GRADIENT_LINEAR",
     gradientTransform: [
-        [1440, 350, 0],
-        [-350, 1440, 0],
+        [1604, 621, 0],
+        [-621, 1604, 0],
     ],
     gradientStops: [
         {
@@ -63,8 +63,8 @@ export const gradientMedium: GradientPaint = {
 export const gradientLight: GradientPaint = {
     type: "GRADIENT_LINEAR",
     gradientTransform: [
-        [1440, 350, 0],
-        [-350, 1440, 0],
+        [1604, 621, 0],
+        [-621, 1604, 0],
     ],
     gradientStops: [
         {
