@@ -2,7 +2,7 @@ import Section from "@/components/ui/Section";
 import { ReviewCardProps } from "./components/ReviewCard";
 import ReviewCardList from "./components/ReviewCardList";
 
-const mockReviews: ReviewCardProps[] = Array.from({ length: 7 }, (_, i) => ({
+const mockReviews: ReviewCardProps[] = Array.from({ length: 7 }, () => ({
     authorName: "김땡땡",
     authorBio: "99기 기획",
     content:

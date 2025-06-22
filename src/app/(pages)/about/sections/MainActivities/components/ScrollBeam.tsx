@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useMotionValue, useScroll, useSpring, useTransform } from "motion/react";
+import { motion, useMotionValue, useSpring } from "motion/react";
 import { RefObject, useEffect, useState } from "react";
 
 export default function ScrollBeam({
