@@ -23,7 +23,7 @@ const CardNumberContent = [
 
 export default function CardNumberRow() {
     return (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-[44px]">
+        <div className="w-full grid grid-cols-1 md:grid-cols-3 xl:grid-cols-[repeat(3,294px)] justify-center gap-4 md:gap-8 px-6">
             {CardNumberContent.map((item, index) => (
                 <CardNumber
                     key={index}

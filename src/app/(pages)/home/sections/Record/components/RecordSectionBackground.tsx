@@ -5,14 +5,6 @@ import { useLayoutEffect, useRef, useState } from "react";
 import { figmaPaintToCSS, GradientPaint } from "@/lib/figmaToCss";
 
 const verticalVignette: GradientPaint = {
-    /*
-    Gradient:
-        - 3% – #151515, opacity 1
-        - 41% – #151515, opacity 0.5
-        - 58% – transparent
-        - 100% – #151515, opacity 1
-    */
-
     type: "GRADIENT_LINEAR",
     gradientTransform: [
         [0, 1, 0],
@@ -42,10 +34,7 @@ export default function RecordSectionBackground() {
     }, []);
 
     return (
-        <div
-            ref={ref}
-            className="absolute top-0 left-[calc(50%-50vw-2px)] w-[calc(100vw+4px)] h-screen overflow-hidden"
-        >
+        <div ref={ref} className="absolute inset-0 overflow-hidden">
             <Image
                 src="/static/images/home_record.png"
                 alt="배경 이미지. 세션 진행 중인 모습."
@@ -53,7 +42,6 @@ export default function RecordSectionBackground() {
                 className="object-cover"
                 priority
             />
-
             <div
                 className="absolute inset-0 pointer-events-none"
                 style={{

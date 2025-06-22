@@ -74,7 +74,7 @@ export function MobileProfileDropdownActionButton({
     if (href) {
         return (
             <Link href={href} className={style}>
-                <div>{icon}</div>
+                <div className="scale-[0.85]">{icon}</div>
                 <span>{label}</span>
             </Link>
         );
@@ -82,7 +82,7 @@ export function MobileProfileDropdownActionButton({
 
     return (
         <button className={style} onClick={onClick}>
-            <div>{icon}</div>
+            <div className="scale-[0.85]">{icon}</div>
             <span>{label}</span>
         </button>
     );
