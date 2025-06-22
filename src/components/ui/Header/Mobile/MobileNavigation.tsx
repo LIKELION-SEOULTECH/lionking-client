@@ -70,7 +70,7 @@ export default function MobileNavigation({ isOpen, onClose, isLoggedIn }: Mobile
                         }}
                         className="fixed right-0 top-[60px] h-[calc(100vh-60px)] w-[75%] max-w-sm bg-gray-8 z-[9999] overflow-y-auto lg:hidden"
                     >
-                        <div className="p-6">
+                        <div className="p-3">
                             <ul className="space-y-2">
                                 {navigationLinks.map((item) => (
                                     <li key={item.key}>
@@ -79,14 +79,14 @@ export default function MobileNavigation({ isOpen, onClose, isLoggedIn }: Mobile
                                                 <button
                                                     onClick={() => toggleExpanded(item.key)}
                                                     className={cn(
-                                                        "w-full flex items-center justify-between p-3 rounded-[8px] transition-colors",
+                                                        "w-full flex items-center justify-between px-3 py-2.5 rounded-[8px] transition-colors",
                                                         "hover:bg-gray-7",
                                                         "text-gray-2 hover:text-orange-main",
                                                         isActive(item.href!) &&
                                                             "bg-gray-7 text-orange-main"
                                                     )}
                                                 >
-                                                    <span className="sub3_sb">{item.label}</span>
+                                                    <span className="body5_r">{item.label}</span>
                                                     <ChevronRight
                                                         className={cn(
                                                             "w-5 h-5 transition-transform",
@@ -110,7 +110,7 @@ export default function MobileNavigation({ isOpen, onClose, isLoggedIn }: Mobile
                                                                     <Link
                                                                         href={child.href}
                                                                         className={cn(
-                                                                            "block p-3 rounded-lg transition-colors",
+                                                                            "block px-3 py-2.5 rounded-lg transition-colors",
                                                                             "text-gray-2 hover:bg-gray-7 hover:text-orange-main",
                                                                             isActive(child.href) &&
                                                                                 "bg-gray-7 text-orange-main"
@@ -130,7 +130,7 @@ export default function MobileNavigation({ isOpen, onClose, isLoggedIn }: Mobile
                                             <Link
                                                 href={item.href!}
                                                 className={cn(
-                                                    "block p-3 rounded-lg transition-colors",
+                                                    "block px-3 py-2.5 rounded-lg transition-colors",
                                                     "text-gray-2 hover:bg-gray-7 hover:text-orange-main",
                                                     isActive(item.href!) &&
                                                         "bg-gray-7 text-orange-main"
@@ -143,7 +143,7 @@ export default function MobileNavigation({ isOpen, onClose, isLoggedIn }: Mobile
                                 ))}
                             </ul>
 
-                            <div className="mt-8 pt-6 border-t border-gray-6">
+                            <div className="mt-4 pt-4 border-t border-gray-6">
                                 {isLoggedIn ? (
                                     <MobileProfileSection />
                                 ) : (
