@@ -24,6 +24,15 @@ const eslintConfig = [
             ],
             "import/no-anonymous-default-export": "off",
         },
+        overrides: [
+            {
+                files: ["**/*.test.tsx"],
+                rules: {
+                    "@typescript-eslint/no-explicit-any": "off",
+                    "@typescript-eslint/no-unused-vars": "off",
+                },
+            },
+        ],
     }),
 ];
 
