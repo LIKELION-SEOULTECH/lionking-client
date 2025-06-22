@@ -4,12 +4,13 @@ import { StaggerChild, StaggerParent } from "@/components/animations/AppearStagg
 import { cn } from "@/lib/utils";
 
 type SectionProps = {
-    displayName: string;
-    displayTitle: string | string[];
+    displayName?: string;
+    displayTitle?: string | string[];
     displayDescription?: string | string[];
     theme?: "DARK" | "LIGHT";
     children: React.ReactNode;
     className?: string;
+    ref?: React.Ref<HTMLDivElement>;
 };
 
 export default function Section({
@@ -19,6 +20,7 @@ export default function Section({
     theme = "DARK",
     children,
     className = "",
+    ref,
 }: SectionProps) {
     return (
         <section
@@ -27,8 +29,9 @@ export default function Section({
                 theme == "DARK" ? "" : "bg-white",
                 "w-full flex flex-col items-center justify-center gap-18"
             )}
+            ref={ref}
         >
-            <StaggerParent delay={0.1} stagger={0.2} once={false}>
+            <StaggerParent delay={0.1} stagger={0.2} once={true}>
                 <div className="flex flex-col items-center justify-center gap-7">
                     <div className="flex flex-col items-center justify-center gap-5">
                         <StaggerChild>

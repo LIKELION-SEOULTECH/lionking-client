@@ -1,3 +1,4 @@
+import ApplicationBottomBanner from "@/components/banners/ApplicationBottomBanner";
 import AboutBanner from "./sections/AboutBanner";
 import AboutIntro from "./sections/AboutIntro";
 import Calendar from "./sections/Calendar";
@@ -19,6 +20,8 @@ export default function AboutPage() {
             <Calendar />
 
             <Reviews />
+
+            <ApplicationBottomBanner theme="LIGHT" year="14기" />
         </>
     );
 }

@@ -33,7 +33,7 @@ export default function Footer() {
 
 function FooterRight() {
     return (
-        <div className="flex flex-col items-center lg:items-start gap-2 lg:gap-8">
+        <div className="h-full flex flex-col items-center lg:items-start justify-center lg:justify-between gap-2 lg:gap-8">
             <div className="flex flex-col items-center lg:items-start gap-3">
                 <p className="body3_r hidden lg:block">FAMILY SITE</p>
                 <ul className="flex flex-col items-center lg:items-start gap-3">
