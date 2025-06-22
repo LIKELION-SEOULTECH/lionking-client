@@ -3,6 +3,7 @@ import Record from "./sections/Record";
 import Activities from "./sections/Activities";
 import Projects from "./sections/Projects";
 import MainPageBackground from "@/assets/main_bg.svg";
+import ApplicationBottomBanner from "@/components/banners/ApplicationBottomBanner";
 
 export default function Home() {
     return (
@@ -21,6 +22,8 @@ export default function Home() {
                     preserveAspectRatio="xMidYMin slice"
                 />
             </div>
+
+            <ApplicationBottomBanner theme="DARK" year="14기" />
         </>
     );
 }
