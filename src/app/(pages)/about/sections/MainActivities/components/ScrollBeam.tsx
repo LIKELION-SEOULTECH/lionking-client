@@ -1,14 +1,16 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "motion/react";
+import { motion, useMotionValue, useScroll, useSpring, useTransform } from "motion/react";
 import { RefObject, useEffect, useState } from "react";
 
 export default function ScrollBeam({
     targetRef,
     circleTops,
+    focusedIndex,
 }: {
     targetRef: RefObject<HTMLElement | null>;
     circleTops: number[];
+    focusedIndex: number;
 }) {
     const [beamHeight, setBeamHeight] = useState(0);
 
@@ -18,21 +20,24 @@ export default function ScrollBeam({
                 setBeamHeight(targetRef.current.scrollHeight);
             }
         };
-
         measure();
         window.addEventListener("resize", measure);
         return () => window.removeEventListener("resize", measure);
     }, [targetRef]);
 
-    const { scrollYProgress } = useScroll({
-        target: targetRef,
-        offset: ["start 10%", "end 100%"],
+    const fillTarget = useMotionValue(0);
+    const fillHeight = useSpring(fillTarget, {
+        stiffness: 200,
+        damping: 25,
     });
 
-    const fillHeight = useTransform(scrollYProgress, [0.1, 0.9], [0, beamHeight]);
+    useEffect(() => {
+        const y = circleTops[focusedIndex] ?? 0;
+        fillTarget.set(y);
+    }, [circleTops, focusedIndex, fillTarget]);
 
     return (
-        <div className="absolute top-0 left-0 sm:left-4 lg:left-0 w-8 sm:w-12 lg:w-[60px] pointer-events-none hidden sm:block">
+        <div className="absolute top-0 left-0 w-8 pointer-events-none">
             <div
                 style={{ height: beamHeight }}
                 className="relative mx-auto w-[2px] bg-transparent overflow-hidden"
@@ -45,7 +50,7 @@ export default function ScrollBeam({
                         ease: "easeInOut",
                         duration: 0.4,
                     }}
-                    className="absolute top-0 left-0 w-full bg-[linear-gradient(to_bottom,_#FF6B00_0%,_#AE5410_80%,_#0F0F0F_100%)] rounded-full"
+                    className="absolute top-0 left-0 w-full bg-[linear-gradient(to_bottom,_#FF6B00_0%,_#AE5410_90%,_#0F0F0F_100%)] rounded-full"
                 />
             </div>
             {circleTops.map((top, i) => (
@@ -54,7 +59,7 @@ export default function ScrollBeam({
                     className="absolute left-1/2 -translate-x-1/2 z-10"
                     style={{ top: `${top}px` }}
                 >
-                    <div className="h-4 w-4 rounded-full border-2 border-orange-main bg-white" />
+                    <div className="size-3 md:size-4 rounded-full border-2 border-orange-main bg-white" />
                 </div>
             ))}
         </div>
