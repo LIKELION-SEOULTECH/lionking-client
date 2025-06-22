@@ -24,7 +24,7 @@ export default function Section({
         <section
             className={cn(
                 className,
-                theme == "DARK" ? "bg-gray-8" : "bg-white",
+                theme == "DARK" ? "" : "bg-white",
                 "w-full flex flex-col items-center justify-center gap-18"
             )}
         >
