@@ -6,9 +6,13 @@ export type Role = "운영진" | "아기사자" | "휴면사자";
 
 export type RoleFilters = "전체" | "운영진" | "아기사자";
 
-export type BlogTypeFilters = "세션" | "아티클";
+export type BlogTypeFilters = "all" | "session" | "article";
+
+export type PostTypes = "session" | "article";
 
 export type PostPreviewMetadata = {
+    postId: string | number;
+    postType: PostTypes;
     part: Parts | string;
     title: string;
     description: string;
@@ -34,6 +38,19 @@ export type Member = {
         label: string;
         url: string;
     }[];
+};
+
+export type BlogContent = {
+    blogId: number | string;
+    title: string;
+    author: Member;
+    thumbnail: string;
+    content: string;
+    createdAt: Date;
+    updatedAt: Date;
+    blogType: BlogTypeFilters;
+    goal: string[];
+    summary: string[];
 };
 
 export type News = {

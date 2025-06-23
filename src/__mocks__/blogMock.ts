@@ -1,6 +1,9 @@
-export default [
+import { PostPreviewMetadata } from "./../types/index";
+
+const posts: PostPreviewMetadata[] = [
     {
-        blogType: "세션",
+        postId: 1,
+        postType: "article",
         part: "디자인",
         title: "피그마 고인물처럼 보이는 법",
         description: "피그마 기본부터 심화까지",
@@ -9,7 +12,8 @@ export default [
         authorId: "1",
     },
     {
-        blogType: "세션",
+        postId: 2,
+        postType: "article",
         part: "백엔드",
         title: "우리 동아리 들어올려면 이건 알아야함",
         description: "RESTful API 설계하기",
@@ -18,7 +22,8 @@ export default [
         authorId: "2",
     },
     {
-        blogType: "세션",
+        postId: 3,
+        postType: "session",
         part: "백엔드",
         title: "도커 잘쓴다는 소리 듣고싶나요",
         description: "Docker를 활용한 CI/CD 파이프라인 구축하기",
@@ -27,7 +32,8 @@ export default [
         authorId: "3",
     },
     {
-        blogType: "아티클",
+        postId: 4,
+        postType: "session",
         part: "프론트엔드",
         title: "바벨이 뭔지는 아시나요",
         description: "자바스크립트 컴파일러 이해하기",
@@ -36,7 +42,8 @@ export default [
         authorId: "2",
     },
     {
-        blogType: "아티클",
+        postId: 5,
+        postType: "article",
         part: "디자인",
         title: "애플은 어떻게 디자인하는가",
         description: "HIG 하나씩 뜯어보기",
@@ -45,3 +52,5 @@ export default [
         authorId: "1",
     },
 ];
+
+export default posts;

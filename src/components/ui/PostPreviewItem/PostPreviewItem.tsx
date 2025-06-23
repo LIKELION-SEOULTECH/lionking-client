@@ -11,6 +11,8 @@ export type PostPreviewItemProps = PostPreviewMetadata & {
 };
 
 export default function PostPreviewItem({
+    postId,
+    postType,
     layout = "vertical_small",
     part,
     title,
@@ -18,8 +20,8 @@ export default function PostPreviewItem({
     date,
     authorName,
     authorId,
+    postHref,
     imageUrl = "/static/images/placeholder.png",
-    postHref = "",
     withAction = false,
 }: PostPreviewItemProps) {
     const styles = styleMap[layout];
@@ -40,13 +42,16 @@ export default function PostPreviewItem({
     );
 
     return (
-        <div className="w-full relative flex flex-col items-center justify-center">
+        <div
+            className="w-full relative flex flex-col items-center justify-center"
+            data-id={`post-preview-${postId}`}
+        >
             {layout === "horizontal_fill_large" && (
                 <div className="w-full h-[1px] bg-gray-2 hidden lg:block" />
             )}
             <div className={cn(previewItemVariants({ layout }))}>
                 <div className={imageWrapperClass}>
-                    <Link href={postHref}>
+                    <Link href={postHref ?? `/archive/blog/${postType}/${postId}`}>
                         <Image src={imageUrl} alt={title} fill className="object-cover" />
                     </Link>
                 </div>
@@ -80,7 +85,10 @@ export default function PostPreviewItem({
                             </div>
                         )}
                         <div className="flex flex-col gap-4">
-                            <Link href={postHref} className={cn(styles.title, "hover:underline")}>
+                            <Link
+                                href={postHref ?? `/archive/blog/${postType}/${postId}`}
+                                className={cn(styles.title, "hover:underline")}
+                            >
                                 <p className={styles.title}>{title}</p>
                             </Link>
                             <p className={styles.desc}>{description}</p>
