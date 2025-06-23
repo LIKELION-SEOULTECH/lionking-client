@@ -23,7 +23,15 @@ export default function HeroText() {
 
                 <StaggerChild>
                     <motion.div {...slideUpFade}>
-                        <h1 className="head1_sb text-center text-gray-1 text-[clamp(26px,5vw,54px)]!">
+                        <h1
+                            className="head1_sb text-center text-[clamp(26px,5vw,54px)]!"
+                            style={{
+                                backgroundImage:
+                                    "linear-gradient(to top, #FFE8D7 0%, #DC5F00 125%)",
+                                WebkitBackgroundClip: "text",
+                                WebkitTextFillColor: "transparent",
+                            }}
+                        >
                             실전으로 성장하는 최고의 경험,
                             <br /> 멋사와 함께 A to Z
                         </h1>
