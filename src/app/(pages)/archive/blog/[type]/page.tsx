@@ -28,3 +28,9 @@ export default async function ArchiveBlogArticlePage({
         </div>
     );
 }
+
+export const dynamicParams = false;
+
+export async function generateStaticParams() {
+    return [{ type: "article" }, { type: "session" }];
+}
