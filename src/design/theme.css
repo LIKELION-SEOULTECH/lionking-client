@@ -41,140 +41,140 @@
 
 .head1_sb {
     font-weight: 600;
-    font-size: 54px;
+    font-size: clamp(32px, 5vw, 54px);
     letter-spacing: -0.02em;
     line-height: 140%;
 }
 
 .head2_b {
     font-weight: 700;
-    font-size: 40px;
+    font-size: clamp(28px, 4vw, 40px);
     letter-spacing: -0.02em;
     line-height: 140%;
 }
 
 .head3_sb {
     font-weight: 600;
-    font-size: 32px;
+    font-size: clamp(24px, 3.5vw, 32px);
     letter-spacing: 0em;
     line-height: 140%;
 }
 
 .head4_b {
     font-weight: 700;
-    font-size: 28px;
+    font-size: clamp(20px, 3vw, 28px);
     letter-spacing: -0.02em;
     line-height: 140%;
 }
 
 .head5_sb {
     font-weight: 600;
-    font-size: 28px;
+    font-size: clamp(20px, 3vw, 28px);
     letter-spacing: -0.02em;
     line-height: 140%;
 }
 
 .sub1_sb {
     font-weight: 600;
-    font-size: 24px;
+    font-size: clamp(18px, 2.8vw, 24px);
     letter-spacing: -0.02em;
     line-height: 140%;
 }
 
 .sub2_sb {
     font-weight: 600;
-    font-size: 20px;
+    font-size: clamp(16px, 2.5vw, 20px);
     letter-spacing: -0.02em;
     line-height: 140%;
 }
 
 .sub3_sb {
     font-weight: 600;
-    font-size: 16px;
+    font-size: clamp(14px, 2vw, 16px);
     letter-spacing: -0.02em;
     line-height: 140%;
 }
 
 .sub4_sb {
     font-weight: 600;
-    font-size: 14px;
+    font-size: clamp(12px, 1.8vw, 14px);
     letter-spacing: -0.02em;
     line-height: 140%;
 }
 
 .sub5_sb {
     font-weight: 600;
-    font-size: 12px;
+    font-size: clamp(10px, 1.5vw, 12px);
     letter-spacing: -0.02em;
     line-height: 140%;
 }
 
 .body1_sb {
     font-weight: 600;
-    font-size: 32px;
+    font-size: clamp(24px, 4vw, 32px);
     letter-spacing: -0.02em;
     line-height: 154%;
 }
 
 .body2_sb {
     font-weight: 600;
-    font-size: 24px;
+    font-size: clamp(18px, 3.2vw, 24px);
     letter-spacing: -0.02em;
     line-height: 154%;
 }
 
 .body3_m {
     font-weight: 500;
-    font-size: 20px;
+    font-size: clamp(16px, 2.5vw, 20px);
     letter-spacing: -0.02em;
     line-height: 154%;
 }
 
 .body3_r {
     font-weight: 400;
-    font-size: 20px;
+    font-size: clamp(14px, 2.5vw, 20px);
     letter-spacing: -0.02em;
     line-height: 154%;
 }
 
 .body4_m {
     font-weight: 500;
-    font-size: 16px;
+    font-size: clamp(14px, 2vw, 16px);
     letter-spacing: -0.02em;
     line-height: 154%;
 }
 
 .body5_r {
     font-weight: 400;
-    font-size: 16px;
+    font-size: clamp(14px, 2vw, 16px);
     letter-spacing: -0.02em;
     line-height: 154%;
 }
 
 .body6_r {
     font-weight: 400;
-    font-size: 12px;
+    font-size: clamp(10px, 1.5vw, 12px);
     letter-spacing: -0.02em;
     line-height: 154%;
 }
 
 .caption6_m {
     font-weight: 500;
-    font-size: 16px;
+    font-size: clamp(12px, 2vw, 16px);
     letter-spacing: -0.02em;
     line-height: 100%;
 }
 
 .caption7_m {
     font-weight: 500;
-    font-size: 14px;
+    font-size: clamp(10px, 1.8vw, 14px);
     letter-spacing: -0.02em;
     line-height: 100%;
 }
 
 .caption8_m {
     font-weight: 500;
-    font-size: 12px;
+    font-size: clamp(8px, 1.5vw, 12px);
     letter-spacing: -0.02em;
     line-height: 100%;
 }

@@ -28,6 +28,8 @@ export default function DashboardPublishedBlogs({ publishedBlogs }: DashboardPub
                     publishedBlogs.map((blog, idx) => (
                         <PostPreviewItem
                             key={idx}
+                            postId={blog.postId}
+                            postType={blog.postType}
                             layout="horizontal_fill_small"
                             part={blog.part}
                             title={blog.title}
@@ -35,6 +37,7 @@ export default function DashboardPublishedBlogs({ publishedBlogs }: DashboardPub
                             date={blog.date}
                             authorId={blog.authorId}
                             authorName={blog.authorName}
+                            postHref={`/archive/blog/session/${blog.postId}`}
                             withAction
                         />
                     ))

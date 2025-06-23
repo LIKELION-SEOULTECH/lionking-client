@@ -57,18 +57,15 @@ export default function BlogEditor({
                     );
                     if (files.length) {
                         event.preventDefault();
-                        // Mark that we're handling this drop
                         dropHandledRef.current = true;
                         const pos = view.posAtCoords({
                             left: event.clientX,
                             top: event.clientY,
                         })?.pos;
                         if (editor) handleImageDrop(files, pos);
-                        // Reset the flag after a short delay
                         setTimeout(() => {
                             dropHandledRef.current = false;
                         }, 100);
-                        // Hide the drag overlay
                         setIsDragging(false);
                         return true;
                     }

@@ -28,6 +28,7 @@ export default function ProjectCardGrid() {
                     {Array.from({ length: 6 }, (_, index) => (
                         <ProjectCardStatic
                             key={index}
+                            projectId={index + 1}
                             title="Project Name"
                             description="Project Description"
                             projectYear="12기"

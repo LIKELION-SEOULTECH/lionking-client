@@ -142,6 +142,9 @@ export default function ImageDropZone({
                     }}
                     onDrop={handleDrop}
                     onClick={() => fileInputRef.current?.click()}
+                    data-testid="dropzone"
+                    role="button"
+                    data-name="컴퓨터에서 업로드"
                 >
                     <input
                         ref={fileInputRef}

@@ -25,6 +25,8 @@ const mockMetrics = [
 
 const mockPublishedBlogs: PostPreviewMetadata[] = [
     {
+        postId: 1,
+        postType: "session",
         part: "프론트엔드",
         title: "리액트로 블로그 만들기",
         description: "리액트로 블로그를 만드는 방법에 대해 알아봅시다.",
@@ -33,6 +35,8 @@ const mockPublishedBlogs: PostPreviewMetadata[] = [
         authorName: "김먀옹",
     },
     {
+        postId: 2,
+        postType: "article",
         part: "백엔드",
         title: "Node.js로 서버 구축하기",
         description: "Node.js를 사용하여 간단한 서버를 구축하는 방법을 알아봅시다.",
