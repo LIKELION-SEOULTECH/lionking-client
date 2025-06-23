@@ -57,11 +57,11 @@ export type ProjectCardVariants = "PROJECT_PAGE" | "MEMBER_PAGE";
 export type ProjectPreviewBadgeType = "NONE" | "BEST" | "TEXT";
 
 export type ProjectPreviewMetadata = {
+    projectId: string | number;
     title: string;
     description: string;
     projectYear: string;
     imageUrl?: string;
-    postHref?: string;
     badges?: {
         type: ProjectPreviewBadgeType;
         text?: string;
