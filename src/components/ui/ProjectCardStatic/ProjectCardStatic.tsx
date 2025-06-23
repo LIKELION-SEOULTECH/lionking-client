@@ -27,17 +27,17 @@ const textStylesMap = {
 };
 
 export default function ProjectCardStatic({
+    projectId,
     title,
     description,
     projectYear,
     badges,
     imageUrl,
-    postHref,
     variant,
 }: ProjectPreviewMetadata & ProjectCardStaticProps) {
     return (
         <Link
-            href={postHref ?? "#"}
+            href={`/archive/projects/${projectId}`}
             className={`relative flex flex-col w-full ${
                 variant === "MEMBER_PAGE"
                     ? "bg-transparent border border-gray-5"
