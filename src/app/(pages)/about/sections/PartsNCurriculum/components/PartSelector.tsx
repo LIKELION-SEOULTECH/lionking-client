@@ -91,7 +91,7 @@ export default function PartSelector({ selectedPart, onChange }: PartSelectorPro
                     ref={scrollContainerRef}
                     className="w-full overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] scroll-smooth"
                 >
-                    <div className="w-fit mx-auto flex items-center justify-center rounded-full bg-gray-1 gap-2 sm:gap-[23px]">
+                    <div className="w-fit mx-auto flex items-center justify-center rounded-full bg-gray-1 gap-0 sm:gap-6">
                         {allParts.map((part) => (
                             <PartSelectorItem
                                 key={part}
@@ -119,7 +119,7 @@ function PartSelectorItem({
     return (
         <button
             onClick={onClick}
-            className="relative px-4 sm:px-8 py-2 rounded-full text-sm sm:text-base font-semibold transition-colors duration-200 cursor-pointer whitespace-nowrap min-w-fit isolate"
+            className="relative px-4 sm:px-8 py-2 rounded-full text-sm sm:text-xl font-semibold transition-colors duration-200 cursor-pointer whitespace-nowrap min-w-fit isolate"
         >
             {isSelected && (
                 <motion.div
