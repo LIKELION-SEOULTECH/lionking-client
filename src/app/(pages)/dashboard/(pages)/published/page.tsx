@@ -6,6 +6,8 @@ import { PostPreviewMetadata } from "@/types";
 
 const mockPublishedBlogs: PostPreviewMetadata[] = [
     {
+        postId: 1,
+        postType: "article",
         part: "프론트엔드",
         title: "리액트로 블로그 만들기",
         description: "리액트로 블로그를 만드는 방법에 대해 알아봅시다.",
@@ -14,6 +16,8 @@ const mockPublishedBlogs: PostPreviewMetadata[] = [
         authorName: "김먀옹",
     },
     {
+        postId: 2,
+        postType: "session",
         part: "백엔드",
         title: "Node.js로 서버 구축하기",
         description: "Node.js를 사용하여 간단한 서버를 구축하는 방법을 알아봅시다.",
@@ -37,6 +41,8 @@ export default function DashboardViewAllPublishedPage() {
                             publishedBlogs.map((blog, idx) => (
                                 <PostPreviewItem
                                     key={idx}
+                                    postId={blog.postId}
+                                    postType={blog.postType}
                                     layout="horizontal_fill_small"
                                     part={blog.part}
                                     title={blog.title}
@@ -44,6 +50,7 @@ export default function DashboardViewAllPublishedPage() {
                                     date={blog.date}
                                     authorId={blog.authorId}
                                     authorName={blog.authorName}
+                                    postHref={`/archive/blog/session/${blog.postId}`}
                                     withAction
                                 />
                             ))

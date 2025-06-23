@@ -13,7 +13,7 @@ export default function BlogTypeSelector({ selectedBlogType }: BlogTypeSelectorP
                 <Link
                     href="/archive/blog/session"
                     className={cn(
-                        selectedBlogType === "세션"
+                        selectedBlogType === "session"
                             ? "text-orange-main hover:text-orange-main/80"
                             : "text-gray-7 hover:text-gray-7/80",
                         "cursor-pointer transition-colors duration-200"
@@ -25,7 +25,7 @@ export default function BlogTypeSelector({ selectedBlogType }: BlogTypeSelectorP
                 <Link
                     href="/archive/blog/article"
                     className={cn(
-                        selectedBlogType === "아티클"
+                        selectedBlogType === "article"
                             ? "text-orange-main hover:text-orange-main/80"
                             : "text-gray-7 hover:text-gray-7/80",
                         "cursor-pointer transition-colors duration-200"
