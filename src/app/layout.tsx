@@ -15,7 +15,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="ko">
-            <body className={`${Pretendard.className} mx-auto overflow-x-hidden`}>
+            <body className={`${Pretendard.className} mx-auto overflow-x-hidden break-keep`}>
                 <QueryProvider>
                     <NextTopLoader color="#FF7710" showSpinner={false} height={1} zIndex={50000} />
                     <Header />
