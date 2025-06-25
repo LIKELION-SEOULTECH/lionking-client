@@ -6,7 +6,6 @@ import WithMockServer from "@/mocks/msw/WithMockServer";
 
 import Header from "@/components/ui/Header";
 import Footer from "@/components/ui/Footer";
-import { QueryProvider } from "./providers/QueryProvider";
 
 export default function RootLayout({
     children,
@@ -16,13 +15,11 @@ export default function RootLayout({
     return (
         <html lang="ko">
             <body className={`${Pretendard.className} mx-auto overflow-x-hidden break-keep`}>
-                <QueryProvider>
-                    <NextTopLoader color="#FF7710" showSpinner={false} height={1} zIndex={50000} />
-                    <Header />
-                    <main role="main">{children}</main>
-                    <Footer />
-                    <WithMockServer />
-                </QueryProvider>
+                <NextTopLoader color="#FF7710" showSpinner={false} height={1} zIndex={50000} />
+                <Header />
+                <main role="main">{children}</main>
+                <Footer />
+                <WithMockServer />
             </body>
         </html>
     );

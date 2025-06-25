@@ -70,3 +70,5 @@ export const newsMock = [
         thumbnailUrl: "/static/images/placeholder.png",
     },
 ];
+
+export default newsMock;
