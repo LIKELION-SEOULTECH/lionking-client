@@ -1,6 +1,6 @@
 "use client";
 
-import { useNews } from "@/api/gallery/useNews";
+import newsMock from "@/__mocks__/newsMock";
 import NewsCards from "./components/NewsCards";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
@@ -8,10 +8,7 @@ import "swiper/css";
 import "swiper/css/autoplay";
 
 export default function NewsList() {
-    const { data = [], isLoading, isError } = useNews();
-
-    if (isLoading) return <p className="text-center text-gray-400">로딩 중...</p>;
-    if (isError) return <p className="text-center text-red-500">에러 발생</p>;
+    const data = newsMock;
 
     return (
         <section

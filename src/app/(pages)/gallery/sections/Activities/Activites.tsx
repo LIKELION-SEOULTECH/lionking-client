@@ -1,14 +1,14 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { useNews } from "@/api/gallery/useNews";
+import newsMock from "@/__mocks__/newsMock";
 import ActivityCard from "./components/ActivityCard";
 
 const PAGE_SIZE = 9;
 const MAX_PAGE_BUTTON = 5;
 
 export default function ActivitiesSection() {
-    const { data = [], isLoading, isError } = useNews();
+    const data = newsMock;
     const [page, setPage] = useState(1);
 
     const totalPages = Math.max(1, Math.ceil(data.length / PAGE_SIZE));
@@ -18,9 +18,6 @@ export default function ActivitiesSection() {
         const start = (page - 1) * PAGE_SIZE;
         return data.slice(start, start + PAGE_SIZE);
     }, [data, page]);
-
-    if (isLoading) return <p className="text-center text-gray-400">로딩 중…</p>;
-    if (isError) return <p className="text-center text-red-500">오류 발생</p>;
 
     return (
         <section className="w-full bg-[#111] pt-[200px] pb-[200px]">
