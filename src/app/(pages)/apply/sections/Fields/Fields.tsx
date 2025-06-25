@@ -2,7 +2,6 @@
 "use client";
 
 import React from "react";
-import { HiOutlineArrowRight } from "react-icons/hi"; // ← arrow icon
 
 type Field = {
     title: string;
