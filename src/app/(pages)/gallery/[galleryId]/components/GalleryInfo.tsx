@@ -1,0 +1,85 @@
+"use client";
+
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import ArrowLeft from "@/assets/icons/circlearrow_left.svg";
+import ArrowRight from "@/assets/icons/circlearrow_right.svg";
+import EditDeleteMenu from "@/components/EditDeleteMenu";
+
+interface GalleryInfoProps {
+    galleryId: string;
+    title: string;
+    date: string;
+    description: string[];
+    photos: string[];
+}
+
+export default function GalleryInfo({
+    galleryId,
+    title,
+    date,
+    description,
+    photos,
+}: GalleryInfoProps) {
+    const router = useRouter();
+    const [idx, setIdx] = useState(0);
+
+    const prev = () => setIdx((i) => (i - 1 + photos.length) % photos.length);
+    const next = () => setIdx((i) => (i + 1) % photos.length);
+
+    // ← 여기에서 doDelete 정의
+    const doDelete = async () => {
+        // TODO: 실제 API 호출로 삭제 처리
+        console.log("Deleting gallery", galleryId);
+        // 삭제 후 목록 페이지로 이동
+        router.push("/gallery");
+    };
+
+    return (
+        <section className="w-full bg-white pt-[120px] px-[190px] pb-[200px]">
+            <div className="flex flex-col items-center gap-[79px]">
+                {/* Photo carousel */}
+                <div className="flex items-center gap-[32px]">
+                    <button onClick={prev} className="w-[58px] h-[58px]">
+                        <ArrowLeft />
+                    </button>
+                    <div className="w-[880px] h-[440px] overflow-hidden">
+                        <img
+                            src={photos[idx] || "/static/images/placeholder.png"}
+                            alt={`${title} ${idx + 1}`}
+                            className="w-full h-full object-cover"
+                        />
+                    </div>
+                    <button onClick={next} className="w-[58px] h-[58px]">
+                        <ArrowRight />
+                    </button>
+                </div>
+
+                {/* Text & Actions */}
+                <div className="w-[880px] flex flex-col gap-[79px]">
+                    <div className="w-full relative flex justify-between">
+                        {/* 제목 + 작성일자 (세로로) */}
+                        <div className="flex flex-col gap-[2px]">
+                            <h1 className="body1_sb text-gray-900">{title}</h1>
+                            <span className="sub2_sb text-[#787471]">{date}</span>
+                        </div>
+
+                        {/* 한 번만 호출 */}
+                        <EditDeleteMenu
+                            editUrl={`/gallery/${galleryId}/edit`}
+                            onDelete={doDelete}
+                            resourceName="활동 기록"
+                        />
+                    </div>
+
+                    {/* 본문 설명 */}
+                    <div className="body3_m text-gray-700 space-y-2">
+                        {description.map((p, i) => (
+                            <p key={i}>{p}</p>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+}

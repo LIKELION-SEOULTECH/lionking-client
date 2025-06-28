@@ -8,6 +8,7 @@ interface NewsCardProps {
 }
 
 export default function NewsCards({ item }: NewsCardProps) {
+    console.log("NewsCards rendering with id=", item.id);
     return (
         <Link
             href={`/gallery/${item.id}`}

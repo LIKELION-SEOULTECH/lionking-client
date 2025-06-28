@@ -11,7 +11,7 @@ interface Props {
 
 export default function ActivityCard({ item }: Props) {
     return (
-        <Link href={`/gallery/activity/${item.id}`} className="block w-[332px] h-[260px] group">
+        <Link href={`/gallery/${item.id}`} className="block w-[332px] h-[260px] group">
             <motion.div
                 whileHover={{ scale: 1.03 }}
                 className="relative w-full h-full rounded-[12px] overflow-hidden"
