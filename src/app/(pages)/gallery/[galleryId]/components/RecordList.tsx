@@ -21,10 +21,14 @@ export default function RecordList({ records }: RecordListProps) {
 
     return (
         <div className="relative w-screen left-1/2 -translate-x-1/2 bg-[#F6F6F6] overflow-visible">
+            {/* 전체 상하 패딩: pt-[72px]로 제목과 카드 사이 72px 확보 */}
             <div className="pt-[72px] pb-[120px]">
                 <div className="max-w-[1440px] mx-auto relative">
+                    {/* 제목 */}
                     <h2 className="head4_b absolute top-0 left-[200px]">지난 기록 더 보기</h2>
-                    <div className="mt-[72px] h-[323px] overflow-visible">
+
+                    {/* 카드 리스트: 제목 아래로 mt-[72px] 적용 */}
+                    <div className="mt-[0px] h-[323px] overflow-visible">
                         <Swiper
                             modules={[Autoplay]}
                             initialSlide={2}
