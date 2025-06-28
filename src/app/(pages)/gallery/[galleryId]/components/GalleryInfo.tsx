@@ -27,18 +27,17 @@ export default function GalleryInfo({
     const prev = () => setIdx((i) => (i - 1 + photos.length) % photos.length);
     const next = () => setIdx((i) => (i + 1) % photos.length);
 
-    // ← 여기에서 doDelete 정의
+    /* 삭제 + 목록 이동 */
     const doDelete = async () => {
-        // TODO: 실제 API 호출로 삭제 처리
+        // TODO: 실제 API 호출
         console.log("Deleting gallery", galleryId);
-        // 삭제 후 목록 페이지로 이동
         router.push("/gallery");
     };
 
     return (
         <section className="w-full bg-white pt-[120px] px-[190px] pb-[200px]">
             <div className="flex flex-col items-center gap-[79px]">
-                {/* Photo carousel */}
+                {/* ─ 사진 캐러셀 ─ */}
                 <div className="flex items-center gap-[32px]">
                     <button onClick={prev} className="w-[58px] h-[58px]">
                         <ArrowLeft />
@@ -55,16 +54,15 @@ export default function GalleryInfo({
                     </button>
                 </div>
 
-                {/* Text & Actions */}
+                {/* ─ 텍스트 + 메뉴 ─ */}
                 <div className="w-[880px] flex flex-col gap-[79px]">
                     <div className="w-full relative flex justify-between">
-                        {/* 제목 + 작성일자 (세로로) */}
+                        {/* 제목 & 작성일 */}
                         <div className="flex flex-col gap-[2px]">
                             <h1 className="body1_sb text-gray-900">{title}</h1>
                             <span className="sub2_sb text-[#787471]">{date}</span>
                         </div>
 
-                        {/* 한 번만 호출 */}
                         <EditDeleteMenu
                             editUrl={`/gallery/${galleryId}/edit`}
                             onDelete={doDelete}
@@ -72,7 +70,7 @@ export default function GalleryInfo({
                         />
                     </div>
 
-                    {/* 본문 설명 */}
+                    {/* 본문 */}
                     <div className="body3_m text-gray-700 space-y-2">
                         {description.map((p, i) => (
                             <p key={i}>{p}</p>

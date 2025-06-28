@@ -8,7 +8,6 @@ interface Props {
 
 export default function DropdownMenu({ visible, onEdit, onDelete }: Props) {
     if (!visible) return null;
-
     return (
         <div className="absolute top-6 right-0 w-[154px] bg-white rounded-lg shadow-md flex flex-col">
             <button

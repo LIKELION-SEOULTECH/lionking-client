@@ -1,8 +1,6 @@
 "use client";
 
-import React from "react";
-
-interface DeleteConfirmationModalProps {
+interface Props {
     visible: boolean;
     resourceName: string;
     onCancel: () => void;
@@ -14,26 +12,28 @@ export default function DeleteConfirmationModal({
     resourceName,
     onCancel,
     onConfirm,
-}: DeleteConfirmationModalProps) {
+}: Props) {
     if (!visible) return null;
+
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-            <div className="bg-white w-[550px] h-[233px] rounded-[20px] p-[40px_100px] flex flex-col justify-between">
-                <p className="body3_sb text-gray-800 text-center whitespace-nowrap text-[18px]">
+            <div className="bg-white w-[516px] h-[209px] rounded-[20px] pt-[50px] px-[20px] pb-[20px] flex flex-col items-center">
+                <p className="body2_sb text-gray-900 text-center whitespace-nowrap">
                     {resourceName}을(를) 정말 삭제하시겠습니까?
                 </p>
-                <div className="flex justify-center items-center gap-[80px] mt-[24px]">
+
+                <div className="flex gap-[10px] mt-[40px]">
                     <button
-                        className="body4_m text-gray-700 px-4 py-2 hover:bg-gray-100 rounded"
+                        className="px-[87px] py-[12px] rounded-[10px] bg-[#F6F6F6] body4_m text-gray-700"
                         onClick={onCancel}
                     >
                         취소
                     </button>
                     <button
-                        className="body4_m text-white bg-red-600 px-4 py-2 hover:bg-red-700 rounded"
+                        className="px-[89px] py-[12px] rounded-[10px] bg-[#FF7710] body4_m text-white"
                         onClick={onConfirm}
                     >
-                        삭제
+                        확인
                     </button>
                 </div>
             </div>
