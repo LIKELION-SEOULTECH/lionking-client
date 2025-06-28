@@ -27,7 +27,6 @@ export default function GalleryInfo({
     const prev = () => setIdx((i) => (i - 1 + photos.length) % photos.length);
     const next = () => setIdx((i) => (i + 1) % photos.length);
 
-    // 삭제 후 /gallery로 이동
     const doDelete = async () => {
         // TODO: 실제 API 호출
         console.log("Deleting gallery", galleryId);
@@ -54,14 +53,13 @@ export default function GalleryInfo({
                     </button>
                 </div>
 
-                {/* 제목 · 작성일 · 수정/삭제 */}
+                {/* 제목 · 작성일 · 메뉴 */}
                 <div className="w-[880px] flex flex-col gap-[79px]">
-                    <div className="w-full relative flex justify-between">
+                    <div className="w-full relative flex justify-between items-start">
                         <div className="flex flex-col gap-[2px]">
                             <h1 className="body1_sb text-gray-900">{title}</h1>
                             <span className="sub2_sb text-[#787471]">{date}</span>
                         </div>
-
                         <EditDeleteMenu
                             editUrl={`/gallery/${galleryId}/edit`}
                             onDelete={doDelete}
@@ -69,7 +67,7 @@ export default function GalleryInfo({
                         />
                     </div>
 
-                    {/* 본문 설명 */}
+                    {/* 본문 */}
                     <div className="body3_m text-gray-700 space-y-2">
                         {description.map((p, i) => (
                             <p key={i}>{p}</p>
