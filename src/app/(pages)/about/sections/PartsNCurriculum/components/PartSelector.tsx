@@ -53,7 +53,7 @@ export default function PartSelector({ selectedPart, onChange }: PartSelectorPro
     useEffect(() => {
         checkScroll();
         scrollToSelected();
-    }, [selectedPart]);
+    }, [selectedPart, scrollToSelected]);
 
     useEffect(() => {
         const container = scrollContainerRef.current;

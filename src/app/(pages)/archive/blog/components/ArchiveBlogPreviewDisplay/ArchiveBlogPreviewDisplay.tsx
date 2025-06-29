@@ -20,29 +20,39 @@ export default function ArchiveBlogPreviewDisplay({
 }: ArchiveBlogPreviewDisplayProps) {
     return (
         <div className="w-full max-w-[1100px] px-6 lg:px-4 xl:px-0 mx-auto">
-            <ArchiveBlogPreviewDisplayHeader
-                displayTitle={displayTitle}
-                viewMoreHref={viewMoreHref}
-            />
+            {posts.length > 0 && (
+                <>
+                    <ArchiveBlogPreviewDisplayHeader
+                        displayTitle={displayTitle}
+                        viewMoreHref={viewMoreHref}
+                    />
 
-            {layout === "VERTICAL" && (
-                <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 place-items-start">
-                    {posts.map((post, idx) => (
-                        <PostPreviewItem key={idx} layout="vertical_small" {...post} />
-                    ))}
-                </div>
-            )}
+                    {layout === "VERTICAL" && (
+                        <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 place-items-start">
+                            {posts.map((post, idx) => (
+                                <PostPreviewItem key={idx} layout="vertical_small" {...post} />
+                            ))}
+                        </div>
+                    )}
 
-            {layout === "DYNAMIC" && (
-                <div className="w-full flex flex-col lg:grid lg:grid-cols-[5fr_6fr] gap-10 md:gap-12 items-center justify-center">
-                    {posts.length > 0 && <PostPreviewItem layout="vertical_large" {...posts[0]} />}
+                    {layout === "DYNAMIC" && (
+                        <div className="w-full flex flex-col lg:grid lg:grid-cols-[5fr_6fr] gap-10 md:gap-12 items-center justify-center">
+                            {posts.length > 0 && (
+                                <PostPreviewItem layout="vertical_large" {...posts[0]} />
+                            )}
 
-                    <div className="flex flex-col gap-10 items-center w-full">
-                        {posts.slice(1).map((post, idx) => (
-                            <PostPreviewItem key={idx} layout="horizontal_compact" {...post} />
-                        ))}
-                    </div>
-                </div>
+                            <div className="flex flex-col gap-10 items-center w-full">
+                                {posts.slice(1).map((post, idx) => (
+                                    <PostPreviewItem
+                                        key={idx}
+                                        layout="horizontal_compact"
+                                        {...post}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </>
             )}
         </div>
     );

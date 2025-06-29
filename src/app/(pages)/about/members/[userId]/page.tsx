@@ -1,13 +1,16 @@
 import { notFound } from "next/navigation";
 import ProfilePanel from "./components/ProfilePanel";
 import PublishedPosts from "./components/PublishedPosts";
-import membersMock from "@/__mocks__/membersMock";
+import { get_member, get_member_memberId } from "@/lib/api/endpoints/member";
+import { memberMapper } from "@/lib/api/mappers/member.mapper";
 
 export default async function MemberPage({ params }: { params: Promise<{ userId: string }> }) {
     const { userId } = await params;
-    const member = membersMock.find((m) => m.id.toString() === userId);
+    const data = await get_member_memberId(userId).then((res) => res.data);
 
-    if (!member) return notFound();
+    if (!data) return notFound();
+
+    const member = memberMapper(data);
 
     return (
         <div className="flex items-center justify-center w-full py-[160px]">
@@ -25,7 +28,9 @@ export default async function MemberPage({ params }: { params: Promise<{ userId:
 }
 
 export async function generateStaticParams() {
-    return membersMock.map((member) => ({
-        userId: member.id.toString(),
+    const data = await get_member().then((res) => res.data);
+
+    return (data ?? []).map((member: any) => ({
+        userId: member.memberId.toString(),
     }));
 }
