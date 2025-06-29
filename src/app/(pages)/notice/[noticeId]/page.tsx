@@ -45,7 +45,11 @@ export default async function NoticeDetailPage({
             <NoticeBanner notice={notice} />
 
             {/* 본문 + 첨부파일 */}
-            <DetailBody content={notice.content} attachment={notice.attachment} />
+            <DetailBody
+                content={notice.content}
+                attachment={notice.attachment}
+                resourceName="공지사항"
+            />
 
             {/* 접이식 하단 목록 */}
             <AccordionList currentId={notice.id} />
