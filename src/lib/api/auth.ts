@@ -11,8 +11,3 @@ export async function refreshToken(): Promise<boolean> {
         return false;
     }
 }
-
-export async function logout(): Promise<void> {
-    await fetchJson("/api/v1/auth/logout", { method: "POST" });
-    await fetch("/api/clear-auth", { method: "POST" });
-}
