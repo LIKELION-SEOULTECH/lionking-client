@@ -110,4 +110,20 @@ export type ProjectPreviewMetadata = {
     }[];
 };
 
+export type Project = {
+    id: number;
+    title: string;
+    description: string;
+    videoLink?: string;
+    generation: number;
+    projectType: ProjectTypeEnum;
+    thumbnail: string;
+    participations: string[];
+    landingImages: string[];
+    retrospections: {
+        memberName: string;
+        content: string;
+    }[];
+};
+
 export type MemberPublishedPostFilters = "참여 프로젝트" | "작성한 글";
