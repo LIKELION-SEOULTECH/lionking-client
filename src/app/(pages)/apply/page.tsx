@@ -1,5 +1,3 @@
-// src/app/(pages)/apply/page.tsx
-import React from "react";
 import Hero from "./sections/Hero/Hero";
 import Schedule from "./sections/Schedule ";
 import Eligibility from "./sections/Eligibility";

@@ -1,29 +1,20 @@
-// src/app/(pages)/apply/sections/Hero/Hero.tsx
 "use client";
 
-import React from "react";
 import ApplyBanner from "@/assets/banner/applyBanner.svg";
 
 export default function Hero() {
     return (
-        <section className="relative w-full overflow-hidden">
-            <ApplyBanner className="block w-full h-auto" preserveAspectRatio="xMidYMin meet" />
+        <section className="relative w-full overflow-hidden pt-15">
+            <ApplyBanner className="w-full h-auto" preserveAspectRatio="xMidYMin meet" />
 
-            {/* 하단 배너 텍스트 영역 */}
-            <div
-                className="
-          flex 
-          justify-center 
-          items-center 
-          h-[70px] 
-          gap-[100px] 
-          text-[#FF7710] 
-          head5_sb
-        "
-            >
-                <span>LIKELION SEOULTECH RECRUITMENT</span>
-                <span>2024.02.21 – 03.15</span>
-                <span>LIKELION SEOULTECH RECRUITMENT</span>
+            <div className="relative w-full overflow-x-hidden">
+                <div className="w-full flex justify-center py-4 text-orange-main head5_sb">
+                    <div className="relative inline-flex gap-8 md:gap-20 lg:gap-25 whitespace-nowrap">
+                        <span className="shrink-0">LIKELION SEOULTECH RECRUITMENT</span>
+                        <span className="shrink-0">2024.02.21 – 03.15</span>
+                        <span className="shrink-0">LIKELION SEOULTECH RECRUITMENT</span>
+                    </div>
+                </div>
             </div>
         </section>
     );
