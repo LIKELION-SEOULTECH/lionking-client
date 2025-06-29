@@ -1,4 +1,6 @@
 import { fetchJson } from "@/lib/api/fetchJson";
+import { blogMapper } from "../mappers/blog.mapper";
+import { PostPreviewMetadata } from "@/types";
 
 export async function post_blog_authorId(authorId: string | number, body: any) {
     return fetchJson(`/api/v1/blog/${authorId}`, {
@@ -29,7 +31,7 @@ export async function patch_blog_blogId(blogId: string | number, body: any) {
 export async function get_blog() {
     return fetchJson("/api/v1/blog", {
         method: "GET",
-    });
+    }).then((res) => res.data.map(blogMapper) as PostPreviewMetadata[]);
 }
 
 export async function get_blog_author_authorId(authorId: string | number) {

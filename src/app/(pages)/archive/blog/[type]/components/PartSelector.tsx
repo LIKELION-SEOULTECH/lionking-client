@@ -11,7 +11,7 @@ type PartSelectorProps = {
 export default function PartSelector({ value, onChange }: PartSelectorProps) {
     return (
         <div className="w-full flex items-center justify-start lg:justify-end">
-            <DropdownSelector value={value} onChange={onChange} options={partOptions} />;
+            <DropdownSelector value={value} onChange={onChange} options={partOptions} />
         </div>
     );
 }
