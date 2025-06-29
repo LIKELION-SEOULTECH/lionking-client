@@ -2,13 +2,16 @@
 
 import { useEffect, useState } from "react";
 
-export default function WithMockServer() {
+export default function WithMockServer({ children }: { children?: React.ReactNode }) {
     const [ready, setReady] = useState(false);
 
     useEffect(() => {
         const shouldMock = process.env.NODE_ENV === "development";
 
-        if (!shouldMock) return;
+        if (!shouldMock) {
+            setReady(true);
+            return;
+        }
 
         const init = async () => {
             const initMsw = await import("./index").then((res) => res.initMsw);
@@ -21,9 +24,9 @@ export default function WithMockServer() {
         }
     }, [ready]);
 
-    if (!ready && process.env.NODE_ENV === "development") {
+    if (!ready) {
         return <p className="text-sm text-gray-500">🧪 Mock server initializing...</p>;
     }
 
-    return null;
+    return <>{children}</>;
 }

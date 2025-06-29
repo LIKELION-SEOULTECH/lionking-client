@@ -64,10 +64,34 @@ export type News = {
 export type ProjectTypeFilters =
     | "활동"
     | "아이디어톤"
-    | "중앙 헤커톤"
+    | "중앙 해커톤"
     | "연합 해커톤"
     | "장기 프로젝트"
     | "기타";
+
+export type ProjectTypeEnum =
+    | "IDEATHON"
+    | "CENTRAL_HACKATHON"
+    | "UNION_HACKATHON"
+    | "LONG_TERM"
+    | "ETC";
+
+export const projectTypeLabelToEnum: Record<ProjectTypeFilters, ProjectTypeEnum | ""> = {
+    활동: "",
+    아이디어톤: "IDEATHON",
+    "중앙 해커톤": "CENTRAL_HACKATHON",
+    "연합 해커톤": "UNION_HACKATHON",
+    "장기 프로젝트": "LONG_TERM",
+    기타: "ETC",
+};
+
+export const projectTypeEnumToLabel: Record<ProjectTypeEnum, ProjectTypeFilters> = {
+    IDEATHON: "아이디어톤",
+    CENTRAL_HACKATHON: "중앙 해커톤",
+    UNION_HACKATHON: "연합 해커톤",
+    LONG_TERM: "장기 프로젝트",
+    ETC: "기타",
+};
 
 export type ProjectCardVariants = "PROJECT_PAGE" | "MEMBER_PAGE";
 

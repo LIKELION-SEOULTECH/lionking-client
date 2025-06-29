@@ -1,12 +1,22 @@
-import DropdownSelector from "@/components/ui/DropdownSelector";
+"use client";
 
-const projectYearOptions = ["기수", "12기", "13기"];
+import DropdownSelector from "@/components/ui/DropdownSelector";
+import { generationToLabel } from "@/lib/utils";
 
 type ProjectYearSelectorProps = {
-    value: string;
+    value: number | string;
     onChange: (value: string) => void;
+    generations?: number[];
 };
 
-export default function ProjectYearSelector({ value, onChange }: ProjectYearSelectorProps) {
-    return <DropdownSelector value={value} onChange={onChange} options={projectYearOptions} dark />;
+export default function ProjectYearSelector({
+    value,
+    onChange,
+    generations = [13, 12],
+}: ProjectYearSelectorProps) {
+    const options = ["기수", ...generations.map((g) => `${g}기`)];
+
+    const selectedLabel = typeof value === "number" ? generationToLabel(value) : value;
+
+    return <DropdownSelector value={selectedLabel} onChange={onChange} options={options} dark />;
 }

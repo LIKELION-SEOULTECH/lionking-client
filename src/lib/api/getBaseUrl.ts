@@ -1,7 +1,7 @@
 export function getBaseUrl(): string {
     const base = process.env.NEXT_PUBLIC_API_BASE_URL;
     if (!base) {
-        throw new Error("Missing NEXT_PUBLIC_API_BASE_URL");
+        return "http://localhost:3000";
     }
-    return base.replace(/\/+$/, "");
+    return base;
 }
