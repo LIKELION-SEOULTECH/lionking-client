@@ -5,17 +5,26 @@ export async function POST(req: NextRequest) {
     const { loginId, password } = await req.json();
 
     try {
-        const data = await fetchJson<{
-            accessToken: string;
-            refreshToken: string;
+        const response = await fetchJson<{
+            code: string;
+            message: string;
+            data: {
+                accessToken: string;
+                refreshToken: string;
+                userId: number;
+                memberId: number;
+                username: string;
+            };
         }>("/api/v1/auth/login", {
             method: "POST",
             body: { loginId, password },
         });
 
-        const response = NextResponse.json({ success: true });
+        const { accessToken, refreshToken } = response.data;
 
-        response.cookies.set("access_token", data.accessToken, {
+        const res = NextResponse.json({ success: true });
+
+        res.cookies.set("access_token", accessToken, {
             httpOnly: true,
             secure: true,
             path: "/",
@@ -23,7 +32,7 @@ export async function POST(req: NextRequest) {
             maxAge: 60 * 15,
         });
 
-        response.cookies.set("refresh_token", data.refreshToken, {
+        res.cookies.set("refresh_token", refreshToken, {
             httpOnly: true,
             secure: true,
             path: "/",
@@ -31,7 +40,7 @@ export async function POST(req: NextRequest) {
             maxAge: 60 * 60 * 24 * 7,
         });
 
-        return response;
+        return res;
     } catch (err) {
         return NextResponse.json(
             { success: false, error: (err as Error).message },

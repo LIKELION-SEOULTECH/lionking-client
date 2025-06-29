@@ -1,24 +1,49 @@
 "use client";
 
-import { useState, useTransition, use, Suspense } from "react";
+import { useState, useTransition, useEffect } from "react";
 import TypeLogo from "@/components/ui/TypeLogo";
-import LoginTrigger from "./LoginTrigger";
 
 export default function LoginPage() {
     const [loginId, setLoginId] = useState("");
     const [password, setPassword] = useState("");
-    const [promise, setPromise] = useState<Promise<any> | null>(null);
     const [isPending, startTransition] = useTransition();
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [loginSuccess, setLoginSuccess] = useState(false);
+
+    useEffect(() => {
+        if (loginSuccess) {
+            window.location.href = "/dashboard";
+        }
+    }, [loginSuccess]);
 
     const handleLogin = () => {
+        setErrorMessage(null);
+
         startTransition(() => {
-            const loginPromise = import("@/lib/api/fetchJson").then(({ fetchJson }) =>
-                fetchJson("/api/login", {
-                    method: "POST",
-                    body: { loginId, password },
+            fetch("/api/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ loginId, password }),
+            })
+                .then(async (res) => {
+                    if (!res.ok) {
+                        const err = await res.json().catch(() => ({}));
+                        throw new Error(err?.message || "로그인 실패");
+                    }
+                    return res.json();
                 })
-            );
-            setPromise(loginPromise);
+                .then((data) => {
+                    if (data?.success) {
+                        setLoginSuccess(true);
+                    } else {
+                        throw new Error("응답이 올바르지 않습니다");
+                    }
+                })
+                .catch((err: Error) => {
+                    setErrorMessage(err.message || "로그인 중 오류가 발생했습니다");
+                });
         });
     };
 
@@ -30,13 +55,11 @@ export default function LoginPage() {
                 <div className="w-full space-y-10">
                     <div className="w-full space-y-6">
                         <div className="relative">
-                            <label htmlFor="loginId" className="hidden">
-                                아이디
-                            </label>
                             <input
                                 id="loginId"
                                 type="text"
                                 value={loginId}
+                                onKeyDown={(e) => e.key === "Enter" && handleLogin()}
                                 onChange={(e) => setLoginId(e.target.value)}
                                 className="w-full px-7 py-3 body3_r text-white placeholder:text-gray-4 outline outline-gray-5 focus:outline-orange-main rounded-[10px] transition-colors duration-200"
                                 placeholder="아이디를 입력해주세요"
@@ -44,13 +67,11 @@ export default function LoginPage() {
                         </div>
 
                         <div className="relative">
-                            <label htmlFor="password" className="hidden">
-                                비밀번호
-                            </label>
                             <input
                                 id="password"
-                                type="text"
+                                type="password"
                                 value={password}
+                                onKeyDown={(e) => e.key === "Enter" && handleLogin()}
                                 onChange={(e) => setPassword(e.target.value)}
                                 className="w-full px-7 py-3 body3_r text-white placeholder:text-gray-4 outline outline-gray-5 focus:outline-orange-main rounded-[10px] transition-colors duration-200"
                                 placeholder="비밀번호를 입력해주세요"
@@ -66,12 +87,8 @@ export default function LoginPage() {
                         {isPending ? "로그인 중..." : "로그인"}
                     </button>
 
-                    {promise && (
-                        <Suspense
-                            fallback={<p className="body5_r text-gray-3">로그인 처리 중...</p>}
-                        >
-                            <LoginTrigger promise={promise} />
-                        </Suspense>
+                    {errorMessage && (
+                        <p className="text-red-400 text-center body5_r">{errorMessage}</p>
                     )}
                 </div>
             </div>
