@@ -2,6 +2,7 @@ import { get_projects } from "@/lib/api/endpoints/project";
 import { ProjectPreviewMetadata, ProjectTypeEnum, ProjectTypeFilters } from "@/types";
 import ProjectCardStatic from "@/components/ui/ProjectCardStatic";
 import ProjectCardGridClient from "./ProjectCardGridClient";
+import { projectMetaMapper } from "@/lib/api/mappers/projectMeta.mapper";
 
 export default async function ProjectCardGrid({
     searchParams,
@@ -11,12 +12,12 @@ export default async function ProjectCardGrid({
     const projectType = searchParams?.projectType as ProjectTypeEnum;
     const generation: number = searchParams?.generation ?? 13;
 
-    const projects: ProjectPreviewMetadata[] = await get_projects({
+    const data = await get_projects({
         projectType,
         generation,
-    });
+    }).then((res) => res.data);
 
-    console.log("projects", projects);
+    const projects: ProjectPreviewMetadata[] = data.map(projectMetaMapper);
 
     return (
         <div className="w-full flex justify-center">
@@ -24,7 +25,7 @@ export default async function ProjectCardGrid({
                 <ProjectCardGridClient projectType={projectType} generation={generation} />
 
                 <div className="w-full grid place-items-center gap-x-[35px] gap-y-[52px] grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-                    {/* {projects.map((project) => (
+                    {projects.map((project) => (
                         <ProjectCardStatic
                             key={project.projectId}
                             projectId={project.projectId}
@@ -35,7 +36,7 @@ export default async function ProjectCardGrid({
                             badges={project.badges}
                             variant="PROJECT_PAGE"
                         />
-                    ))} */}
+                    ))}
                 </div>
             </div>
         </div>
