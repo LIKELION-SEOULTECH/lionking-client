@@ -1,5 +1,5 @@
 import { extractSummary, getFullS3Url } from "@/lib/utils";
-import type { PostPreviewMetadata, PostTypes } from "@/types";
+import type { BlogContent, PostPreviewMetadata, PostTypes } from "@/types";
 
 const blogTypeApiToPostTypeMap: Record<string, PostTypes> = {
     ARTICLE: "article",
@@ -20,7 +20,7 @@ type BlogAPIResponse = {
     }[];
 };
 
-export function blogMapper(blog: BlogAPIResponse): PostPreviewMetadata {
+export function blogMetaMapper(blog: BlogAPIResponse): PostPreviewMetadata {
     return {
         postId: blog.id,
         postType: blogTypeApiToPostTypeMap[blog.blogType] ?? "article",
@@ -32,5 +32,23 @@ export function blogMapper(blog: BlogAPIResponse): PostPreviewMetadata {
         authorId: blog.authorId,
         imageUrl: getFullS3Url(blog.thumbnailImage),
         postHref: `/blog/${blog.id}`,
+    };
+}
+
+export function blogMapper(blog: BlogAPIResponse): BlogContent {
+    return {
+        blogId: blog.id,
+        blogType: blogTypeApiToPostTypeMap[blog.blogType] ?? "article",
+        title: blog.title,
+        content: blog.content,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        author: {
+            id: blog.authorId,
+            name: `작성자${blog.authorId}`,
+        },
+        thumbnail: getFullS3Url(blog.thumbnailImage) ?? "",
+        goal: [""],
+        summary: [""],
     };
 }

@@ -27,8 +27,8 @@ export type Member = {
     id: number;
     name: string;
     major?: string;
-    position: Parts;
-    role: Role;
+    position?: Parts;
+    role?: Role;
     imageUrl?: string;
     userTags?: string[]; // <파트> <운영진/아기사자> <부서>, 주황색으로 나오는 부분
     profileIntro?: string;
