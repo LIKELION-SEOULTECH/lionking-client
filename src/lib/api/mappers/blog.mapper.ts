@@ -46,6 +46,7 @@ export function blogMapper(blog: BlogAPIResponse): BlogContent {
         author: {
             id: blog.authorId,
             name: `작성자${blog.authorId}`,
+            position: "기획(기본)",
         },
         thumbnail: getFullS3Url(blog.thumbnailImage) ?? "",
         goal: [""],

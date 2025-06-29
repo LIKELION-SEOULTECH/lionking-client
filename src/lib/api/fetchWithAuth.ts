@@ -3,7 +3,7 @@
 import { refreshToken } from "./auth";
 
 export async function fetchWithAuth(input: RequestInfo, init?: RequestInit): Promise<Response> {
-    let res = await fetch(input, {
+    const res = await fetch(input, {
         ...init,
         credentials: "include",
         headers: {

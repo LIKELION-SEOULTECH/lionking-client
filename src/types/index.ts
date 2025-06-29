@@ -28,7 +28,7 @@ export type Member = {
     name: string;
     major?: string;
     position?: Parts;
-    role?: Role;
+    role: Role;
     imageUrl?: string;
     userTags?: string[]; // <파트> <운영진/아기사자> <부서>, 주황색으로 나오는 부분
     profileIntro?: string;
@@ -43,7 +43,11 @@ export type Member = {
 export type BlogContent = {
     blogId: number | string;
     title: string;
-    author: Member;
+    author: {
+        id: number | string;
+        name: string;
+        position: Parts | string;
+    };
     thumbnail: string;
     content: string;
     createdAt: Date;
