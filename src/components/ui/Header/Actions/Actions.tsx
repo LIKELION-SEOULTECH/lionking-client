@@ -1,46 +1,37 @@
-import { cn } from "@/lib/utils";
+import Link from "next/link";
 import Button from "@/components/ui/Button";
 import ProfileButton from "./components/ProfileButton";
-import { useRouter } from "next/navigation";
+import { Member } from "@/types";
 
 type ActionsProps = {
     isLoggedIn: boolean;
-    isMobile?: boolean;
+    authenticatedUser: Member | undefined;
 };
 
-export default function Actions({ isLoggedIn, isMobile = false }: ActionsProps) {
-    const router = useRouter();
-
+export default function Actions({ isLoggedIn, authenticatedUser }: ActionsProps) {
     return (
         <div
-            className={cn("h-full flex items-center gap-4", isMobile && "gap-2")}
+            className="h-full flex items-center gap-4"
             role="group"
             aria-label="동아리 지원 및 로그인 버튼"
         >
-            <Button
-                color="orange"
-                type="button"
-                onClick={() => router.push("/apply")}
-                className={cn(isMobile && "text-sm px-3 py-1.5")}
-            >
-                {isMobile ? "지원" : "지원하기"}
-            </Button>
+            <Link href="/apply" className="block">
+                <Button color="orange" type="button">
+                    지원하기
+                </Button>
+            </Link>
 
-            <div className={cn(isMobile && "hidden sm:block")}>
+            <div className="hidden sm:block">
                 {isLoggedIn ? (
-                    <ProfileButton isMobile={isMobile} />
+                    <ProfileButton authenticatedUser={authenticatedUser} />
                 ) : (
-                    <LoginButton isMobile={isMobile} />
+                    <Link href="/login" className="block">
+                        <Button color="neutral" type="button">
+                            로그인
+                        </Button>
+                    </Link>
                 )}
             </div>
         </div>
-    );
-}
-
-function LoginButton({ isMobile = false }: { isMobile?: boolean }) {
-    return (
-        <Button color="neutral" type="button" className={cn(isMobile && "text-sm px-3 py-1.5")}>
-            로그인
-        </Button>
     );
 }

@@ -9,27 +9,13 @@ import type { Member } from "@/types";
 import { ChevronRight } from "lucide-react";
 
 type MobileProfileSectionProps = {
-    member?: {
-        id: number;
-        name: string;
-        role: Member["role"];
-        major?: string;
-        imageUrl?: string;
-    };
-    onSignout?: () => void;
+    user: Member;
+    onSignout: () => void;
 };
 
-export default function MobileProfileSection({
-    member = {
-        id: 1,
-        name: "김사자",
-        role: "운영진",
-        major: "인공지능학과",
-    },
-    onSignout = () => alert("로그아웃"),
-}: MobileProfileSectionProps) {
+export default function MobileProfileSection({ user, onSignout }: MobileProfileSectionProps) {
     const [isExpanded, setIsExpanded] = useState(false);
-    const buttonGroups = profileDropdownActionMap[member.role]({
+    const buttonGroups = profileDropdownActionMap[user.role]({
         signout: onSignout,
     });
 
@@ -44,15 +30,15 @@ export default function MobileProfileSection({
                 <div className="flex items-center justify-between gap-3">
                     <motion.div className="relative size-10 rounded-full overflow-hidden">
                         <Image
-                            src={member.imageUrl ?? "/static/images/placeholder_profile.svg"}
-                            alt={`${member.name}의 프로필 이미지`}
+                            src={user.imageUrl ?? "/static/images/placeholder_profile.svg"}
+                            alt={`${user.name}의 프로필 이미지`}
                             objectFit="cover"
                             fill
                         />
                     </motion.div>
                     <div className="h-full flex flex-col items-start justify-center text-white">
-                        <p className="sub3_sb">{member.name}</p>
-                        <p className="body6_r text-gray-2">{member.role}</p>
+                        <p className="sub3_sb">{user.name}</p>
+                        <p className="body6_r text-gray-2">{user.roleLabel}</p>
                     </div>
                 </div>
                 <motion.div

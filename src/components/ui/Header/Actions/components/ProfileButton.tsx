@@ -3,13 +3,13 @@ import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import ProfileDropdown from "./ProfileDropdown";
 import ProfileEmpty from "@/assets/profile_empty.svg";
-import { cn } from "@/lib/utils";
+import { Member } from "@/types";
 
 type ProfileButtonProps = {
-    isMobile?: boolean;
+    authenticatedUser: Member | undefined;
 };
 
-export default function ProfileButton({ isMobile = false }: ProfileButtonProps) {
+export default function ProfileButton({ authenticatedUser }: ProfileButtonProps) {
     const [isOpen, setIsOpen] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -39,26 +39,19 @@ export default function ProfileButton({ isMobile = false }: ProfileButtonProps) 
             className="relative"
             ref={containerRef}
             onMouseEnter={() => {
-                if (!isMobile) {
-                    cancelClose();
-                    setIsOpen(true);
-                }
+                cancelClose();
+                setIsOpen(true);
             }}
             onMouseLeave={() => {
-                if (!isMobile) {
-                    delayedClose();
-                }
+                delayedClose();
             }}
         >
             <button
                 onClick={() => setIsOpen((prev) => !prev)}
-                className={cn(
-                    "flex justify-start items-center gap-2 focus:outline-none",
-                    isMobile && "gap-1"
-                )}
+                className="flex justify-start items-center gap-2 focus:outline-none"
             >
-                <ProfileEmpty className={cn(isMobile && "w-8 h-8")} />
-                <div className={cn("sub5_sb", isMobile && "hidden sm:block text-sm")}>김사자</div>
+                <ProfileEmpty />
+                <div className="sub5_sb">{authenticatedUser?.name}</div>
             </button>
             <AnimatePresence>
                 {isOpen && (
@@ -68,24 +61,19 @@ export default function ProfileButton({ isMobile = false }: ProfileButtonProps) 
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: -6, scale: 0.98 }}
                         transition={{ duration: 0.15, ease: "easeOut" }}
-                        className={cn(
-                            "absolute right-0 top-full mt-7 min-w-[241px]",
-                            isMobile && "mt-3 min-w-[200px]"
-                        )}
+                        className="absolute right-0 top-full mt-7 min-w-[241px]"
                     >
-                        <ProfileDropdown
-                            member={{
-                                id: 1,
-                                name: "김먀옹",
-                                major: "인공지능학과",
-                                position: "프론트엔드",
-                                role: "운영진",
-                                userTags: ["프론트엔드", "운영진"],
-                            }}
-                            onClicks={{
-                                signout: () => alert("ㅂ2"),
-                            }}
-                        />
+                        {authenticatedUser && (
+                            <ProfileDropdown
+                                member={authenticatedUser}
+                                onClicks={{
+                                    signout: async () => {
+                                        await fetch("/api/logout", { method: "POST" });
+                                        window.location.href = "/";
+                                    },
+                                }}
+                            />
+                        )}
                     </motion.div>
                 )}
             </AnimatePresence>

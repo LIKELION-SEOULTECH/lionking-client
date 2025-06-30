@@ -2,7 +2,10 @@ export type Parts = "기획" | "디자인" | "프론트엔드" | "백엔드" | "
 
 export type PartFilters = "전체" | "기획" | "디자인" | "프론트엔드" | "백엔드" | "AI";
 
-export type Role = "운영진" | "아기사자" | "휴면사자";
+// export type Role = "운영진" | "아기사자" | "휴면사자";
+export type Role = "GUEST" | "MEMBER" | "MANAGER" | "REPRESENTATIVE" | "PREVIOUS";
+
+export type RoleLabels = "게스트" | "아기사자" | "운영진" | "대표" | "휴면사자";
 
 export type RoleFilters = "전체" | "운영진" | "아기사자";
 
@@ -29,6 +32,7 @@ export type Member = {
     major?: string;
     position?: Parts;
     role: Role;
+    roleLabel: RoleLabels;
     imageUrl?: string;
     userTags?: string[]; // <파트> <운영진/아기사자> <부서>, 주황색으로 나오는 부분
     profileIntro?: string;
@@ -38,6 +42,27 @@ export type Member = {
         label: string;
         url: string;
     }[];
+};
+
+export type User = {
+    memberId: number;
+    username: string;
+    profileImage: string | null;
+    department: string | null;
+    position: string;
+    role: string;
+    descriptionTag: string | null;
+    description: string | null;
+    techStack: string | null;
+    portfolioUrls: string | null;
+};
+
+export const roleEnumToLabel: Record<Role, RoleLabels> = {
+    GUEST: "게스트",
+    MEMBER: "아기사자",
+    MANAGER: "운영진",
+    REPRESENTATIVE: "대표",
+    PREVIOUS: "휴면사자",
 };
 
 export type BlogContent = {

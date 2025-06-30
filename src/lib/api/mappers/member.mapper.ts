@@ -1,13 +1,14 @@
-import { Member } from "@/types";
+import { Member, roleEnumToLabel, User } from "@/types";
 import { Parts, Role } from "@/types";
 
-export function memberMapper(data: any): Member {
+export function memberMapper(data: User): Member {
     return {
         id: data.memberId,
         name: data.username,
         major: data.department ?? undefined,
         position: data.position as Parts,
         role: data.role as Role,
+        roleLabel: roleEnumToLabel[data.role as Role],
         imageUrl: data.profileImage ?? undefined,
         userTags: [data.role, data.position].filter(Boolean),
         profileIntro: data.description ?? undefined,
