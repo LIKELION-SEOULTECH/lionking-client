@@ -3,6 +3,7 @@
 import { cookies } from "next/headers";
 import { getBaseUrl } from "./getBaseUrl";
 import { post_auth_reissue } from "./endpoints/auth";
+import { redirect } from "next/navigation";
 
 export type FetchJsonOptions = {
     method?: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
@@ -60,7 +61,7 @@ export async function createFetchClient() {
                 );
             } catch (error) {
                 console.error(error);
-                throw new Error("다시 로그인하세요.");
+                redirect("/login");
             }
         }
 
@@ -98,6 +99,7 @@ export async function createFetchClient() {
                 const err = await response.json();
                 message = err.message || JSON.stringify(err);
             } catch {}
+            if (withAuth) redirect("/login");
             throw new Error(message);
         }
 

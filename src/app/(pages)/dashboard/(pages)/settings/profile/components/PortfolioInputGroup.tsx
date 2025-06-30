@@ -20,9 +20,9 @@ export function PortfolioInputGroup({
 }) {
     return (
         <div className="flex items-center gap-4 w-full">
-            <F.Select name={`portfolios[${index}].type`} options={portfolioOptions} />
+            <F.Select name={`portfolioUrls[${index}].type`} options={portfolioOptions} />
             <F.Input
-                name={`portfolios[${index}].url`}
+                name={`portfolioUrls[${index}].url`}
                 placeholder="포트폴리오 URL을 입력해주세요"
                 className="flex-1"
             />

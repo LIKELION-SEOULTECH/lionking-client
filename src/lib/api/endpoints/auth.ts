@@ -54,3 +54,12 @@ export async function get_auth_me() {
         method: "GET",
     });
 }
+
+export async function get_authenticated_userid(): Promise<number> {
+    const fetchJson = await createFetchClient();
+
+    return fetchJson("/api/v1/auth/me", {
+        method: "GET",
+        withAuth: true,
+    }).then((res) => res.data.id);
+}

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { get_member, get_member_memberId } from "@/lib/api/endpoints/member";
+import { get_member_memberId } from "@/lib/api/endpoints/member";
 
 export async function GET(req: NextRequest, params: Promise<{ memberId: string }>) {
     try {

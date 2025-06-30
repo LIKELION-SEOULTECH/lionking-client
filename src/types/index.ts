@@ -41,9 +41,9 @@ export type Member = {
     userTags?: string[]; // <파트> <운영진/아기사자> <부서>, 주황색으로 나오는 부분
     profileIntro?: string;
     profileIntroTags?: string[]; // 맴버프로필-소개 섹션에 들어가는 태그
-    profileIntroSkills?: string[];
+    profileIntroSkills?: string;
     profileExternalLinks?: {
-        label: string;
+        type: string;
         url: string;
     }[];
 };
