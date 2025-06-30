@@ -29,11 +29,11 @@ export function extractSummary(html: string, maxLength: number = 100): string {
     return normalized;
 }
 
-const S3_BASE_URL = "https://lionking-bucket2.s3.ap-northeast-2.amazonaws.com/";
+const S3_BASE_URL = "https://lionking-bucket2.s3.ap-northeast-2.amazonaws.com";
 
 export function getFullS3Url(s3Key?: string | null): string | undefined {
     if (!s3Key) return undefined;
-    return `${process.env.NEXT_PUBLIC_S3_BASE_URL ?? S3_BASE_URL}${s3Key}`;
+    return `${process.env.NEXT_PUBLIC_S3_BASE_URL ?? S3_BASE_URL}/${s3Key}`;
 }
 
 export function extractFilePathFromS3Url(url: string): string {
