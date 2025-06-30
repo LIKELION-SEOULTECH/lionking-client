@@ -1,4 +1,4 @@
-import { Member, roleEnumToLabel, User } from "@/types";
+import { Member, positionEnumToLabel, roleEnumToLabel, User } from "@/types";
 import { Parts, Role } from "@/types";
 
 export function memberMapper(data: User): Member {
@@ -7,6 +7,7 @@ export function memberMapper(data: User): Member {
         name: data.username,
         major: data.department ?? undefined,
         position: data.position as Parts,
+        positionLabel: positionEnumToLabel[data.position as Parts],
         role: data.role as Role,
         roleLabel: roleEnumToLabel[data.role as Role],
         imageUrl: data.profileImage ?? undefined,

@@ -1,4 +1,6 @@
-export type Parts = "기획" | "디자인" | "프론트엔드" | "백엔드" | "AI";
+// export type Parts = "기획" | "디자인" | "프론트엔드" | "백엔드" | "AI";
+export type Parts = "PLAN" | "DESIGN" | "FRONTEND" | "BACKEND" | "AI";
+export type PartLabels = "기획" | "디자인" | "프론트엔드" | "백엔드" | "AI";
 
 export type PartFilters = "전체" | "기획" | "디자인" | "프론트엔드" | "백엔드" | "AI";
 
@@ -31,6 +33,7 @@ export type Member = {
     name: string;
     major?: string;
     position?: Parts;
+    positionLabel?: PartLabels;
     generation?: number;
     role: Role;
     roleLabel: RoleLabels;
@@ -64,6 +67,14 @@ export const roleEnumToLabel: Record<Role, RoleLabels> = {
     MANAGER: "운영진",
     REPRESENTATIVE: "대표",
     PREVIOUS: "휴면사자",
+};
+
+export const positionEnumToLabel: Record<Parts, PartLabels> = {
+    PLAN: "기획",
+    DESIGN: "디자인",
+    FRONTEND: "프론트엔드",
+    BACKEND: "백엔드",
+    AI: "AI",
 };
 
 export type BlogContent = {
@@ -100,6 +111,7 @@ export type ProjectTypeFilters =
     | "기타";
 
 export type ProjectTypeEnum =
+    | ""
     | "IDEATHON"
     | "CENTRAL_HACKATHON"
     | "UNION_HACKATHON"
@@ -116,6 +128,7 @@ export const projectTypeLabelToEnum: Record<ProjectTypeFilters, ProjectTypeEnum 
 };
 
 export const projectTypeEnumToLabel: Record<ProjectTypeEnum, ProjectTypeFilters> = {
+    "": "활동",
     IDEATHON: "아이디어톤",
     CENTRAL_HACKATHON: "중앙 해커톤",
     UNION_HACKATHON: "연합 해커톤",

@@ -1,5 +1,22 @@
 import { createFetchClient } from "@/lib/api/fetchJson";
-import type { Project } from "@/types";
+import { type Project, type ProjectTypeEnum } from "@/types";
+
+type MemberRetrospection = {
+    memberId: number;
+    retrospection: string;
+};
+
+export type PostProjectRequest = {
+    projectName: string;
+    projectType: ProjectTypeEnum;
+    generation: number;
+    projectDescription: string;
+    videoLink: string;
+    memberRetrospection: MemberRetrospection[];
+    memberIds: number[];
+    thumbnailImageKey: string;
+    landingImagesKeys: string[];
+};
 
 export async function get_projects(query?: Record<string, any>) {
     const fetchJson = await createFetchClient();
@@ -10,7 +27,7 @@ export async function get_projects(query?: Record<string, any>) {
     });
 }
 
-export async function post_projects(body: any) {
+export async function post_projects(body: PostProjectRequest) {
     const fetchJson = await createFetchClient();
 
     return fetchJson("/api/v1/projects", {
