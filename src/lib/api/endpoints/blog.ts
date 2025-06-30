@@ -7,6 +7,10 @@ export type PostBlogRequest = {
     title: string;
     content: string;
     thumbnailImage: string;
+    contentMedia?: {
+        s3Key: string;
+        mediaType: "IMAGE";
+    }[];
 };
 
 export async function post_blog_authorId(authorId: string | number, body: PostBlogRequest) {

@@ -1,3 +1,5 @@
+"use server";
+
 import { createFetchClient } from "@/lib/api/fetchJson";
 import { type Project, type ProjectTypeEnum } from "@/types";
 

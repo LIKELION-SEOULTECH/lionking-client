@@ -49,3 +49,13 @@ export function extractFilePathFromS3Url(url: string): string {
         throw new Error("Failed to extract file path from S3 URL");
     }
 }
+
+export function extractS3KeysFromHtml(content: string): { s3Key: string; mediaType: "IMAGE" }[] {
+    const matches = [...content.matchAll(/src="https:\/\/[^\/]+\/([^"]+)"/g)];
+    const keys = matches.map(([, path]) => ({
+        s3Key: path,
+        mediaType: "IMAGE" as const,
+    }));
+
+    return keys;
+}

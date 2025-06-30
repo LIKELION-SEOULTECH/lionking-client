@@ -2,12 +2,14 @@ import * as Yup from "yup";
 import { GenericFormPageConfig } from "../types/FormConfig.types";
 import Icons from "@/assets/banner/archive/blog/icons.svg";
 import { PostBlogRequest } from "@/lib/api/endpoints/blog";
+import { extractS3KeysFromHtml, extractFilePathFromS3Url } from "@/lib/utils";
 
 const blogSchema = Yup.object({
     title: Yup.string().required("제목을 입력해주세요").max(100, "최대 100자까지 입력 가능합니다"),
     category: Yup.string().required("카테고리를 선택해주세요"),
     thumbnail: Yup.string().required("썸네일을 업로드해주세요"),
     content: Yup.string().required("내용을 입력해주세요"),
+    authorId: Yup.number().required(),
 });
 
 export type BlogFormValues = Yup.InferType<typeof blogSchema>;
@@ -17,7 +19,8 @@ export function generatePostBlogRequest(form: BlogFormValues): PostBlogRequest {
         title: form.title,
         blogType: form.category as "SESSION" | "ARTICLE",
         content: form.content,
-        thumbnailImage: form.thumbnail,
+        thumbnailImage: extractFilePathFromS3Url(form.thumbnail),
+        contentMedia: extractS3KeysFromHtml(form.content),
     };
 }
 
@@ -87,12 +90,15 @@ export const blogFormConfig: GenericFormPageConfig<BlogFormValues> = {
             category: "",
             thumbnail: "",
             content: "",
+            authorId: 0,
         },
         validationSchema: blogSchema,
         onSubmit: async (values) => {
             const reqBody = generatePostBlogRequest(values);
 
-            const response = await fetch("/api/projects", {
+            console.log("Submitting blog post:", reqBody);
+
+            const response = await fetch(`/api/blog/${values.authorId}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(reqBody),
@@ -100,7 +106,7 @@ export const blogFormConfig: GenericFormPageConfig<BlogFormValues> = {
 
             if (!response.ok) {
                 const error = await response.json();
-                throw new Error(error.message || "프로젝트 등록에 실패했습니다.");
+                throw new Error(error.message || "블로그 등록에 실패했습니다.");
             }
 
             return response.json();

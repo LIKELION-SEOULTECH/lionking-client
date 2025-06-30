@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { post_projects, PostProjectRequest } from "@/lib/api/endpoints/project";
+import {
+    get_projects_projectId,
+    post_projects,
+    PostProjectRequest,
+} from "@/lib/api/endpoints/project";
 
 export async function POST(req: NextRequest) {
     try {

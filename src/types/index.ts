@@ -161,7 +161,7 @@ export type Project = {
     generation: number;
     projectType: ProjectTypeEnum;
     thumbnail: string;
-    participations: string[];
+    participations: string[] | number[];
     landingImages: string[];
     retrospections: {
         memberName: string;

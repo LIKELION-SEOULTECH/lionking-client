@@ -119,12 +119,12 @@ export default function ProjectFormWithRecaps() {
                 <FormSection title="프로젝트 회고" isRequired>
                     <div className="w-full flex flex-col gap-8">
                         {values.projectRecaps.map((recap, index) => (
-                            <div key={recap.author.id} className="w-full">
+                            <div key={recap.author?.id || recap.memberId} className="w-full">
                                 <div className="mb-2 flex gap-2 body3_m">
                                     <span className="text-orange-main">
-                                        {recap.author.positionLabel}
+                                        {recap.author?.positionLabel || ""}
                                     </span>
-                                    <span className="text-black">{recap.author.name}</span>
+                                    <span className="text-black">{recap.author?.name}</span>
                                 </div>
                                 <TextArea
                                     name={`projectRecaps[${index}].content`}
