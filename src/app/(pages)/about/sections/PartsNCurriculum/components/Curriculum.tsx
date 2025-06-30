@@ -1,10 +1,10 @@
 "use client";
 
-import type { Parts } from "@/types";
+import type { PartLabels } from "@/types";
 import { partCurriculumData } from "@/contents/partCurriculumData";
 import { motion, AnimatePresence } from "motion/react";
 
-export default function Curriculum({ part }: { part: Parts }) {
+export default function Curriculum({ part }: { part: PartLabels }) {
     const { roleDescription, curriculum } = partCurriculumData[part];
 
     return (

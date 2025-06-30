@@ -135,7 +135,7 @@ export function Select({
 }: {
     name: string;
     className?: string;
-    options: { label: string; value: string }[];
+    options: { label: string; value: string | number }[];
 }) {
     const [field, meta] = useField(name);
 

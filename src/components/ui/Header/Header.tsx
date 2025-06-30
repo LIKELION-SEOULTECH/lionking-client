@@ -6,12 +6,10 @@ import MobileNavigation from "./Mobile/MobileNavigation";
 import Actions from "./Actions";
 import TypeLogo from "../TypeLogo";
 import HamburgerButton from "./Mobile/HamburgerButton";
+import { useAuth } from "@/hooks/auth/useAuth";
 
-type HeaderProps = {
-    isLoggedIn?: boolean;
-};
-
-export default function Header({ isLoggedIn = true }: HeaderProps) {
+export default function Header() {
+    const { isAuthenticated, user } = useAuth();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     return (
@@ -26,7 +24,7 @@ export default function Header({ isLoggedIn = true }: HeaderProps) {
 
                     <div className="hidden lg:flex items-center gap-12.5">
                         <Navigation />
-                        <Actions isLoggedIn={isLoggedIn} />
+                        <Actions isLoggedIn={isAuthenticated} authenticatedUser={user} />
                     </div>
 
                     <div className="flex lg:hidden">
@@ -44,7 +42,8 @@ export default function Header({ isLoggedIn = true }: HeaderProps) {
             <MobileNavigation
                 isOpen={isMobileMenuOpen}
                 onClose={() => setIsMobileMenuOpen(false)}
-                isLoggedIn={isLoggedIn}
+                isLoggedIn={isAuthenticated}
+                authenticatedUser={user}
             />
         </>
     );

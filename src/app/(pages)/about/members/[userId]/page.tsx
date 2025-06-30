@@ -1,11 +1,11 @@
 import { notFound } from "next/navigation";
 import ProfilePanel from "./components/ProfilePanel";
 import PublishedPosts from "./components/PublishedPosts";
-import membersMock from "@/__mocks__/membersMock";
+import { get_member, get_member_memberId } from "@/lib/api/endpoints/member";
 
 export default async function MemberPage({ params }: { params: Promise<{ userId: string }> }) {
     const { userId } = await params;
-    const member = membersMock.find((m) => m.id.toString() === userId);
+    const member = await get_member_memberId(userId);
 
     if (!member) return notFound();
 
@@ -25,7 +25,9 @@ export default async function MemberPage({ params }: { params: Promise<{ userId:
 }
 
 export async function generateStaticParams() {
-    return membersMock.map((member) => ({
+    const data = await get_member();
+
+    return (data ?? []).map((member) => ({
         userId: member.id.toString(),
     }));
 }

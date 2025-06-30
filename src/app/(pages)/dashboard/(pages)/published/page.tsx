@@ -1,34 +1,15 @@
-"use client";
-
 import EmptyViews from "@/components/ui/EmptyViews";
 import PostPreviewItem from "@/components/ui/PostPreviewItem";
-import { PostPreviewMetadata } from "@/types";
+import { getMe } from "@/lib/api/auth";
+import { get_blog_author_authorId } from "@/lib/api/endpoints/blog";
+import { redirect } from "next/navigation";
 
-const mockPublishedBlogs: PostPreviewMetadata[] = [
-    {
-        postId: 1,
-        postType: "article",
-        part: "프론트엔드",
-        title: "리액트로 블로그 만들기",
-        description: "리액트로 블로그를 만드는 방법에 대해 알아봅시다.",
-        date: "2023-10-01",
-        authorId: 1,
-        authorName: "김먀옹",
-    },
-    {
-        postId: 2,
-        postType: "session",
-        part: "백엔드",
-        title: "Node.js로 서버 구축하기",
-        description: "Node.js를 사용하여 간단한 서버를 구축하는 방법을 알아봅시다.",
-        date: "2023-10-02",
-        authorId: 1,
-        authorName: "김먀옹",
-    },
-];
+export default async function DashboardViewAllPublishedPage() {
+    const me = await getMe();
 
-export default function DashboardViewAllPublishedPage() {
-    const publishedBlogs = mockPublishedBlogs;
+    if (!me) return redirect("/login");
+
+    const publishedBlogs = await get_blog_author_authorId(me.id);
 
     return (
         <div className="bg-white text-black overflow-hidden">

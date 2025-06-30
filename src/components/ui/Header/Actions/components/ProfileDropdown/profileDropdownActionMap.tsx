@@ -18,7 +18,48 @@ type ActionGroup = ProfileDropdownActionButtonProps[];
 type GroupedActionBuilder = (onClicks: ProfileDropdownProps["onClicks"]) => ActionGroup[];
 
 export const profileDropdownActionMap: Record<Role, GroupedActionBuilder> = {
-    운영진: (onClicks) => [
+    GUEST: (onClicks) => [
+        [
+            {
+                label: "마이페이지",
+                icon: <DashboardSVG />,
+                href: "/dashboard",
+            },
+            {
+                label: "로그아웃",
+                icon: <SignOutSVG />,
+                onClick: onClicks.signout,
+            },
+        ],
+    ],
+    MEMBER: (onClicks) => [
+        [
+            {
+                label: "프로젝트 등록",
+                icon: <NewProjectSVG />,
+                href: "/dashboard/project/new",
+            },
+            {
+                label: "블로그 작성",
+                icon: <WriteBlogSVG />,
+                href: "/dashboard/new",
+            },
+        ],
+        [
+            {
+                label: "마이페이지",
+                icon: <DashboardSVG />,
+                href: "/dashboard",
+            },
+            {
+                label: "로그아웃",
+                icon: <SignOutSVG />,
+                onClick: onClicks.signout,
+            },
+        ],
+    ],
+
+    MANAGER: (onClicks) => [
         [
             {
                 label: "프로젝트 등록",
@@ -56,17 +97,30 @@ export const profileDropdownActionMap: Record<Role, GroupedActionBuilder> = {
             },
         ],
     ],
-    아기사자: (onClicks) => [
+
+    REPRESENTATIVE: (onClicks) => [
         [
             {
                 label: "프로젝트 등록",
                 icon: <NewProjectSVG />,
-                href: "/dashboard/project/new",
+                href: "/dashboard/projects/new",
             },
             {
                 label: "블로그 작성",
                 icon: <WriteBlogSVG />,
-                href: "/dashboard/new",
+                href: "/dashboard/blog/new",
+            },
+        ],
+        [
+            {
+                label: "공지사항 등록",
+                icon: <NewNoticeSVG />,
+                href: "/dashboard/notice/new",
+            },
+            {
+                label: "활동기록 등록",
+                icon: <AddGallerySVG />,
+                href: "/dashboard/gallery/new",
             },
         ],
         [
@@ -82,7 +136,8 @@ export const profileDropdownActionMap: Record<Role, GroupedActionBuilder> = {
             },
         ],
     ],
-    휴면사자: (onClicks) => [
+
+    PREVIOUS: (onClicks) => [
         [
             {
                 label: "마이페이지",

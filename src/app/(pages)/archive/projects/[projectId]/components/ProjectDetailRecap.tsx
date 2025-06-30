@@ -1,8 +1,5 @@
-import { Member } from "@/types";
-import Link from "next/link";
-
 export type ProjectDetailRecapItemProps = {
-    author: Member;
+    memberName: string;
     content: string;
 };
 
@@ -19,7 +16,7 @@ export default function ProjectDetailRecap({ recaps }: ProjectDetailRecapProps) 
                 {recaps.map((recap, index) => (
                     <ProjectDetailRecapItem
                         key={index}
-                        author={recap.author}
+                        memberName={recap.memberName}
                         content={recap.content}
                     />
                 ))}
@@ -28,14 +25,16 @@ export default function ProjectDetailRecap({ recaps }: ProjectDetailRecapProps) 
     );
 }
 
-function ProjectDetailRecapItem({ author, content }: ProjectDetailRecapItemProps) {
+function ProjectDetailRecapItem({ memberName, content }: ProjectDetailRecapItemProps) {
     return (
         <div className="flex flex-col items-start justify-start gap-5 bg-gray-5 px-7 py-6 rounded-[40px] rounded-bl-none cursor-default hover:bg-gray-5/80 transition-colors duration-200">
-            <Link href={`/about/members/${author.id}`}>
-                <p className="body3_m text-white hover:underline">
-                    {author.name} / {author.position}
-                </p>
-            </Link>
+            {/* <Link href={`/about/members/${author.id}`}> */}
+            <p className="body3_m text-white hover:underline">
+                {memberName}
+                {/* {author.name} */}
+                {/* / {author.position} */}
+            </p>
+            {/* </Link> */}
 
             <p className="body5_r text-white break-keep">{content}</p>
         </div>

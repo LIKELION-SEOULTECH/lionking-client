@@ -1,6 +1,8 @@
 import ProjectDetailMeta from "./components/ProjectDetailMeta";
 import ProjectDetailImages from "./components/ProjectDetailImages";
-import ProjectDetailRecap, { ProjectDetailRecapItemProps } from "./components/ProjectDetailRecap";
+import ProjectDetailRecap from "./components/ProjectDetailRecap";
+import { get_projects, get_projects_projectId } from "@/lib/api/endpoints/project";
+import type { Project } from "@/types";
 
 export default async function ProjectDetailPage({
     params,
@@ -9,43 +11,25 @@ export default async function ProjectDetailPage({
 }) {
     const { projectId } = await params;
 
-    // const project = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/projects/${projectId}`, {
-    //     next: { revalidate: 60 },
-    // }).then((res) => res.json());
-
-    const projectName = `서비스 ${projectId}`; // 임시
-
-    const images = [
-        "/static/images/placeholder_thumbnail.png",
-        "/static/images/placeholder_thumbnail.png",
-        "/static/images/placeholder_thumbnail.png",
-    ]; // 임시
-
-    const mockRecaps: ProjectDetailRecapItemProps[] = [
-        {
-            author: { id: 1, name: "김사자", position: "디자인", role: "아기사자" },
-            content:
-                "역할에 대한 ..프로젝트에 대한 감상.. 등 회고를 적는 공간입니다. 역할에 대한 ..프로젝트에 대한 감상.. 등 회고를 적는 공간입니다. 역할에 대한 ..프로젝트에 대한 감상.. 등 회고를 적는 공간입니다. 역할에 대한 ..프로젝트에 대한 감상.. 등 회고를 적는 공간입니다. 역할에 대한 ..프로젝트에 대한 감상.. 등 회고를 적는 공간입니다. 역할에 대한 ..프로젝트에 대한 감상.. 등 회고를 적는 공간입니다. 역할에 대한 ..프로젝트에 대한 감상.. 등 회고를 적는 공간입니다. 역할에 대한 ..프로젝트에 대한 감상 등 회고적는",
-        },
-        {
-            author: { id: 2, name: "김어흥", position: "프론트엔드", role: "아기사자" },
-            content:
-                "역할에 대한 ..프로젝트에 대한 감상.. 등 회고를 적는 공간입니다. 역할에 대한 ..프로젝트에 대한 감상.. 등 회고를 적는 공간입니다. 역할에 대한 ..프로젝트에 대한 감상.. 등 회고를 적는 공간입니다. 역할에 대한 ..프로젝트에 대한 감상.. 등 회고를 적는 공간입니다. 역할에 대한 ..프로젝트에 대한 감상.. 등 회고를 적는 공간입니다. 역할에 대한 ..프로젝트에 대한 감상.. 등 회고를 적는 공간입니다. 역할에 대한 ..프로젝트에 대한 감상.. 등 회고를 적는 공간입니다. 역할에 대한 ..프로젝트에 대한 감상 등 회고적는",
-        },
-        {
-            author: { id: 3, name: "김야옹", position: "백엔드", role: "아기사자" },
-            content:
-                "역할에 대한 ..프로젝트에 대한 감상.. 등 회고를 적는 공드간입니다. 역할에 대한 ..프로젝트에 대한 감상.. 등 회고를 적는 공간입니다. 역할에 대한 ..프로젝트에 대한 감상.. 등 회고를 적는 공간입니다. 역할에 대한 ..프로젝트에 대한 감상.. 등 회고를 적는 공간입니다. 역할에 대한 ..프로젝트에 대한 감상.. 등 회고를 적는 공간입니다. 역할에 대한 ..프로젝트에 대한 감상.. 등 회고를 적는 공간입니다. 역할에 대한 ..프로젝트에 대한 감상.. 등 회고를 적는 공간입니다. 역할에 대한 ..프로젝트에 대한 감상 등 회고적는",
-        },
-    ];
+    const project = await get_projects_projectId(projectId);
 
     return (
         <>
-            <ProjectDetailMeta projectName={projectName} />
+            <ProjectDetailMeta project={project} />
 
-            <ProjectDetailImages images={images} />
+            {project.landingImages && project.landingImages.length > 0 && (
+                <ProjectDetailImages images={project.landingImages} />
+            )}
 
-            <ProjectDetailRecap recaps={mockRecaps} />
+            <ProjectDetailRecap recaps={project.retrospections} />
         </>
     );
+}
+
+export async function generateStaticParams() {
+    const data = await get_projects().then((res) => res.data);
+
+    return (data ?? []).map((project: Project) => ({
+        projectId: project.id.toString(),
+    }));
 }

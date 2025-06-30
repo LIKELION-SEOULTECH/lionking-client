@@ -1,14 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import type { Parts } from "@/types";
+import type { PartLabels } from "@/types";
 import Section from "@/components/ui/Section";
 import PartSelector from "./components/PartSelector";
 import Curriculum from "./components/Curriculum";
 import Appear from "@/components/animations/Appear";
 
 export default function PartsNCurriculum() {
-    const [selectedPart, setSelectedPart] = useState<Parts>("기획");
+    const [selectedPart, setSelectedPart] = useState<PartLabels>("기획");
 
     return (
         <Section

@@ -1,6 +1,7 @@
 import { useState, useRef, useCallback } from "react";
 import { useField, useFormikContext } from "formik";
 import { Upload, X, Grid3X3, Rows, GripVertical } from "lucide-react";
+import { upload_to_s3 } from "@/lib/api/endpoints/s3";
 
 type LayoutMode = "full" | "grid";
 
@@ -10,12 +11,14 @@ export default function ImageDropZone({
     maxFiles = 1,
     accept = "image/*",
     defaultLayout = "grid",
+    uploadPrefix,
 }: {
     name: string;
     multiple?: boolean;
     maxFiles?: number;
     accept?: string;
     defaultLayout?: LayoutMode;
+    uploadPrefix?: string;
 }) {
     const [field, meta, helpers] = useField<string | string[]>(name);
     const { getFieldProps } = useFormikContext();
@@ -33,15 +36,13 @@ export default function ImageDropZone({
     }
 
     const handleFiles = useCallback(
-        (files: File[]) => {
+        async (files: File[]) => {
             const imageFiles = files.filter((file) => file.type.startsWith("image/"));
+            if (imageFiles.length === 0) return;
 
             if (!multiple && imageFiles.length > 0) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    helpers.setValue(e.target?.result as string);
-                };
-                reader.readAsDataURL(imageFiles[0]);
+                const publicUrl = await upload_to_s3(imageFiles[0], uploadPrefix);
+                helpers.setValue(publicUrl);
             } else if (multiple) {
                 const currentFieldProps = getFieldProps(name);
                 const currentImages = (currentFieldProps.value as string[]) || [];
@@ -50,19 +51,17 @@ export default function ImageDropZone({
 
                 if (filesToProcess.length === 0) return;
 
-                Promise.all(
-                    filesToProcess.map((file) => {
-                        return new Promise<string>((resolve) => {
-                            const reader = new FileReader();
-                            reader.onload = (e) => resolve(e.target?.result as string);
-                            reader.readAsDataURL(file);
-                        });
-                    })
-                ).then((newImages) => {
+                try {
+                    const uploadedUrls = await Promise.all(
+                        filesToProcess.map((file) => upload_to_s3(file))
+                    );
+
                     const latestFieldProps = getFieldProps(name);
                     const latestImages = (latestFieldProps.value as string[]) || [];
-                    helpers.setValue([...latestImages, ...newImages]);
-                });
+                    helpers.setValue([...latestImages, ...uploadedUrls]);
+                } catch (err) {
+                    console.error(err);
+                }
             }
         },
         [helpers, maxFiles, multiple, getFieldProps, name]

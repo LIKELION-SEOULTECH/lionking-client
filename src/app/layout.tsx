@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Pretendard } from "@/fonts/loadFonts";
 import NextTopLoader from "nextjs-toploader";
-import WithMockServer from "@/mocks/msw/WithMockServer";
 
 import Header from "@/components/ui/Header";
 import Footer from "@/components/ui/Footer";
@@ -19,7 +18,6 @@ export default function RootLayout({
                 <Header />
                 <main role="main">{children}</main>
                 <Footer />
-                <WithMockServer />
             </body>
         </html>
     );
