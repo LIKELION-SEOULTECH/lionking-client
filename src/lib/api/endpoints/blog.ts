@@ -2,7 +2,14 @@ import { createFetchClient } from "@/lib/api/fetchJson";
 import { blogMapper, blogMetaMapper } from "../mappers/blog.mapper";
 import { PostPreviewMetadata } from "@/types";
 
-export async function post_blog_authorId(authorId: string | number, body: any) {
+export type PostBlogRequest = {
+    blogType: "ARTICLE" | "SESSION";
+    title: string;
+    content: string;
+    thumbnailImage: string;
+};
+
+export async function post_blog_authorId(authorId: string | number, body: PostBlogRequest) {
     const fetchJson = await createFetchClient();
 
     return fetchJson(`/api/v1/blog/${authorId}`, {
