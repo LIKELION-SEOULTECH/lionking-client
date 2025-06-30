@@ -1,4 +1,3 @@
-// app/(pages)/notice/[noticeId]/components/DetailBody.tsx
 "use client";
 
 import React from "react";
@@ -15,7 +14,6 @@ type Attachment = {
 interface DetailBodyProps {
     content: string[];
     attachment?: Attachment;
-    /** 부모 컴포넌트에서 넘어오는 리소스 이름 (default: "게시물") */
     resourceName?: string;
 }
 
@@ -64,7 +62,7 @@ export default function DetailBody({
                     {attachment && (
                         <div className="bg-gray-100 rounded-lg flex items-center justify-between py-[14px] px-[28px]">
                             <div>
-                                <p className="body3(new)_m text-gray-900">{attachment.name}</p>
+                                <p className="body3_m text-gray-900">{attachment.name}</p>
                                 <p className="text-gray-500 !text-[10px]">{attachment.size}</p>
                             </div>
                             <a href={attachment.url} download className="ml-auto">
