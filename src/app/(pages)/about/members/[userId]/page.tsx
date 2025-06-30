@@ -2,15 +2,12 @@ import { notFound } from "next/navigation";
 import ProfilePanel from "./components/ProfilePanel";
 import PublishedPosts from "./components/PublishedPosts";
 import { get_member, get_member_memberId } from "@/lib/api/endpoints/member";
-import { memberMapper } from "@/lib/api/mappers/member.mapper";
 
 export default async function MemberPage({ params }: { params: Promise<{ userId: string }> }) {
     const { userId } = await params;
-    const data = await get_member_memberId(userId).then((res) => res.data);
+    const member = await get_member_memberId(userId);
 
-    if (!data) return notFound();
-
-    const member = memberMapper(data);
+    if (!member) return notFound();
 
     return (
         <div className="flex items-center justify-center w-full py-[160px]">
@@ -28,9 +25,9 @@ export default async function MemberPage({ params }: { params: Promise<{ userId:
 }
 
 export async function generateStaticParams() {
-    const data = await get_member().then((res) => res.data);
+    const data = await get_member();
 
-    return (data ?? []).map((member: any) => ({
-        userId: member.memberId.toString(),
+    return (data ?? []).map((member) => ({
+        userId: member.id.toString(),
     }));
 }

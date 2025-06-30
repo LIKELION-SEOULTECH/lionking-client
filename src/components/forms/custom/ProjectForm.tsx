@@ -5,10 +5,11 @@ import { Form, useFormikContext } from "formik";
 import { FormSection, Input, TextArea, Select, RadioGroup } from "../common/FormComponents";
 import ImageDropZone from "../common/ImageDropZone";
 import MemberSelector from "../common/MemberSelector";
-import type { Member } from "@/types";
+import type { Member, ProjectTypeEnum } from "@/types";
 
 type ProjectRecap = {
     author: Member;
+    memberId: number;
     content: string;
 };
 
@@ -17,14 +18,14 @@ export default function ProjectFormWithRecaps() {
     const _startYear = 2024;
     const yearOptions = Array.from({ length: _currentYear - _startYear + 1 }, (_, i) => {
         const label = `${12 + i}기`;
-        return { value: label, label };
+        return { value: 12 + i, label };
     });
 
     const { values, setFieldValue, isValid, isSubmitting, dirty } = useFormikContext<{
         projectName: string;
-        projectType: string;
+        projectType: ProjectTypeEnum;
         projectDescription: string;
-        projectYear: string;
+        projectYear: number;
         projectVideo: string;
         projectMembers: Member[];
         projectThumbnail: string;
@@ -36,17 +37,14 @@ export default function ProjectFormWithRecaps() {
         const currentRecaps = values.projectRecaps;
         const members = values.projectMembers;
 
-        const recapMap = new Map(currentRecaps.map((recap) => [recap.author.id, recap]));
+        const recapMap = new Map(currentRecaps.map((recap) => [recap.memberId, recap]));
 
         const newRecaps = members.map((member) => {
             const existingRecap = recapMap.get(member.id);
             return (
                 existingRecap || {
-                    author: {
-                        id: member.id,
-                        part: member.position,
-                        name: member.name,
-                    },
+                    author: member,
+                    memberId: member.id,
                     content: "",
                 }
             );
@@ -72,11 +70,11 @@ export default function ProjectFormWithRecaps() {
                 <RadioGroup
                     name="projectType"
                     options={[
-                        { label: "아이디어톤", value: "아이디어톤" },
-                        { label: "중앙 해커톤", value: "중앙 해커톤" },
-                        { label: "연합 해커톤", value: "연합 해커톤" },
-                        { label: "장기 프로젝트", value: "장기 프로젝트" },
-                        { label: "기타", value: "기타" },
+                        { label: "아이디어톤", value: "IDEATHON" },
+                        { label: "중앙 해커톤", value: "CENTRAL_HACKATHON" },
+                        { label: "연합 해커톤", value: "UNION_HACKATHON" },
+                        { label: "장기 프로젝트", value: "LONG_TERM" },
+                        { label: "기타", value: "ETC" },
                     ]}
                 />
             </FormSection>
@@ -84,7 +82,7 @@ export default function ProjectFormWithRecaps() {
             <FormSection title="활동 기수 선택" isRequired>
                 <Select
                     name="projectYear"
-                    options={[{ value: "", label: "기수 선택" }, ...yearOptions]}
+                    options={[{ value: 0, label: "기수 선택" }, ...yearOptions]}
                 />
             </FormSection>
 
@@ -124,7 +122,7 @@ export default function ProjectFormWithRecaps() {
                             <div key={recap.author.id} className="w-full">
                                 <div className="mb-2 flex gap-2 body3_m">
                                     <span className="text-orange-main">
-                                        {recap.author.position}
+                                        {recap.author.positionLabel}
                                     </span>
                                     <span className="text-black">{recap.author.name}</span>
                                 </div>

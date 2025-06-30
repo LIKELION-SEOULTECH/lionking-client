@@ -33,5 +33,19 @@ const S3_BASE_URL = "https://lionking-bucket2.s3.ap-northeast-2.amazonaws.com/";
 
 export function getFullS3Url(s3Key?: string | null): string | undefined {
     if (!s3Key) return undefined;
-    return `${S3_BASE_URL}${s3Key}`;
+    return `${process.env.NEXT_PUBLIC_S3_BASE_URL ?? S3_BASE_URL}${s3Key}`;
+}
+
+export function extractFilePathFromS3Url(url: string): string {
+    try {
+        const baseUrl = process.env.NEXT_PUBLIC_S3_BASE_URL ?? S3_BASE_URL;
+
+        if (!url.startsWith(baseUrl)) {
+            throw new Error("Invalid S3 URL");
+        }
+
+        return url.slice(baseUrl.length + 1);
+    } catch (error) {
+        throw new Error("Failed to extract file path from S3 URL");
+    }
 }

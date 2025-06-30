@@ -9,14 +9,21 @@ import MobileProfileSection from "./MobileProfileSection";
 import Button from "@/components/ui/Button";
 import { navigationLinks } from "../navigationLinks";
 import { ChevronRight } from "lucide-react";
+import { Member } from "@/types";
 
 type MobileNavigationProps = {
     isOpen: boolean;
     onClose: () => void;
     isLoggedIn: boolean;
+    authenticatedUser: Member | undefined;
 };
 
-export default function MobileNavigation({ isOpen, onClose, isLoggedIn }: MobileNavigationProps) {
+export default function MobileNavigation({
+    isOpen,
+    onClose,
+    isLoggedIn,
+    authenticatedUser,
+}: MobileNavigationProps) {
     const pathname = usePathname();
     const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
@@ -144,16 +151,31 @@ export default function MobileNavigation({ isOpen, onClose, isLoggedIn }: Mobile
                             </ul>
 
                             <div className="mt-4 pt-4 border-t border-gray-6">
-                                {isLoggedIn ? (
-                                    <MobileProfileSection />
+                                {isLoggedIn && authenticatedUser ? (
+                                    <MobileProfileSection
+                                        user={authenticatedUser}
+                                        onSignout={() => async () => {
+                                            await fetch("/api/logout", { method: "POST" });
+                                            window.location.href = "/";
+                                        }}
+                                    />
                                 ) : (
                                     <div className="space-y-3">
-                                        <Button color="orange" type="button" className="w-full">
-                                            지원하기
-                                        </Button>
-                                        <Button color="neutral" type="button" className="w-full">
-                                            로그인
-                                        </Button>
+                                        <Link href="/apply" className="block">
+                                            <Button color="orange" type="button" className="w-full">
+                                                지원하기
+                                            </Button>
+                                        </Link>
+
+                                        <Link href="/login" className="block">
+                                            <Button
+                                                color="neutral"
+                                                type="button"
+                                                className="w-full"
+                                            >
+                                                로그인
+                                            </Button>
+                                        </Link>
                                     </div>
                                 )}
                             </div>

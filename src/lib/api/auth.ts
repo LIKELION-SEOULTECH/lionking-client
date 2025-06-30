@@ -1,13 +1,28 @@
 "use server";
 
-import { fetchJson } from "@/lib/api/fetchJson";
+import { createFetchClient } from "@/lib/api/fetchJson";
+import { AuthMeResponse, authVerifyMapper } from "./mappers/auth.mapper";
 
 export async function refreshToken(): Promise<boolean> {
+    const fetchJson = await createFetchClient();
+
     try {
         await fetchJson("/api/v1/auth/reissue", { method: "POST" });
         return true;
     } catch {
-        await fetch("/api/clear-auth", { method: "POST" });
+        await fetch("/api/logout", { method: "POST" });
         return false;
     }
+}
+
+export async function getMe() {
+    const fetchJson = await createFetchClient();
+
+    const res = await fetchJson("/api/v1/auth/me", {
+        method: "GET",
+        withAuth: true,
+    }).then((res) => res.data as AuthMeResponse);
+
+    const mappedUser = authVerifyMapper(res);
+    return mappedUser;
 }

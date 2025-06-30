@@ -2,6 +2,7 @@
 
 import { useState, useTransition, useEffect } from "react";
 import TypeLogo from "@/components/ui/TypeLogo";
+import { useAuth } from "@/hooks/auth/useAuth";
 
 export default function LoginPage() {
     const [loginId, setLoginId] = useState("");
@@ -10,11 +11,13 @@ export default function LoginPage() {
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [loginSuccess, setLoginSuccess] = useState(false);
 
+    const { isAuthenticated } = useAuth();
+
     useEffect(() => {
-        if (loginSuccess) {
+        if (loginSuccess || isAuthenticated) {
             window.location.href = "/dashboard";
         }
-    }, [loginSuccess]);
+    }, [isAuthenticated, loginSuccess]);
 
     const handleLogin = () => {
         setErrorMessage(null);

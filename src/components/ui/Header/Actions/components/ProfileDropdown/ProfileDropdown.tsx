@@ -20,7 +20,7 @@ export default function ProfileDropdown({ member, onClicks }: ProfileDropdownPro
 
                 <div className="h-full flex flex-col items-start justify-center gap-1.25 text-white">
                     <p className="sub3_sb">{member.name}</p>
-                    <p className="body6_r">{member.role}</p>
+                    <p className="body6_r">{member.roleLabel}</p>
                 </div>
             </div>
 
