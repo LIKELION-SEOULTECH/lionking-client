@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { fetchJson } from "@/lib/api/fetchJson";
+import { createFetchClient } from "@/lib/api/fetchJson";
 
 export async function POST(req: NextRequest) {
     const { loginId, password } = await req.json();
+    const fetchJson = await createFetchClient();
 
     try {
         const response = await fetchJson<{

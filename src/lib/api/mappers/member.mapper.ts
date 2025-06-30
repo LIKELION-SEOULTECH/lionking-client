@@ -10,7 +10,7 @@ export function memberMapper(data: User): Member {
         role: data.role as Role,
         roleLabel: roleEnumToLabel[data.role as Role],
         imageUrl: data.profileImage ?? undefined,
-        userTags: [data.role, data.position].filter(Boolean),
+        userTags: [roleEnumToLabel[data.role as Role], data.position].filter(Boolean),
         profileIntro: data.description ?? undefined,
         profileIntroTags: data.descriptionTag
             ? data.descriptionTag.split(",").map((tag: string) => tag.trim().replace(/^#/, ""))

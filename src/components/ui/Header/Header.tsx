@@ -9,7 +9,7 @@ import HamburgerButton from "./Mobile/HamburgerButton";
 import { useAuth } from "@/hooks/auth/useAuth";
 
 export default function Header() {
-    const { isAuthenticated, user, loading, error } = useAuth();
+    const { isAuthenticated, user } = useAuth();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     return (

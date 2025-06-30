@@ -1,5 +1,5 @@
-import { memberMapper } from "@/lib/api/mappers/member.mapper";
-import { Member, User } from "@/types";
+import { AuthMeResponse, authVerifyMapper } from "@/lib/api/mappers/auth.mapper";
+import { Member } from "@/types";
 import { useEffect, useState } from "react";
 
 type UseAuthResult = {
@@ -18,9 +18,8 @@ export function useAuth(): UseAuthResult {
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                const res = await fetch("/api/check-auth", {
+                const res = await fetch("/api/auth/me", {
                     method: "GET",
-                    credentials: "include",
                 });
 
                 if (!res.ok) {
@@ -29,9 +28,9 @@ export function useAuth(): UseAuthResult {
                     setError(err.message || "인증 실패");
                 } else {
                     const data = await res.json();
-                    const user = data.data as User;
+                    const user = data.data as AuthMeResponse;
                     setIsAuthenticated(user !== null);
-                    const mappedUser = memberMapper(user);
+                    const mappedUser = authVerifyMapper(user);
                     setUser(mappedUser);
                 }
             } catch {

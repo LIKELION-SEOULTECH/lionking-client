@@ -1,9 +1,13 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { PostPreviewMetadata } from "@/types";
 import { previewItemVariants, PostPreviewLayout, styleMap } from "./PostPreviewItemVariants";
 import KebabMenuDropdown from "../KebabMenuDropdown";
+import { delete_blog_blogId } from "@/lib/api/endpoints/blog";
+import { useRouter } from "next/navigation";
 
 export type PostPreviewItemProps = PostPreviewMetadata & {
     layout: PostPreviewLayout;
@@ -24,6 +28,8 @@ export default function PostPreviewItem({
     imageUrl = "/static/images/placeholder.png",
     withAction = false,
 }: PostPreviewItemProps) {
+    const router = useRouter();
+
     const styles = styleMap[layout];
 
     const isHorizontal = layout.startsWith("horizontal");
@@ -77,7 +83,10 @@ export default function PostPreviewItem({
                                             },
                                             {
                                                 label: "삭제하기",
-                                                onClick: () => alert("삭제!"),
+                                                onClick: async () => {
+                                                    delete_blog_blogId(postId);
+                                                    router.refresh();
+                                                },
                                             },
                                         ]}
                                     />

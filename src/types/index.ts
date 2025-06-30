@@ -31,6 +31,7 @@ export type Member = {
     name: string;
     major?: string;
     position?: Parts;
+    generation?: number;
     role: Role;
     roleLabel: RoleLabels;
     imageUrl?: string;
