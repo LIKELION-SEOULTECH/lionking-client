@@ -24,7 +24,7 @@ export default function DetailBody({
     attachment,
     resourceName = "게시물",
 }: DetailBodyProps) {
-    const router = useRouter();
+    // const router = useRouter();
     const { noticeId } = useParams() as { noticeId: string };
 
     const handleDelete = async () => {
