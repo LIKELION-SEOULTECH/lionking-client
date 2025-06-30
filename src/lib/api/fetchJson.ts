@@ -36,7 +36,7 @@ export async function createFetchClient() {
 
         requestHeaders["Authorization"] = `Bearer ${accessToken}`;
 
-        let response = await fetch(`${getBaseUrl()}${endpoint}`, {
+        const response = await fetch(`${getBaseUrl()}${endpoint}`, {
             method: options.method || "GET",
             headers: requestHeaders,
             body: options.body ? JSON.stringify(options.body) : undefined,

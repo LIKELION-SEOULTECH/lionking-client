@@ -1,11 +1,11 @@
-import { Parts } from "@/types";
+import { PartLabels } from "@/types";
 
 type PartData = {
     roleDescription: string;
     curriculum: string[];
 };
 
-export const partCurriculumData: Record<Parts, PartData> = {
+export const partCurriculumData: Record<PartLabels, PartData> = {
     기획: {
         roleDescription:
             "서비스의 아이디어를 구체화 하고, 어떤 기능이 필요한지 고민하며 팀원들과 협업해 프로젝트를 이끌어가는 역할을 해요.",

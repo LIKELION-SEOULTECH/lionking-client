@@ -27,7 +27,7 @@ export default async function MemberPage({ params }: { params: Promise<{ userId:
 export async function generateStaticParams() {
     const data = await get_member();
 
-    return (data ?? []).map((member: any) => ({
-        userId: member.memberId.toString(),
+    return (data ?? []).map((member) => ({
+        userId: member.id.toString(),
     }));
 }

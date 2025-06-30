@@ -2,15 +2,15 @@
 
 import { cn } from "@/lib/utils";
 import { motion } from "motion/react";
-import type { Parts } from "@/types";
+import type { PartLabels } from "@/types";
 import { useEffect, useRef, useState } from "react";
 
 type PartSelectorProps = {
-    selectedPart: Parts;
-    onChange: (part: Parts) => void;
+    selectedPart: PartLabels;
+    onChange: (part: PartLabels) => void;
 };
 
-const allParts: Parts[] = ["기획", "디자인", "프론트엔드", "백엔드", "AI"];
+const allParts: PartLabels[] = ["기획", "디자인", "프론트엔드", "백엔드", "AI"];
 
 export default function PartSelector({ selectedPart, onChange }: PartSelectorProps) {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -112,7 +112,7 @@ function PartSelectorItem({
     isSelected = false,
     onClick,
 }: {
-    name: Parts;
+    name: PartLabels;
     isSelected?: boolean;
     onClick: () => void;
 }) {
