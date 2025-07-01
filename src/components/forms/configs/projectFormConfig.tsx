@@ -56,46 +56,62 @@ export function generatePostProjectRequest(form: ProjectFormValues): PostProject
     };
 }
 
-export const projectFormConfig: GenericFormPageConfig<ProjectFormValues> = {
-    banner: {
-        title: "프로젝트 등록하기",
-        icon: <Icons />,
-    },
-    form: {
-        sections: [], // 프젝회고 기능때문에 별도로 custom 처리함
-        initialValues: {
-            projectName: "",
-            projectType: "",
-            projectDescription: "",
-            projectYear: 0,
-            projectVideo: "",
-            projectMembers: [],
-            projectThumbnail: "",
-            projectLandingImages: [],
-            projectRecaps: [],
+export function getProjectFormConfig({
+    isEdit = false,
+    projectId,
+}: {
+    isEdit?: boolean;
+    projectId?: number | string;
+}): GenericFormPageConfig<ProjectFormValues> {
+    return {
+        banner: {
+            title: isEdit ? "프로젝트 수정하기" : "프로젝트 등록하기",
+            icon: <Icons />,
         },
-        validationSchema: projectValidationSchema,
-        onSubmit: async (values) => {
-            const reqBody = generatePostProjectRequest(values);
+        form: {
+            sections: [],
+            initialValues: {
+                projectName: "",
+                projectType: "",
+                projectDescription: "",
+                projectYear: 0,
+                projectVideo: "",
+                projectMembers: [],
+                projectThumbnail: "",
+                projectLandingImages: [],
+                projectRecaps: [],
+            },
+            validationSchema: projectValidationSchema,
+            onSubmit: async (values) => {
+                const reqBody = generatePostProjectRequest(values);
 
-            const response = await fetch("/api/projects", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(reqBody),
-            });
+                console.log("Request Body:", reqBody);
 
-            if (!response.ok) {
-                const error = await response.json();
-                throw new Error(error.message || "프로젝트 등록에 실패했습니다.");
-            }
+                const url = isEdit ? `/api/projects/${projectId}` : `/api/projects`;
 
-            return response.json();
+                const method = isEdit ? "PATCH" : "POST";
+
+                const response = await fetch(url, {
+                    method,
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(reqBody),
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.message || "프로젝트 처리 중 오류가 발생했습니다.");
+                }
+
+                return response.json();
+            },
+            submitButtonText: isEdit ? "수정하기" : "등록하기",
+            successConfig: {
+                title: isEdit
+                    ? "프로젝트 수정이 완료되었습니다."
+                    : "프로젝트 등록이 완료되었습니다.",
+                buttonLabel: isEdit ? "수정된 프로젝트 보기" : "프로젝트 보러가기",
+                href: "/archive/projects",
+            },
         },
-        submitButtonText: "등록하기",
-        successConfig: {
-            title: "프로젝트 등록이 완료되었습니다.",
-            buttonLabel: "프로젝트 보러가기",
-            href: "/archive/projects",
-        },
-    },
-};
+    };
+}

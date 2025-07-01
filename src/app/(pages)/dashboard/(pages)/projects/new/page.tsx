@@ -6,18 +6,18 @@ import { AnimatePresence, motion } from "motion/react";
 import SuccessPage from "@/components/forms/views/SuccessPage";
 import GenericBanner from "@/components/banners/GenericBanner";
 import ProjectForm from "@/components/forms/custom/ProjectForm";
-import { projectFormConfig } from "@/components/forms/configs/projectFormConfig";
+import { getProjectFormConfig } from "@/components/forms/configs/projectFormConfig";
 
 export default function NewProjectPage() {
     const [isSuccess, setIsSuccess] = useState(false);
-    const { banner, form } = projectFormConfig;
+    const { banner, form } = getProjectFormConfig({});
 
     return (
         <AnimatePresence mode="wait">
             {isSuccess ? (
                 <>
                     <motion.div
-                        className="fixed inset-0 bg-white z-0"
+                        className="fixed inset-0 z-0 bg-white"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.3 }}
@@ -49,7 +49,7 @@ export default function NewProjectPage() {
                         {[...Array(20)].map((_, i) => (
                             <motion.div
                                 key={i}
-                                className="absolute w-2 h-2 bg-orange-main rounded-full"
+                                className="absolute w-2 h-2 rounded-full bg-orange-main"
                                 initial={{
                                     top: "50%",
                                     left: "50%",
@@ -73,7 +73,7 @@ export default function NewProjectPage() {
             ) : (
                 <motion.div
                     key="form"
-                    className="min-h-screen w-full bg-white"
+                    className="w-full min-h-screen bg-white"
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.4 }}
                 >

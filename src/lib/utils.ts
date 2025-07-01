@@ -38,7 +38,7 @@ export function getFullS3Url(s3Key?: string | null): string | undefined {
 
 export function extractFilePathFromS3Url(url: string): string {
     try {
-        const baseUrl = process.env.NEXT_PUBLIC_S3_BASE_URL ?? S3_BASE_URL;
+        const baseUrl = (process.env.NEXT_PUBLIC_S3_BASE_URL ?? S3_BASE_URL).replace(/\/+$/, "");
 
         if (!url.startsWith(baseUrl)) {
             throw new Error("Invalid S3 URL");

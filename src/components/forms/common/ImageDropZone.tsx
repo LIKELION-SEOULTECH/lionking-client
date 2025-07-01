@@ -122,7 +122,7 @@ export default function ImageDropZone({
     const canAddMore = multiple ? images.length < maxFiles : images.length === 0;
 
     return (
-        <div className="w-full flex flex-col gap-4">
+        <div className="flex flex-col w-full gap-4">
             {canAddMore && (
                 <div
                     className={`flex flex-col min-h-22.5 py-8 items-center justify-center gap-2 bg-gray-1 border border-gray-1 rounded-[10px] transition-all cursor-pointer hover:bg-orange-light-1/50 ${
@@ -174,7 +174,7 @@ export default function ImageDropZone({
                 <>
                     {multiple && images.length > 1 && (
                         <div className="flex items-center justify-between">
-                            <p className="text-sm text-gray-500 flex items-center gap-1">
+                            <p className="flex items-center gap-1 text-sm text-gray-500">
                                 <GripVertical className="w-4 h-4" />
                                 드래그하여 순서 변경
                             </p>
@@ -231,25 +231,25 @@ export default function ImageDropZone({
                                     <img
                                         src={image}
                                         alt={`Preview ${index + 1}`}
-                                        className="w-full h-auto object-cover"
+                                        className="object-cover w-full h-auto"
                                         draggable={false}
                                     />
-                                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-all duration-300" />
+                                    <div className="absolute inset-0 transition-all duration-300 bg-black/0 group-hover:bg-black/50" />
                                     <button
                                         type="button"
                                         onClick={() => removeImage(index)}
-                                        className="absolute top-4 right-4 p-2 bg-white/90 backdrop-blur-sm rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-white cursor-pointer"
+                                        className="absolute p-2 transition-all duration-300 rounded-full shadow-lg opacity-0 cursor-pointer top-4 right-4 bg-white/90 backdrop-blur-sm group-hover:opacity-100 hover:bg-white"
                                     >
                                         <X className="w-5 h-5 text-gray-700" />
                                     </button>
-                                    <div className="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                        <p className="text-white text-sm font-medium bg-black/50 backdrop-blur-sm px-3 py-1 rounded-full">
+                                    <div className="absolute transition-opacity duration-300 opacity-0 bottom-4 left-4 group-hover:opacity-100">
+                                        <p className="px-3 py-1 text-sm font-medium text-white rounded-full bg-black/50 backdrop-blur-sm">
                                             {index + 1} / {images.length}
                                         </p>
                                     </div>
                                     {multiple && (
-                                        <div className="absolute top-4 left-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                            <div className="text-white bg-black/50 backdrop-blur-sm p-2 rounded-full">
+                                        <div className="absolute transition-opacity duration-300 opacity-0 top-4 left-4 group-hover:opacity-100">
+                                            <div className="p-2 text-white rounded-full bg-black/50 backdrop-blur-sm">
                                                 <GripVertical className="w-5 h-5" />
                                             </div>
                                         </div>
@@ -260,7 +260,7 @@ export default function ImageDropZone({
                     )}
 
                     {layout === "grid" && (
-                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+                        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4">
                             {images.map((image, index) => (
                                 <div
                                     key={index}
@@ -285,7 +285,7 @@ export default function ImageDropZone({
                                         className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.05]"
                                         draggable={false}
                                     />
-                                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-all duration-300" />
+                                    <div className="absolute inset-0 transition-all duration-300 bg-black/0 group-hover:bg-black/50" />
                                     <button
                                         type="button"
                                         onClick={() => removeImage(index)}
@@ -293,13 +293,13 @@ export default function ImageDropZone({
                                     >
                                         <X className="w-4 h-4 text-gray-700" />
                                     </button>
-                                    <div className="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                        <p className="text-white text-sm font-medium bg-black/50 backdrop-blur-sm px-3 py-1 rounded-full">
+                                    <div className="absolute transition-opacity duration-300 opacity-0 bottom-4 left-4 group-hover:opacity-100">
+                                        <p className="px-3 py-1 text-sm font-medium text-white rounded-full bg-black/50 backdrop-blur-sm">
                                             {index + 1} / {images.length}
                                         </p>
                                     </div>
                                     {multiple && (
-                                        <div className="absolute top-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                        <div className="absolute transition-opacity duration-300 opacity-0 top-2 left-2 group-hover:opacity-100">
                                             <div className="text-white bg-black/50 backdrop-blur-sm p-1.5 rounded-full">
                                                 <GripVertical className="w-4 h-4" />
                                             </div>
