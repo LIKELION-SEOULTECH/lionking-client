@@ -21,7 +21,7 @@ export default async function ProjectDetailPage({
                 <ProjectDetailImages images={project.landingImages} />
             )}
 
-            <ProjectDetailRecap recaps={project.retrospections} />
+            <ProjectDetailRecap recaps={project.participations} />
         </>
     );
 }

@@ -41,9 +41,9 @@ export type Member = {
     userTags?: string[]; // <파트> <운영진/아기사자> <부서>, 주황색으로 나오는 부분
     profileIntro?: string;
     profileIntroTags?: string[]; // 맴버프로필-소개 섹션에 들어가는 태그
-    profileIntroSkills?: string[];
+    profileIntroSkills?: string;
     profileExternalLinks?: {
-        label: string;
+        type: string;
         url: string;
     }[];
 };
@@ -153,6 +153,44 @@ export type ProjectPreviewMetadata = {
     }[];
 };
 
+// export type Project = {
+//     id: number;
+//     title: string;
+//     description: string;
+//     videoLink?: string;
+//     generation: number;
+//     projectType: ProjectTypeEnum;
+//     thumbnail: string;
+//     participations: string[] | number[];
+//     landingImages: string[];
+//     retrospections: {
+//         memberName: string;
+//         content: string;
+//     }[];
+// };
+
+export type ProjectParticipant = {
+    memberId: number;
+    username: string;
+    profileImage: string | null;
+    position: Parts | null;
+    positionLabel: PartLabels | null;
+    role: Role | null;
+    retrospection: string;
+};
+
+export function mapMemberToProjectParticipant(member: Member): ProjectParticipant {
+    return {
+        memberId: member.id,
+        username: member.name,
+        profileImage: member.imageUrl || null,
+        position: member.position || null,
+        positionLabel: positionEnumToLabel[member.position as Parts] || null,
+        role: member.role || null,
+        retrospection: "",
+    };
+}
+
 export type Project = {
     id: number;
     title: string;
@@ -161,12 +199,8 @@ export type Project = {
     generation: number;
     projectType: ProjectTypeEnum;
     thumbnail: string;
-    participations: string[];
+    participations: ProjectParticipant[];
     landingImages: string[];
-    retrospections: {
-        memberName: string;
-        content: string;
-    }[];
 };
 
 export type MemberPublishedPostFilters = "참여 프로젝트" | "작성한 글";

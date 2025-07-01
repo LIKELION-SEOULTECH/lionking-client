@@ -10,22 +10,21 @@ import { useImageUpload } from "./hooks/useImageUpload";
 import { ImageExt } from "./extensions/ImageComponent";
 import EditorToolbar from "./EditorToolbar";
 import EditorContentArea from "./EditorContentArea";
+import { upload_to_s3 } from "@/lib/api/endpoints/s3";
 
 export default function BlogEditor({
     name,
     placeholder = "내용을 입력하세요.",
-    onImageUpload,
 }: {
     name: string;
     placeholder?: string;
-    onImageUpload?: (file: File) => Promise<string>;
 }) {
     const [field, meta, helpers] = useField(name);
     const [isDragging, setIsDragging] = useState(false);
     const [uploadingFileName, setUploadingFileName] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const dropHandledRef = useRef<boolean>(false);
-    const { handleImageFile, isUploading, uploadProgress } = useImageUpload(onImageUpload);
+    const { handleImageFile, isUploading, uploadProgress } = useImageUpload(upload_to_s3);
 
     const editor = useEditor({
         extensions: [

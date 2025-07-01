@@ -1,10 +1,8 @@
-export type ProjectDetailRecapItemProps = {
-    memberName: string;
-    content: string;
-};
+import { ProjectParticipant } from "@/types";
+import Link from "next/link";
 
-export type ProjectDetailRecapProps = {
-    recaps: ProjectDetailRecapItemProps[];
+type ProjectDetailRecapProps = {
+    recaps: ProjectParticipant[];
 };
 
 export default function ProjectDetailRecap({ recaps }: ProjectDetailRecapProps) {
@@ -13,30 +11,22 @@ export default function ProjectDetailRecap({ recaps }: ProjectDetailRecapProps) 
             <h2 className="head3_sb text-white">프로젝트 회고</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                {recaps.map((recap, index) => (
-                    <ProjectDetailRecapItem
-                        key={index}
-                        memberName={recap.memberName}
-                        content={recap.content}
-                    />
+                {recaps.map((r, index) => (
+                    <ProjectDetailRecapItem key={index} {...r} />
                 ))}
             </div>
         </div>
     );
 }
 
-function ProjectDetailRecapItem({ memberName, content }: ProjectDetailRecapItemProps) {
+function ProjectDetailRecapItem({ memberId, username, retrospection }: ProjectParticipant) {
     return (
         <div className="flex flex-col items-start justify-start gap-5 bg-gray-5 px-7 py-6 rounded-[40px] rounded-bl-none cursor-default hover:bg-gray-5/80 transition-colors duration-200">
-            {/* <Link href={`/about/members/${author.id}`}> */}
-            <p className="body3_m text-white hover:underline">
-                {memberName}
-                {/* {author.name} */}
-                {/* / {author.position} */}
-            </p>
-            {/* </Link> */}
+            <Link href={`/about/members/${memberId}`}>
+                <p className="body3_m text-white hover:underline">{username}</p>
+            </Link>
 
-            <p className="body5_r text-white break-keep">{content}</p>
+            <p className="body5_r text-white break-keep">{retrospection}</p>
         </div>
     );
 }

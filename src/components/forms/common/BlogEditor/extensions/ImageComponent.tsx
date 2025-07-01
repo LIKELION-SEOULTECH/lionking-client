@@ -3,6 +3,8 @@ import { NodeViewProps, NodeViewWrapper, ReactNodeViewRenderer } from "@tiptap/r
 import ImageExtension from "@tiptap/extension-image";
 import { Move } from "lucide-react";
 
+const MIN_WIDTH = 50;
+
 const ResizableImageComponent = ({ node, updateAttributes, selected }: NodeViewProps) => {
     const [isResizing, setIsResizing] = useState(false);
     const [showAltInput, setShowAltInput] = useState(false);
@@ -13,46 +15,62 @@ const ResizableImageComponent = ({ node, updateAttributes, selected }: NodeViewP
         if (showAltInput && altInputRef.current) altInputRef.current.focus();
     }, [showAltInput]);
 
+    const naturalAspectRatioRef = useRef<number | null>(null);
+
+    useEffect(() => {
+        const img = imageRef.current;
+        if (!img || naturalAspectRatioRef.current) return;
+
+        const onLoad = () => {
+            const ratio = img.naturalWidth / img.naturalHeight;
+            naturalAspectRatioRef.current = ratio;
+
+            queueMicrotask(() => {
+                updateAttributes({
+                    width: img.offsetWidth,
+                    height: Math.round(img.offsetWidth / ratio),
+                });
+            });
+        };
+
+        if (img.complete && img.naturalWidth && img.naturalHeight) {
+            onLoad();
+        } else {
+            img.addEventListener("load", onLoad);
+            return () => img.removeEventListener("load", onLoad);
+        }
+    }, [updateAttributes]);
+
     const handleResize = useCallback(
-        (e: React.MouseEvent, direction: string) => {
+        (e: React.MouseEvent) => {
             e.preventDefault();
             e.stopPropagation();
-            const startX = e.clientX;
-            const startY = e.clientY;
-            const startWidth = node.attrs.width || imageRef.current?.offsetWidth || 0;
-            const startHeight = node.attrs.height || imageRef.current?.offsetHeight || 0;
-            const aspectRatio = startWidth / startHeight;
 
-            const handleMouseMove = (e: MouseEvent) => {
+            const startX = e.clientX;
+            const startWidth = node.attrs.width || imageRef.current?.offsetWidth || 0;
+            const aspectRatio = naturalAspectRatioRef.current || 1.5;
+
+            const onMouseMove = (e: MouseEvent) => {
                 const deltaX = e.clientX - startX;
-                const deltaY = e.clientY - startY;
-                let newWidth = startWidth;
-                let newHeight = startHeight;
-                if (direction.includes("right")) newWidth = startWidth + deltaX;
-                if (direction.includes("left")) newWidth = startWidth - deltaX;
-                if (direction.includes("bottom")) newHeight = startHeight + deltaY;
-                if (direction.includes("top")) newHeight = startHeight - deltaY;
-                if (e.shiftKey) {
-                    if (direction === "right" || direction === "left")
-                        newHeight = newWidth / aspectRatio;
-                    else newWidth = newHeight * aspectRatio;
-                }
-                newWidth = Math.max(100, newWidth);
-                newHeight = Math.max(100, newHeight);
-                updateAttributes({ width: Math.round(newWidth), height: Math.round(newHeight) });
+                let newWidth = startWidth + deltaX;
+
+                newWidth = Math.max(MIN_WIDTH, newWidth);
+                const newHeight = Math.round(newWidth / aspectRatio);
+
+                updateAttributes({ width: Math.round(newWidth), height: newHeight });
             };
 
-            const handleMouseUp = () => {
+            const onMouseUp = () => {
                 setIsResizing(false);
-                document.removeEventListener("mousemove", handleMouseMove);
-                document.removeEventListener("mouseup", handleMouseUp);
+                document.removeEventListener("mousemove", onMouseMove);
+                document.removeEventListener("mouseup", onMouseUp);
             };
 
             setIsResizing(true);
-            document.addEventListener("mousemove", handleMouseMove);
-            document.addEventListener("mouseup", handleMouseUp);
+            document.addEventListener("mousemove", onMouseMove);
+            document.addEventListener("mouseup", onMouseUp);
         },
-        [node.attrs.width, node.attrs.height, updateAttributes]
+        [node.attrs.width, updateAttributes]
     );
 
     const handleAltTextSubmit = (e: React.FormEvent) => {
@@ -60,46 +78,48 @@ const ResizableImageComponent = ({ node, updateAttributes, selected }: NodeViewP
         setShowAltInput(false);
     };
 
+    const width = node.attrs.width || 300;
+    const height = node.attrs.height || Math.round(width / (naturalAspectRatioRef.current || 1.5));
+
+    const handleSize = Math.max(8, width * 0.04);
+
     return (
-        <NodeViewWrapper className="relative inline-block my-4" draggable data-drag-handle>
+        <NodeViewWrapper className="inline-block align-bottom my-1" draggable data-drag-handle>
             <div
-                className={`relative inline-block group ${
-                    selected ? "ring-2 ring-orange-main" : ""
-                }`}
+                className={`relative group ${selected ? "ring-2 ring-orange-main" : ""}`}
+                style={{ width, aspectRatio: `${width} / ${height}` }}
             >
                 <img
                     ref={imageRef}
                     src={node.attrs.src}
                     alt={node.attrs.alt || ""}
                     title={node.attrs.title || ""}
-                    width={node.attrs.width}
-                    height={node.attrs.height}
-                    className={`max-w-full h-auto rounded-lg ${
+                    className={`w-full h-auto rounded-lg ${
                         isResizing ? "pointer-events-none" : "cursor-move"
                     }`}
                     draggable={false}
                     loading="lazy"
                 />
+
                 {selected && (
                     <>
-                        <div className="absolute -top-10 left-0 flex items-center gap-2 bg-white rounded-lg shadow-lg px-2 py-1">
-                            <div className="flex items-center gap-1">
-                                <Move className="w-4 h-4 text-gray-500" />
-                                <span className="text-xs text-gray-600">드래그로 이동</span>
-                            </div>
-                            <div className="w-px h-4 bg-gray-300" />
+                        <div className="absolute -top-10 left-0 flex items-center gap-2 bg-white rounded-lg shadow px-2 py-1 z-10">
+                            <Move className="w-4 h-4 text-gray-500" />
+                            <span className="text-xs text-gray-600">드래그로 이동</span>
+                            <div className="w-px h-4 bg-gray-300 mx-2" />
                             <button
                                 onClick={() => setShowAltInput((s) => !s)}
-                                className="text-xs text-gray-600 hover:text-orange-main flex items-center gap-1"
+                                className="text-xs text-gray-600 hover:text-orange-main"
                                 title="대체 텍스트 편집"
                             >
-                                <span>Alt</span>
+                                Alt
                             </button>
                         </div>
+
                         {showAltInput && (
                             <form
                                 onSubmit={handleAltTextSubmit}
-                                className="absolute -bottom-12 left-0 right-0 bg-white rounded-lg shadow-lg p-2"
+                                className="absolute -bottom-12 left-0 right-0 bg-white rounded-lg shadow p-2 z-10"
                             >
                                 <input
                                     ref={altInputRef}
@@ -111,37 +131,17 @@ const ResizableImageComponent = ({ node, updateAttributes, selected }: NodeViewP
                                 />
                             </form>
                         )}
+
                         <div
-                            className="absolute -top-1 -left-1 w-3 h-3 bg-orange-main rounded-full cursor-nw-resize opacity-0 group-hover:opacity-100 transition-opacity"
-                            onMouseDown={(e) => handleResize(e, "top-left")}
-                        />
-                        <div
-                            className="absolute -top-1 -right-1 w-3 h-3 bg-orange-main rounded-full cursor-ne-resize opacity-0 group-hover:opacity-100 transition-opacity"
-                            onMouseDown={(e) => handleResize(e, "top-right")}
-                        />
-                        <div
-                            className="absolute -bottom-1 -left-1 w-3 h-3 bg-orange-main rounded-full cursor-sw-resize opacity-0 group-hover:opacity-100 transition-opacity"
-                            onMouseDown={(e) => handleResize(e, "bottom-left")}
-                        />
-                        <div
-                            className="absolute -bottom-1 -right-1 w-3 h-3 bg-orange-main rounded-full cursor-se-resize opacity-0 group-hover:opacity-100 transition-opacity"
-                            onMouseDown={(e) => handleResize(e, "bottom-right")}
-                        />
-                        <div
-                            className="absolute -top-1 left-1/2 -translate-x-1/2 w-3 h-3 bg-orange-main rounded-full cursor-n-resize opacity-0 group-hover:opacity-100 transition-opacity"
-                            onMouseDown={(e) => handleResize(e, "top")}
-                        />
-                        <div
-                            className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-3 h-3 bg-orange-main rounded-full cursor-s-resize opacity-0 group-hover:opacity-100 transition-opacity"
-                            onMouseDown={(e) => handleResize(e, "bottom")}
-                        />
-                        <div
-                            className="absolute top-1/2 -left-1 -translate-y-1/2 w-3 h-3 bg-orange-main rounded-full cursor-w-resize opacity-0 group-hover:opacity-100 transition-opacity"
-                            onMouseDown={(e) => handleResize(e, "left")}
-                        />
-                        <div
-                            className="absolute top-1/2 -right-1 -translate-y-1/2 w-3 h-3 bg-orange-main rounded-full cursor-e-resize opacity-0 group-hover:opacity-100 transition-opacity"
-                            onMouseDown={(e) => handleResize(e, "right")}
+                            className="absolute bg-orange-main rounded-full opacity-0 group-hover:opacity-100 transition-opacity cursor-se-resize"
+                            onMouseDown={handleResize}
+                            style={{
+                                width: `${handleSize}px`,
+                                height: `${handleSize}px`,
+                                bottom: `-${handleSize / 2}px`,
+                                right: `-${handleSize / 2}px`,
+                                zIndex: 20,
+                            }}
                         />
                     </>
                 )}

@@ -1,6 +1,7 @@
 import { AuthMeResponse, authVerifyMapper } from "@/lib/api/mappers/auth.mapper";
 import { Member } from "@/types";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 type UseAuthResult = {
     isAuthenticated: boolean;
@@ -9,40 +10,42 @@ type UseAuthResult = {
     error?: string;
 };
 
-export function useAuth(): UseAuthResult {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+type UseAuthOptions = {
+    redirectTo?: string;
+};
+
+export function useAuth(options?: UseAuthOptions): UseAuthResult {
+    const [user, setUser] = useState<Member | undefined>();
     const [loading, setLoading] = useState(true);
-    const [user, setUser] = useState<Member>();
     const [error, setError] = useState<string>();
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const router = useRouter();
 
     useEffect(() => {
-        const checkAuth = async () => {
+        const fetchUser = async () => {
             try {
-                const res = await fetch("/api/auth/me", {
-                    method: "GET",
-                });
-
+                const res = await fetch("/api/auth/me", { method: "GET" });
                 if (!res.ok) {
-                    const err = await res.json();
-                    setIsAuthenticated(false);
-                    setError(err.message || "인증 실패");
-                } else {
-                    const data = await res.json();
-                    const user = data.data as AuthMeResponse;
-                    setIsAuthenticated(user !== null);
-                    const mappedUser = authVerifyMapper(user);
-                    setUser(mappedUser);
+                    throw new Error((await res.json()).message || "인증 실패");
                 }
-            } catch {
+
+                const data = await res.json();
+                const user = data.data as AuthMeResponse;
+                setUser(authVerifyMapper(user));
+                setIsAuthenticated(true);
+            } catch (err) {
                 setIsAuthenticated(false);
-                setError("네트워크 오류");
+                if (options?.redirectTo) {
+                    router.replace(options.redirectTo);
+                }
+                setError((err as Error).message);
             } finally {
                 setLoading(false);
             }
         };
 
-        checkAuth();
+        fetchUser();
     }, []);
 
-    return { isAuthenticated, user, loading, error };
+    return { user, loading, error, isAuthenticated };
 }

@@ -11,11 +11,18 @@ import { GenericFormPageConfig } from "../types/FormConfig.types";
 
 export default function GenericFormPage<V extends Record<string, unknown>>({
     config,
+    initialOverride,
 }: {
     config: GenericFormPageConfig<V>;
+    initialOverride?: Partial<V>;
 }) {
     const [isSuccess, setIsSuccess] = useState(false);
     const { banner, form, isBlog } = config;
+
+    const initialValues: V = {
+        ...form.initialValues,
+        ...initialOverride,
+    };
 
     return (
         <AnimatePresence mode="wait">
@@ -93,7 +100,7 @@ export default function GenericFormPage<V extends Record<string, unknown>>({
 
                     <div className="w-full max-w-[1100px] mx-auto px-6 lg:px-4 xl:px-0 py-16">
                         <Formik
-                            initialValues={form.initialValues}
+                            initialValues={initialValues}
                             validationSchema={form.validationSchema}
                             validateOnMount={true}
                             onSubmit={async (values, { setSubmitting }) => {

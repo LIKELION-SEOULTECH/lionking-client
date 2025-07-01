@@ -1,15 +1,28 @@
 import * as Yup from "yup";
 import { GenericFormPageConfig } from "../types/FormConfig.types";
 import Icons from "@/assets/banner/archive/blog/icons.svg";
+import { PostBlogRequest } from "@/lib/api/endpoints/blog";
+import { extractS3KeysFromHtml, extractFilePathFromS3Url } from "@/lib/utils";
 
 const blogSchema = Yup.object({
     title: Yup.string().required("제목을 입력해주세요").max(100, "최대 100자까지 입력 가능합니다"),
     category: Yup.string().required("카테고리를 선택해주세요"),
     thumbnail: Yup.string().required("썸네일을 업로드해주세요"),
     content: Yup.string().required("내용을 입력해주세요"),
+    authorId: Yup.number().required(),
 });
 
 export type BlogFormValues = Yup.InferType<typeof blogSchema>;
+
+export function generatePostBlogRequest(form: BlogFormValues): PostBlogRequest {
+    return {
+        title: form.title,
+        blogType: form.category as "SESSION" | "ARTICLE",
+        content: form.content,
+        thumbnailImage: extractFilePathFromS3Url(form.thumbnail),
+        contentMedia: extractS3KeysFromHtml(form.content),
+    };
+}
 
 export const blogFormConfig: GenericFormPageConfig<BlogFormValues> = {
     banner: {
@@ -32,19 +45,16 @@ export const blogFormConfig: GenericFormPageConfig<BlogFormValues> = {
                 ],
             },
             {
-                title: "활동 유형 선택",
+                title: "블로그 유형",
                 fields: [
                     {
                         name: "category",
                         type: "radio",
-                        label: "활동유형",
+                        label: "블로그유형",
                         required: true,
                         options: [
-                            { label: "아이디어톤", value: "아이디어톤" },
-                            { label: "중앙 해커톤", value: "중앙해커톤" },
-                            { label: "연합 해커톤", value: "연합해커톤" },
-                            { label: "장기 프로젝트", value: "장기프로젝트" },
-                            { label: "기타", value: "기타" },
+                            { label: "세션", value: "SESSION" },
+                            { label: "아티클", value: "ARTICLE" },
                         ],
                     },
                 ],
@@ -80,11 +90,26 @@ export const blogFormConfig: GenericFormPageConfig<BlogFormValues> = {
             category: "",
             thumbnail: "",
             content: "",
+            authorId: 0,
         },
         validationSchema: blogSchema,
         onSubmit: async (values) => {
-            console.log("Blog post submitted:", values);
-            await new Promise((resolve) => setTimeout(resolve, 2000));
+            const reqBody = generatePostBlogRequest(values);
+
+            console.log("Submitting blog post:", reqBody);
+
+            const response = await fetch(`/api/blog/${values.authorId}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(reqBody),
+            });
+
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.message || "블로그 등록에 실패했습니다.");
+            }
+
+            return response.json();
         },
         submitButtonText: "작성하기",
         successConfig: {

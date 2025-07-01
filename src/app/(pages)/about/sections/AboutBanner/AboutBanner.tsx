@@ -14,6 +14,7 @@ export default function AboutBanner() {
 
         const totalFrames = lottieRef.current.getDuration(true) ?? 0;
         const animationDuration = 1000;
+        const startDelay = 800;
         let startTime: number | null = null;
         let lastFrame = -1;
         let frameId: number;
@@ -41,9 +42,15 @@ export default function AboutBanner() {
         }
 
         lottieRef.current.stop();
-        frameId = requestAnimationFrame(animate);
 
-        return () => cancelAnimationFrame(frameId);
+        const timeoutId = setTimeout(() => {
+            frameId = requestAnimationFrame(animate);
+        }, startDelay);
+
+        return () => {
+            clearTimeout(timeoutId);
+            cancelAnimationFrame(frameId);
+        };
     }, []);
 
     return (

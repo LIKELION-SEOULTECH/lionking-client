@@ -1,16 +1,16 @@
 import { useState, useRef, KeyboardEvent, useEffect } from "react";
 import { useField } from "formik";
 import { LoaderCircle, X } from "lucide-react";
-import { Member } from "@/types";
+import { mapMemberToProjectParticipant, Member, ProjectParticipant } from "@/types";
 
 export default function MemberSelector({ name }: { name: string }) {
-    const [field, , helpers] = useField<Member[]>(name);
+    const [field, , helpers] = useField<ProjectParticipant[]>(name);
     const [isOpen, setIsOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
     const [isComposing, setIsComposing] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(0);
 
-    const [allMembers, setAllMembers] = useState<Member[]>([]);
+    const [allMembers, setAllMembers] = useState<ProjectParticipant[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -21,10 +21,12 @@ export default function MemberSelector({ name }: { name: string }) {
 
     const filteredMembers = allMembers.filter(
         (member) =>
-            !selectedMembers.find((m) => m.id === member.id) &&
-            (member.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            !selectedMembers.find((m) => m.memberId === member.memberId) &&
+            (member.username?.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 (member.position &&
-                    member.position.toLowerCase().includes(searchTerm.toLowerCase())))
+                    member.position.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                (member.positionLabel &&
+                    member.positionLabel?.toLowerCase().includes(searchTerm.toLowerCase())))
     );
 
     useEffect(() => {
@@ -40,7 +42,11 @@ export default function MemberSelector({ name }: { name: string }) {
                 const json: { data: Member[] } = await res.json();
                 const members: Member[] = json.data;
 
-                setAllMembers(members);
+                const mappedMembers: ProjectParticipant[] = members.map(
+                    mapMemberToProjectParticipant
+                );
+
+                setAllMembers(mappedMembers);
             } catch (err) {
                 setError(err instanceof Error ? err.message : "Unknown error");
             } finally {
@@ -55,7 +61,7 @@ export default function MemberSelector({ name }: { name: string }) {
         setSelectedIndex(0);
     }, [searchTerm]);
 
-    const addMember = (member: Member) => {
+    const addMember = (member: ProjectParticipant) => {
         helpers.setValue([...selectedMembers, member]);
         if (!isComposing) {
             setSearchTerm("");
@@ -64,7 +70,7 @@ export default function MemberSelector({ name }: { name: string }) {
     };
 
     const removeMember = (memberId: number) => {
-        helpers.setValue(selectedMembers.filter((m) => m.id !== memberId));
+        helpers.setValue(selectedMembers.filter((m) => m.memberId !== memberId));
         inputRef.current?.focus();
     };
 
@@ -74,7 +80,7 @@ export default function MemberSelector({ name }: { name: string }) {
         if (e.key === "Backspace" && searchTerm === "" && selectedMembers.length > 0) {
             e.preventDefault();
             const lastMember = selectedMembers[selectedMembers.length - 1];
-            removeMember(lastMember.id);
+            removeMember(lastMember.memberId);
             return;
         }
 
@@ -120,15 +126,15 @@ export default function MemberSelector({ name }: { name: string }) {
             >
                 {selectedMembers.map((member) => (
                     <button
-                        key={member.id}
+                        key={member.memberId}
                         type="button"
                         onClick={(e) => {
                             e.stopPropagation();
-                            removeMember(member.id);
+                            removeMember(member.memberId);
                         }}
                         className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-[10px] hover:bg-gray-1 border border-gray-2 cursor-pointer transition-colors duration-200 shrink-0"
                     >
-                        <span className="text-sm text-gray-900">{member.name}</span>
+                        <span className="text-sm text-gray-900">{member.username}</span>
                         <X className="w-4 h-4 text-black" />
                     </button>
                 ))}
@@ -172,7 +178,7 @@ export default function MemberSelector({ name }: { name: string }) {
                 <div className="absolute z-50 w-full mt-2 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto">
                     {filteredMembers.map((member, index) => (
                         <button
-                            key={member.id}
+                            key={member.memberId}
                             type="button"
                             onMouseDown={(e) => {
                                 e.preventDefault();
@@ -184,10 +190,10 @@ export default function MemberSelector({ name }: { name: string }) {
                         >
                             <div className="flex-1">
                                 <span className="text-sm font-medium text-gray-900">
-                                    {member.name}
+                                    {member.username}
                                 </span>
                                 <span className="text-sm text-gray-500 ml-2">
-                                    {member.position}
+                                    {member.positionLabel}
                                 </span>
                             </div>
                         </button>

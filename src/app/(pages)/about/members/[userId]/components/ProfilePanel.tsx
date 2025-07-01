@@ -27,7 +27,7 @@ export default function ProfilePanel({ member }: ProfilePanelProps) {
                     </ProfilePanelSubSection>
                     {profileIntroSkills && profileIntroSkills.length > 0 && (
                         <ProfilePanelSubSection title="기술">
-                            <p>{profileIntroSkills.join(", ")}</p>
+                            <p>{profileIntroSkills}</p>
                         </ProfilePanelSubSection>
                     )}
                 </ProfilePanelSection>
@@ -39,7 +39,7 @@ export default function ProfilePanel({ member }: ProfilePanelProps) {
                                 {profileExternalLinks.map((link, idx) => (
                                     <div
                                         className="w-full flex flex-col items-start justify-center gap-2"
-                                        key={link.label}
+                                        key={link.type}
                                     >
                                         <ProfileExternalLinkItem {...link} />
 
@@ -84,7 +84,7 @@ function ProfileTagItem({ tag }: { tag: string }) {
     );
 }
 
-function ProfileExternalLinkItem({ label, url }: { label: string; url: string }) {
+function ProfileExternalLinkItem({ type, url }: { type: string; url: string }) {
     return (
         <a
             href={url}
@@ -92,7 +92,7 @@ function ProfileExternalLinkItem({ label, url }: { label: string; url: string })
             target="_blank"
             rel="noopener noreferrer"
         >
-            <p className="body5_r text-white hover:underline">{label}</p>
+            <p className="body5_r text-white hover:underline">{type}</p>
             <ArrowUpGrayIcon />
         </a>
     );
