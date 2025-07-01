@@ -4,11 +4,19 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { motion } from "motion/react";
 
-type MainActivityCardProps = {
-    isFocused?: boolean;
+export type MainActivityCardContent = {
+    badge: string;
+    title: string;
+    description: string;
+    imageSrc: string;
 };
 
-export default function MainActivityCard({ isFocused }: MainActivityCardProps) {
+type MainActivityCardProps = {
+    isFocused: boolean;
+    content: MainActivityCardContent;
+};
+
+export default function MainActivityCard({ isFocused, content }: MainActivityCardProps) {
     return (
         <motion.div
             layout
@@ -16,33 +24,33 @@ export default function MainActivityCard({ isFocused }: MainActivityCardProps) {
                 "card-bg",
                 isFocused && "focused",
                 isFocused
-                    ? "shadow-[0px_10px_30px_rgba(0,0,0,0.3)] scale-[1] p-5 md:p-[30px]"
-                    : "opacity-70 scale-[0.88] p-6 md:p-[40px]"
+                    ? "opacity-100 shadow-[0px_10px_30px_rgba(0,0,0,0.3)] scale-[1] p-5 md:p-[30px]"
+                    : "opacity-[0.6] scale-[0.88] p-6 md:p-[40px]"
             )}
         >
-            <CardContent isFocused={!!isFocused} />
+            <CardContent isFocused={isFocused} content={content} />
         </motion.div>
     );
 }
 
-function CardContent({ isFocused }: { isFocused: boolean }) {
+function CardContent({ isFocused, content }: MainActivityCardProps) {
     return (
-        <div className="w-full flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 transition-all duration-500">
+        <div className="flex flex-col items-center justify-center w-full gap-4 transition-all duration-500 md:flex-row md:gap-8">
             <div className="w-full md:w-[415px] flex-shrink-0">
                 <Image
-                    src="/static/images/placeholder.png"
+                    src={content.imageSrc}
                     alt="Placeholder"
                     width={415}
                     height={306}
-                    className="w-full h-auto"
+                    className="w-full h-auto rounded-[20px]"
                 />
             </div>
-            <MainActivityCardRightInfo isFocused={isFocused} />
+            <MainActivityCardRightInfo isFocused={isFocused} content={content} />
         </div>
     );
 }
 
-function MainActivityCardRightInfo({ isFocused }: { isFocused: boolean }) {
+function MainActivityCardRightInfo({ isFocused, content }: MainActivityCardProps) {
     return (
         <div className="flex flex-col items-start justify-start gap-6 md:gap-[30px] w-full md:w-[453px] transition-all duration-500 break-keep">
             <div className="flex flex-col items-start justify-start gap-3">
@@ -53,16 +61,16 @@ function MainActivityCardRightInfo({ isFocused }: { isFocused: boolean }) {
                     style={{ transformOrigin: "left bottom" }}
                     transition={{ duration: 0.4, ease: "easeInOut" }}
                 >
-                    정기세션
+                    {content.badge}
                 </motion.div>
                 <motion.p
-                    className="head3_sb text-white"
+                    className="text-white head3_sb"
                     initial={{ scale: 1 }}
                     animate={{ scale: isFocused ? 1 : 1 / 1.33 }}
                     style={{ transformOrigin: "left center" }}
                     transition={{ duration: 0.4, ease: "easeInOut" }}
                 >
-                    매주 진행되는 정기 세션을 통해 어쩌고 할 수 있어요 (설명)
+                    {content.title}
                 </motion.p>
             </div>
             <motion.p
@@ -72,8 +80,7 @@ function MainActivityCardRightInfo({ isFocused }: { isFocused: boolean }) {
                 style={{ transformOrigin: "left top" }}
                 transition={{ duration: 0.4, ease: "easeInOut" }}
             >
-                활동에 대한 설명을 적어주세요! 활동에 대한 설명을 적어주세요! 활동에 대한 설명을
-                적어주세요! 활동에 대한 설명
+                {content.description}
             </motion.p>
         </div>
     );
