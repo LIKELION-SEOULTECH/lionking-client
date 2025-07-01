@@ -153,6 +153,42 @@ export type ProjectPreviewMetadata = {
     }[];
 };
 
+// export type Project = {
+//     id: number;
+//     title: string;
+//     description: string;
+//     videoLink?: string;
+//     generation: number;
+//     projectType: ProjectTypeEnum;
+//     thumbnail: string;
+//     participations: string[] | number[];
+//     landingImages: string[];
+//     retrospections: {
+//         memberName: string;
+//         content: string;
+//     }[];
+// };
+
+export type ProjectParticipant = {
+    memberId: number;
+    username: string;
+    profileImage: string | null;
+    position: Parts | null;
+    role: Role | null;
+    retrospection: string;
+};
+
+export function mapMemberToProjectParticipant(member: Member): ProjectParticipant {
+    return {
+        memberId: member.id,
+        username: member.name,
+        profileImage: member.imageUrl || null,
+        position: member.position || null,
+        role: member.role || null,
+        retrospection: "",
+    };
+}
+
 export type Project = {
     id: number;
     title: string;
@@ -161,12 +197,8 @@ export type Project = {
     generation: number;
     projectType: ProjectTypeEnum;
     thumbnail: string;
-    participations: string[] | number[];
+    participations: ProjectParticipant[];
     landingImages: string[];
-    retrospections: {
-        memberName: string;
-        content: string;
-    }[];
 };
 
 export type MemberPublishedPostFilters = "참여 프로젝트" | "작성한 글";

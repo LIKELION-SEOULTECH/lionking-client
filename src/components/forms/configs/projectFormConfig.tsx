@@ -2,7 +2,7 @@ import * as Yup from "yup";
 import { GenericFormPageConfig } from "../types/FormConfig.types";
 import Icons from "@/assets/banner/archive/projects/icons.svg";
 import { PostProjectRequest } from "@/lib/api/endpoints/project";
-import { ProjectTypeEnum } from "@/types";
+import { ProjectParticipant, ProjectTypeEnum } from "@/types";
 import { extractFilePathFromS3Url } from "@/lib/utils";
 
 export const projectValidationSchema = Yup.object({
@@ -15,7 +15,7 @@ export const projectValidationSchema = Yup.object({
         .required("프로젝트 소개를 입력해주세요")
         .max(300, "최대 300자까지 입력 가능합니다"),
     projectVideo: Yup.string().url("올바른 URL 형식이 아닙니다"),
-    projectMembers: Yup.array()
+    projectMembers: Yup.array<ProjectParticipant>()
         .min(1, "최소 1명 이상의 멤버를 선택해주세요")
         .required("참여 멤버를 선택해주세요"),
     projectThumbnail: Yup.string().required("썸네일을 업로드해주세요"),
@@ -26,6 +26,7 @@ export const projectValidationSchema = Yup.object({
     projectRecaps: Yup.array().of(
         Yup.object({
             memberId: Yup.number().required(),
+            username: Yup.string().required(),
             content: Yup.string()
                 .required("회고 내용을 입력해주세요")
                 .max(300, "최대 300자까지 입력 가능합니다"),
@@ -46,7 +47,7 @@ export function generatePostProjectRequest(form: ProjectFormValues): PostProject
             memberId: retrospection.memberId,
             retrospection: retrospection.content,
         }))!,
-        memberIds: form.projectMembers.map((member) => member.id),
+        memberIds: form.projectMembers.map((member) => member.memberId),
         thumbnailImageKey: extractFilePathFromS3Url(form.projectThumbnail),
         landingImagesKeys: form.projectLandingImages.map(extractFilePathFromS3Url),
     };

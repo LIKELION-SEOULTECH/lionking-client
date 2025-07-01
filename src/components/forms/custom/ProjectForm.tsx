@@ -5,7 +5,7 @@ import { Form, useFormikContext } from "formik";
 import { FormSection, Input, TextArea, Select, RadioGroup } from "../common/FormComponents";
 import ImageDropZone from "../common/ImageDropZone";
 import MemberSelector from "../common/MemberSelector";
-import type { Member, ProjectTypeEnum } from "@/types";
+import type { Member, ProjectParticipant, ProjectTypeEnum } from "@/types";
 
 type ProjectRecap = {
     author: Member;
@@ -27,7 +27,7 @@ export default function ProjectFormWithRecaps() {
         projectDescription: string;
         projectYear: number;
         projectVideo: string;
-        projectMembers: Member[];
+        projectMembers: ProjectParticipant[];
         projectThumbnail: string;
         projectLandingImages: string[];
         projectRecaps: ProjectRecap[];
@@ -40,11 +40,11 @@ export default function ProjectFormWithRecaps() {
         const recapMap = new Map(currentRecaps.map((recap) => [recap.memberId, recap]));
 
         const newRecaps = members.map((member) => {
-            const existingRecap = recapMap.get(member.id);
+            const existingRecap = recapMap.get(member.memberId);
             return (
                 existingRecap || {
-                    author: member,
-                    memberId: member.id,
+                    memberId: member.memberId,
+                    username: member.username,
                     content: "",
                 }
             );
