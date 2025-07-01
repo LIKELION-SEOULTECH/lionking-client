@@ -1,12 +1,25 @@
+import { notFound } from "next/navigation";
 import BlogContentRenderer from "./components/BlogContentRenderer";
 import BlogShareButton from "./components/BlogShareButton";
 import BlogSuggestion from "./components/BlogSuggestion";
 import { get_blog, get_blog_blogId } from "@/lib/api/endpoints/blog";
 
-export default async function BlogDetailPage({ params }: { params: Promise<{ blogId: string }> }) {
-    const { blogId } = await params;
+export default async function BlogDetailPage({
+    params,
+}: {
+    params: Promise<{ type: string; blogId: string }>;
+}) {
+    const { type, blogId } = await params;
 
     const blog = await get_blog_blogId(blogId);
+
+    if (!blog) {
+        return notFound();
+    }
+
+    if (blog.blogType !== type) {
+        return notFound();
+    }
 
     return (
         <>

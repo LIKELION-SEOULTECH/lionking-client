@@ -13,5 +13,6 @@ export async function upload_to_s3(file: File, prefix: string = "uploads") {
     }
 
     const { publicUrl } = await res.json();
+
     return publicUrl;
 }

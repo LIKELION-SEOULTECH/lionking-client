@@ -1,16 +1,45 @@
 "use client";
 
-import { useState } from "react";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Formik } from "formik";
 import { AnimatePresence, motion } from "motion/react";
 import SuccessPage from "@/components/forms/views/SuccessPage";
 import GenericBanner from "@/components/banners/GenericBanner";
 import ProjectForm from "@/components/forms/custom/ProjectForm";
-import { getProjectFormConfig } from "@/components/forms/configs/projectFormConfig";
+import {
+    getProjectFormConfig,
+    ProjectFormValues,
+} from "@/components/forms/configs/projectFormConfig";
+import { get_projects_projectId } from "@/lib/api/endpoints/project";
+import { projectToFormValues } from "@/lib/api/mappers/project.mapper";
 
-export default function NewProjectPage() {
+export default function EditProjectPage() {
+    const params = useParams<{ projectId: string }>();
+    const projectId = params.projectId;
+
     const [isSuccess, setIsSuccess] = useState(false);
-    const { banner, form } = getProjectFormConfig({});
+    const { banner, form } = getProjectFormConfig({ isEdit: true, projectId });
+
+    const [initialValues, setInitialValues] = useState<ProjectFormValues | null>(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            if (projectId) {
+                const project = await get_projects_projectId(projectId);
+                const data: ProjectFormValues = await projectToFormValues(project);
+
+                setInitialValues({
+                    ...form.initialValues,
+                    ...data,
+                });
+            }
+        };
+
+        fetchData();
+    }, [projectId]);
+
+    if (!initialValues) return <div className="py-40 text-center">불러오는 중...</div>;
 
     return (
         <AnimatePresence mode="wait">
@@ -81,7 +110,7 @@ export default function NewProjectPage() {
 
                     <div className="w-full max-w-[1100px] mx-auto px-6 lg:px-4 xl:px-0 py-16">
                         <Formik
-                            initialValues={form.initialValues}
+                            initialValues={initialValues}
                             validationSchema={form.validationSchema}
                             validateOnMount={true}
                             onSubmit={async (values, { setSubmitting }) => {

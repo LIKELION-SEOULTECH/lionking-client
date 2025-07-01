@@ -5,6 +5,7 @@ import NextTopLoader from "nextjs-toploader";
 
 import Header from "@/components/ui/Header";
 import Footer from "@/components/ui/Footer";
+import { Toaster } from "@/components/ui/Toast";
 
 export default function RootLayout({
     children,
@@ -17,6 +18,7 @@ export default function RootLayout({
                 <NextTopLoader color="#FF7710" showSpinner={false} height={1} zIndex={50000} />
                 <Header />
                 <main role="main">{children}</main>
+                <Toaster />
                 <Footer />
             </body>
         </html>

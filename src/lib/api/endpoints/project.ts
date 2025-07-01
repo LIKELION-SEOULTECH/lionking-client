@@ -1,3 +1,5 @@
+"use server";
+
 import { createFetchClient } from "@/lib/api/fetchJson";
 import { type Project, type ProjectTypeEnum } from "@/types";
 
@@ -39,14 +41,15 @@ export async function post_projects(body: PostProjectRequest) {
 export async function get_projects_projectId(projectId: string | number) {
     const fetchJson = await createFetchClient();
 
-    return fetchJson(`/api/v1/projects/${projectId}`, {
+    const response = await fetchJson(`/api/v1/projects/${projectId}`, {
         method: "GET",
-    }).then((res) => {
-        if (res.status === 404) {
-            throw new Error("Project not found");
-        }
-        return res.data as Project;
     });
+
+    if (response.status === 404) {
+        throw new Error("Project not found");
+    }
+
+    return response.data as Project;
 }
 
 export async function delete_projects_projectId(projectId: string | number) {

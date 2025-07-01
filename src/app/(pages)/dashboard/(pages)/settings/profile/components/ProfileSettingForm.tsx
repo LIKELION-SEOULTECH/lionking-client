@@ -17,7 +17,7 @@ function Input({
             <input
                 {...field}
                 {...props}
-                className="w-full px-7 py-3 border border-gray-5 rounded-[10px] body3_r text-gray-1 focus:ring-1 focus:outline-none focus:ring-orange-500 transition-color duration-200"
+                className="w-full px-7 py-3 border border-gray-5 rounded-[10px] body4_r text-gray-1 focus:ring-1 focus:outline-none focus:ring-orange-500 transition-color duration-200"
             />
             {meta.touched && meta.error && (
                 <p className="text-sm text-red-500 mt-1">{meta.error}</p>
@@ -53,15 +53,15 @@ function RadioGroup({
                             className="hidden"
                         />
                         <div
-                            className={`relative w-[26px] h-[26px] rounded-full transition-colors duration-200
+                            className={`relative size-5.5 rounded-full transition-colors duration-200
                                 ${isChecked ? "bg-white border border-orange-main" : "bg-gray-3"}`}
                         >
                             {isChecked && (
-                                <div className="absolute top-1/2 left-1/2 w-[14px] h-[14px] bg-orange-main rounded-full -translate-x-1/2 -translate-y-1/2" />
+                                <div className="absolute top-1/2 left-1/2 size-3 bg-orange-main rounded-full -translate-x-1/2 -translate-y-1/2" />
                             )}
                         </div>
                         <span
-                            className={`sub2_sb transition-colors duration-200 ${
+                            className={`body4_m transition-colors duration-200 ${
                                 isChecked ? "text-white" : "text-gray-3"
                             }`}
                         >
@@ -89,7 +89,7 @@ function Select({
         <div className={cn("relative inline-block", className)}>
             <select
                 {...field}
-                className="appearance-none px-5 py-2 pr-10 bg-gray-5 text-white rounded-full body4_m focus:ring-1 focus:outline-none focus:ring-orange-500 transition-colors duration-200 cursor-pointer"
+                className="appearance-none px-5 py-2 pr-10 bg-gray-5 text-white rounded-full body4_r focus:ring-1 focus:outline-none focus:ring-orange-500 transition-colors duration-200 cursor-pointer"
             >
                 {options.map((opt) => (
                     <option key={opt.value} value={opt.value}>
@@ -139,7 +139,7 @@ function TagSelector({ name, options }: { name: string; options: string[] }) {
                     type="button"
                     key={tag}
                     onClick={() => toggle(tag)}
-                    className={`px-4 py-2 rounded-[8px] bg-gray-5 border-2 body3_m transition-colors duration-200 cursor-pointer ${
+                    className={`px-4 py-2 rounded-[8px] bg-gray-5 border-2 body4_r transition-colors duration-200 cursor-pointer ${
                         value.includes(tag)
                             ? "text-orange-main border-orange-500"
                             : "text-gray-1 border-gray-5"
@@ -173,7 +173,7 @@ function TextArea({
                 placeholder={placeholder}
                 maxLength={limit}
                 onChange={(e) => helpers.setValue(e.target.value)}
-                className="w-full px-7 py-3 border border-gray-5 rounded-[10px] body3_r text-white resize-none focus:ring-1 focus:outline-none focus:ring-orange-500 transition-color duration-200"
+                className="w-full px-7 py-3 border border-gray-5 rounded-[10px] body4_r text-white resize-none focus:ring-1 focus:outline-none focus:ring-orange-500 transition-color duration-200"
             />
             {limit !== undefined && (
                 <div className="text-right text-gray-4 text-sm mt-1">

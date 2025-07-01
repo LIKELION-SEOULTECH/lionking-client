@@ -16,17 +16,15 @@ export function memberMapper(data: User): Member {
         profileIntroTags: data.descriptionTag
             ? data.descriptionTag.split(",").map((tag: string) => tag.trim().replace(/^#/, ""))
             : [],
-        profileIntroSkills: data.techStack
-            ? data.techStack.split(",").map((s: string) => s.trim())
-            : [],
+        profileIntroSkills: data.techStack ?? "",
         profileExternalLinks: data.portfolioUrls
             ? data.portfolioUrls
                   .split(",")
                   .map((entry: string) => entry.trim())
-                  .filter(Boolean)
+                  .filter((entry) => entry && entry.includes(":"))
                   .map((entry: string) => {
-                      const [label, url] = entry.split(":").map((s) => s.trim());
-                      return { label, url };
+                      const [type, ...urlParts] = entry.split(":").map((s) => s.trim());
+                      return { type, url: urlParts.join(":") };
                   })
             : [],
     };

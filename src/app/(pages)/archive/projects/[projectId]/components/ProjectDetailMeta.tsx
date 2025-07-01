@@ -42,12 +42,12 @@ export default function ProjectDetailMeta({ project }: ProjectDetailProps) {
                         <p className="sub2_sb text-white">팀원</p>
 
                         <ul className="flex flex-wrap gap-x-1.5 after:content-none body3_r text-gray-1">
-                            {project.participations.map((name) => (
+                            {project.participations.map((p) => (
                                 <li
-                                    key={name}
+                                    key={p.memberId}
                                     className="after:content-[','] last:after:content-none"
                                 >
-                                    {name}
+                                    {p.username}
                                 </li>
                             ))}
                         </ul>

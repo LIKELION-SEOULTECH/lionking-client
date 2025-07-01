@@ -24,7 +24,6 @@ export default function PostPreviewItem({
     date,
     authorName,
     authorId,
-    postHref,
     imageUrl = "/static/images/placeholder.png",
     withAction = false,
 }: PostPreviewItemProps) {
@@ -57,7 +56,7 @@ export default function PostPreviewItem({
             )}
             <div className={cn(previewItemVariants({ layout }))}>
                 <div className={imageWrapperClass}>
-                    <Link href={postHref ?? `/archive/blog/${postType}/${postId}`}>
+                    <Link href={`/archive/blog/${postType}/${postId}`}>
                         <Image src={imageUrl} alt={title} fill className="object-cover" />
                     </Link>
                 </div>
@@ -95,7 +94,7 @@ export default function PostPreviewItem({
                         )}
                         <div className="flex flex-col gap-4">
                             <Link
-                                href={postHref ?? `/archive/blog/${postType}/${postId}`}
+                                href={`/archive/blog/${postType}/${postId}`}
                                 className={cn(styles.title, "hover:underline")}
                             >
                                 <p className={styles.title}>{title}</p>

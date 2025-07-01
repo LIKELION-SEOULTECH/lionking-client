@@ -22,7 +22,7 @@ export function authVerifyMapper(data: AuthMeResponse): Member {
         userTags: [data.role, data.position].filter(Boolean),
         profileIntro: undefined,
         profileIntroTags: [],
-        profileIntroSkills: [],
+        profileIntroSkills: "",
         profileExternalLinks: [],
     };
 }

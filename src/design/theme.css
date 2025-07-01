@@ -144,6 +144,13 @@
     line-height: 154%;
 }
 
+.body4_r {
+    font-weight: 400;
+    font-size: clamp(14px, 2vw, 16px);
+    letter-spacing: -0.02em;
+    line-height: 154%;
+}
+
 .body5_r {
     font-weight: 400;
     font-size: clamp(14px, 2vw, 16px);
