@@ -3,6 +3,7 @@
 import { useState, useTransition, useEffect } from "react";
 import TypeLogo from "@/components/ui/TypeLogo";
 import { useAuth } from "@/hooks/auth/useAuth";
+import Link from "next/link";
 
 export default function LoginPage() {
     const [loginId, setLoginId] = useState("");
@@ -91,8 +92,17 @@ export default function LoginPage() {
                     </button>
 
                     {errorMessage && (
-                        <p className="text-red-400 text-center body5_r">{errorMessage}</p>
+                        <p className="text-center text-red-400 body5_r">{errorMessage}</p>
                     )}
+
+                    <div className="flex items-center justify-center w-full">
+                        <Link
+                            href="/signup"
+                            className="transition-colors duration-200 body4_r text-gray-4 hover:text-orange-main hover:underline"
+                        >
+                            회원가입
+                        </Link>
+                    </div>
                 </div>
             </div>
         </div>
