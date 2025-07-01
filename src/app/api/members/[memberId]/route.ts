@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { get_member_memberId } from "@/lib/api/endpoints/member";
 
-export async function GET(req: NextRequest, params: Promise<{ memberId: string }>) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ memberId: string }> }) {
     try {
         const { memberId } = await params;
         const data = await get_member_memberId(memberId);

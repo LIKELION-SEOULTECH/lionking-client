@@ -8,9 +8,9 @@ async function fetchMember(memberId: string | number): Promise<Member> {
 }
 
 export async function projectToFormValues(project: Project): Promise<ProjectFormValues> {
-    const members = await Promise.all(
-        project.participations.map((memberId) => fetchMember(memberId))
-    );
+    // const members = await Promise.all(
+    //     project.participations.map((memberId) => fetchMember(memberId))
+    // );
 
     return {
         projectName: project.title,
@@ -18,15 +18,21 @@ export async function projectToFormValues(project: Project): Promise<ProjectForm
         projectYear: project.generation,
         projectDescription: project.description,
         projectVideo: project.videoLink || "",
-        projectMembers: members,
+        projectMembers: [1, 2], // MOCK!!
         projectThumbnail: project.thumbnail,
         projectLandingImages: project.landingImages,
-        projectRecaps: project.retrospections.map((r) => {
-            const matched = members.find((m) => m.id === r.memberId);
-            return {
-                memberId: 0,
-                content: r.content,
-            };
-        }),
+        // projectRecaps: project.retrospections.map((r) => {
+        //     const matched = members.find((m) => m.id === r.memberId);
+        //     return {
+        //         memberId: 0,
+        //         content: r.content,
+        //     };
+        // }),
+
+        // MOCK!!
+        projectRecaps: project.retrospections.map((r, idx) => ({
+            memberId: 1 + idx, // MOCK!!
+            content: r.content,
+        })),
     };
 }

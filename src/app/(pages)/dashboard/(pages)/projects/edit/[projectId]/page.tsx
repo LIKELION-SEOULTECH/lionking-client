@@ -21,16 +21,19 @@ export default function EditProjectPage() {
     const [initialValues, setInitialValues] = useState<ProjectFormValues | null>(null);
 
     useEffect(() => {
-        get_projects_projectId(projectId).then((project) => {
-            const data: ProjectFormValues = projectToFormValues(project);
-            setInitialValues({
-                ...form.initialValues,
-                ...data,
-            });
-        });
+        const fetchData = async () => {
+            if (projectId) {
+                const project = await get_projects_projectId(projectId);
+                const data: ProjectFormValues = await projectToFormValues(project);
 
-        console.log("Project ID:", projectId);
-        console.log("Initial Values:", initialValues);
+                setInitialValues({
+                    ...form.initialValues,
+                    ...data,
+                });
+            }
+        };
+
+        fetchData();
     }, [projectId]);
 
     if (!initialValues) return <div className="py-40 text-center">불러오는 중...</div>;

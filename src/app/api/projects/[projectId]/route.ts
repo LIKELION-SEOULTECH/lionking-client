@@ -1,7 +1,10 @@
 import { get_projects_projectId } from "@/lib/api/endpoints/project";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest, params: Promise<{ projectId: string }>) {
+export async function GET(
+    req: NextRequest,
+    { params }: { params: Promise<{ projectId: string }> }
+) {
     try {
         const { projectId } = await params;
 
