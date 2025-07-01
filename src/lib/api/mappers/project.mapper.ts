@@ -1,5 +1,5 @@
 import type { ProjectFormValues } from "@/components/forms/configs/projectFormConfig";
-import { getFullS3Url } from "@/lib/utils";
+import { parsePublicUrlFromPresignedUrl } from "@/lib/utils";
 import { positionEnumToLabel, type Project } from "@/types";
 
 export async function projectToFormValues(project: Project): Promise<ProjectFormValues> {
@@ -10,8 +10,8 @@ export async function projectToFormValues(project: Project): Promise<ProjectForm
         projectDescription: project.description,
         projectVideo: project.videoLink || "",
         projectMembers: project.participations,
-        projectThumbnail: getFullS3Url(project.thumbnail) || "",
-        projectLandingImages: project.landingImages.map(getFullS3Url),
+        projectThumbnail: parsePublicUrlFromPresignedUrl(project.thumbnail) || "",
+        projectLandingImages: project.landingImages.map(parsePublicUrlFromPresignedUrl),
         projectRecaps: project.participations.map((p) => {
             return {
                 member: {

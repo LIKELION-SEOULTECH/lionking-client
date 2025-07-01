@@ -26,7 +26,7 @@ export default meta;
 type Story = StoryObj<typeof PostPreviewItem>;
 
 const baseArgs: PostPreviewMetadata = {
-    part: "프론트엔드",
+    part: "FRONTEND",
     postId: "1",
     postType: "session",
     title: "피그마 필수 기능 1시간 만에 정복하기",

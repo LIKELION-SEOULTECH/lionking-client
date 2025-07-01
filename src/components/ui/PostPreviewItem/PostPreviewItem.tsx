@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import { PostPreviewMetadata } from "@/types";
+import { positionEnumToLabel, PostPreviewMetadata } from "@/types";
 import { previewItemVariants, PostPreviewLayout, styleMap } from "./PostPreviewItemVariants";
 import KebabMenuDropdown from "../KebabMenuDropdown";
 import { delete_blog_blogId } from "@/lib/api/endpoints/blog";
@@ -48,7 +48,7 @@ export default function PostPreviewItem({
 
     return (
         <div
-            className="w-full relative flex flex-col items-center justify-center"
+            className="relative flex flex-col items-center justify-center w-full"
             data-id={`post-preview-${postId}`}
         >
             {layout === "horizontal_fill_large" && (
@@ -68,10 +68,10 @@ export default function PostPreviewItem({
                         isVerticalCompactDark && "px-4.5 pb-4"
                     )}
                 >
-                    <div className="w-full flex flex-col gap-2">
+                    <div className="flex flex-col w-full gap-2">
                         {styles.partPosition == "TOP" && (
-                            <div className="w-full flex items-center justify-between">
-                                <p className={styles.part}>{part}</p>
+                            <div className="flex items-center justify-between w-full">
+                                <p className={styles.part}>{positionEnumToLabel[part]}</p>
 
                                 {withAction && (
                                     <KebabMenuDropdown
@@ -115,7 +115,9 @@ export default function PostPreviewItem({
                                 <div className="h-[17px] w-[1.5px] bg-gray-3" />
                                 <div className="flex items-center gap-1">
                                     {styles.partPosition == "BOTTOM" && (
-                                        <span className={cn(styles.part)}>{part}</span>
+                                        <span className={cn(styles.part)}>
+                                            {positionEnumToLabel[part]}
+                                        </span>
                                     )}
                                     <Link
                                         href={`/about/members/${authorId}`}
