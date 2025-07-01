@@ -67,19 +67,19 @@ export default function ProfileSettingLoader({
             }}
             onSubmit={handleSubmit}
         >
-            <Form className="w-full flex flex-col items-start justify-start gap-35">
+            <Form className="flex flex-col items-start justify-start w-full gap-35">
                 <ProfileSettingSection title="기본 정보">
-                    <div className="w-full flex items-center gap-12">
+                    <div className="flex items-center w-full gap-12">
                         <p className="body3_m">이름</p>
                         <F.Input name="username" placeholder="김사자" />
                     </div>
 
-                    <div className="w-full flex items-center gap-12">
+                    <div className="flex items-center w-full gap-12">
                         <p className="body3_m">전공</p>
                         <F.Input name="department" placeholder="사자키우기전공" />
                     </div>
 
-                    <div className="w-full flex items-center gap-12">
+                    <div className="flex items-center w-full gap-12">
                         <p className="body3_m">직책</p>
                         <F.RadioGroup
                             name="role"
@@ -93,7 +93,7 @@ export default function ProfileSettingLoader({
                         />
                     </div>
 
-                    <div className="w-full flex items-center gap-12">
+                    <div className="flex items-center w-full gap-12">
                         <p className="body3_m">파트</p>
                         <F.Select
                             name="position"
@@ -110,8 +110,8 @@ export default function ProfileSettingLoader({
                 </ProfileSettingSection>
 
                 <ProfileSettingSection title="내 소개">
-                    <div className="w-full flex flex-col items-start justify-start gap-4 pb-8">
-                        <div className="w-full flex items-center justify-start gap-6">
+                    <div className="flex flex-col items-start justify-start w-full gap-4 pb-8">
+                        <div className="flex items-center justify-start w-full gap-6">
                             <p className="body2_sb">소개 태그</p>
                             <div className="flex items-center gap-[5px]">
                                 <ImpSmall />
@@ -137,7 +137,7 @@ export default function ProfileSettingLoader({
                         />
                     </div>
 
-                    <div className="w-full flex flex-col items-start justify-start gap-4">
+                    <div className="flex flex-col items-start justify-start w-full gap-4">
                         <p className="body2_sb">소개글</p>
                         <F.TextArea
                             name="description"
@@ -146,7 +146,7 @@ export default function ProfileSettingLoader({
                         />
                     </div>
 
-                    <div className="w-full flex flex-col items-start justify-start gap-4">
+                    <div className="flex flex-col items-start justify-start w-full gap-4">
                         <p className="body2_sb">기술</p>
                         <F.TextArea
                             name="techStack"
@@ -156,7 +156,7 @@ export default function ProfileSettingLoader({
                 </ProfileSettingSection>
 
                 <ProfileSettingSection title="포트폴리오">
-                    <div className="w-full flex flex-col items-start justify-start gap-3">
+                    <div className="flex flex-col items-start justify-start w-full gap-3">
                         <div className="flex items-center gap-[5px]">
                             <ImpSmall />
                             <p className="body5_r text-gray-2">최대 3개까지 추가할 수 있어요</p>
@@ -164,7 +164,7 @@ export default function ProfileSettingLoader({
 
                         <FieldArray name="portfolioUrls">
                             {({ push, remove, form }) => (
-                                <div className="flex flex-col gap-4 w-full">
+                                <div className="flex flex-col w-full gap-4">
                                     {form.values.portfolioUrls.map(
                                         (_entry: PortfolioEntry, index: number) => (
                                             <PortfolioInputGroup
@@ -219,7 +219,7 @@ export default function ProfileSettingLoader({
                 <div className="flex items-center justify-center w-full mt-4">
                     <button
                         type="submit"
-                        className="px-6 py-2 bg-orange-main text-white rounded-md hover:bg-orange-main/80 transition-colors duration-200 cursor-pointer"
+                        className="px-6 py-2 text-white transition-colors duration-200 rounded-md cursor-pointer bg-orange-main hover:bg-orange-main/80"
                     >
                         {isPending ? "저장 중..." : "저장하기"}
                     </button>
