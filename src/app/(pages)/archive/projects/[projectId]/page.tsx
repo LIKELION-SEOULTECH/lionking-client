@@ -3,6 +3,7 @@ import ProjectDetailImages from "./components/ProjectDetailImages";
 import ProjectDetailRecap from "./components/ProjectDetailRecap";
 import { get_projects, get_projects_projectId } from "@/lib/api/endpoints/project";
 import type { Project } from "@/types";
+import { parsePublicUrlFromPresignedUrl } from "@/lib/utils";
 
 export default async function ProjectDetailPage({
     params,
@@ -18,7 +19,9 @@ export default async function ProjectDetailPage({
             <ProjectDetailMeta project={project} />
 
             {project.landingImages && project.landingImages.length > 0 && (
-                <ProjectDetailImages images={project.landingImages} />
+                <ProjectDetailImages
+                    images={project.landingImages.map(parsePublicUrlFromPresignedUrl)}
+                />
             )}
 
             <ProjectDetailRecap recaps={project.participations} />

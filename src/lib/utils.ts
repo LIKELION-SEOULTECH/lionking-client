@@ -59,3 +59,12 @@ export function extractS3KeysFromHtml(content: string): { s3Key: string; mediaTy
 
     return keys;
 }
+
+export function parsePublicUrlFromPresignedUrl(presignedUrl: string): string {
+    try {
+        const url = new URL(presignedUrl);
+        return `${url.origin}${url.pathname}`;
+    } catch {
+        throw new Error("Invalid S3 presigned URL");
+    }
+}

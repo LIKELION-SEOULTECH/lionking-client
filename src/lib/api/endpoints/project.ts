@@ -68,3 +68,21 @@ export async function patch_projects_projectId(projectId: string | number, body:
         body,
     });
 }
+
+export async function get_number_of_projects(memberId: string | number): Promise<number> {
+    const fetchJson = await createFetchClient();
+
+    return fetchJson(`/api/v1/participation/${memberId}`, {
+        method: "GET",
+    })
+        .then((res) => {
+            const data = res.data as {
+                projectIds: number[];
+                count: number;
+            };
+            return data.count;
+        })
+        .catch((_e) => {
+            return 0;
+        });
+}
