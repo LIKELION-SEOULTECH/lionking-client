@@ -32,7 +32,7 @@ export default async function BlogDetailPage({
             />
 
             <div className="relative w-full">
-                <div className="absolute left-1/2 -translate-x-1/2 w-screen h-5 bg-gray-1" />
+                <div className="absolute w-screen h-5 -translate-x-1/2 left-1/2 bg-gray-1" />
             </div>
 
             <BlogSuggestion currentBlogId={blogId} />
