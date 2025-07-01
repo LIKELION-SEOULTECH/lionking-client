@@ -5,11 +5,10 @@ import { Form, useFormikContext } from "formik";
 import { FormSection, Input, TextArea, Select, RadioGroup } from "../common/FormComponents";
 import ImageDropZone from "../common/ImageDropZone";
 import MemberSelector from "../common/MemberSelector";
-import type { Member, ProjectParticipant, ProjectTypeEnum } from "@/types";
+import type { ProjectParticipant, ProjectTypeEnum } from "@/types";
 
 type ProjectRecap = {
-    author: Member;
-    memberId: number;
+    member: ProjectParticipant;
     content: string;
 };
 
@@ -37,14 +36,17 @@ export default function ProjectFormWithRecaps() {
         const currentRecaps = values.projectRecaps;
         const members = values.projectMembers;
 
-        const recapMap = new Map(currentRecaps.map((recap) => [recap.memberId, recap]));
+        const recapMap = new Map(currentRecaps.map((recap) => [recap.member.memberId, recap]));
 
         const newRecaps = members.map((member) => {
             const existingRecap = recapMap.get(member.memberId);
             return (
                 existingRecap || {
-                    memberId: member.memberId,
-                    username: member.username,
+                    member: {
+                        memberId: member.memberId,
+                        username: member.username,
+                        positionLabel: member.positionLabel || "",
+                    },
                     content: "",
                 }
             );
@@ -119,12 +121,12 @@ export default function ProjectFormWithRecaps() {
                 <FormSection title="프로젝트 회고" isRequired>
                     <div className="w-full flex flex-col gap-8">
                         {values.projectRecaps.map((recap, index) => (
-                            <div key={recap.author?.id || recap.memberId} className="w-full">
+                            <div key={recap.member.memberId} className="w-full">
                                 <div className="mb-2 flex gap-2 body3_m">
                                     <span className="text-orange-main">
-                                        {recap.author?.positionLabel || ""}
+                                        {recap.member.positionLabel || ""}
                                     </span>
-                                    <span className="text-black">{recap.author?.name}</span>
+                                    <span className="text-black">{recap.member.username}</span>
                                 </div>
                                 <TextArea
                                     name={`projectRecaps[${index}].content`}

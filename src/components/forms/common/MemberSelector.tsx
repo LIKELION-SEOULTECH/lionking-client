@@ -1,12 +1,7 @@
 import { useState, useRef, KeyboardEvent, useEffect } from "react";
 import { useField } from "formik";
 import { LoaderCircle, X } from "lucide-react";
-import {
-    mapMemberToProjectParticipant,
-    Member,
-    positionEnumToLabel,
-    ProjectParticipant,
-} from "@/types";
+import { mapMemberToProjectParticipant, Member, ProjectParticipant } from "@/types";
 
 export default function MemberSelector({ name }: { name: string }) {
     const [field, , helpers] = useField<ProjectParticipant[]>(name);
@@ -30,10 +25,8 @@ export default function MemberSelector({ name }: { name: string }) {
             (member.username?.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 (member.position &&
                     member.position.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                (member.position &&
-                    positionEnumToLabel[member.position]
-                        ?.toLowerCase()
-                        .includes(searchTerm.toLowerCase())))
+                (member.positionLabel &&
+                    member.positionLabel?.toLowerCase().includes(searchTerm.toLowerCase())))
     );
 
     useEffect(() => {
@@ -199,11 +192,9 @@ export default function MemberSelector({ name }: { name: string }) {
                                 <span className="text-sm font-medium text-gray-900">
                                     {member.username}
                                 </span>
-                                {member.position && (
-                                    <span className="text-sm text-gray-500 ml-2">
-                                        {positionEnumToLabel[member.position]}
-                                    </span>
-                                )}
+                                <span className="text-sm text-gray-500 ml-2">
+                                    {member.positionLabel}
+                                </span>
                             </div>
                         </button>
                     ))}

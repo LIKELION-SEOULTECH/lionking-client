@@ -174,6 +174,7 @@ export type ProjectParticipant = {
     username: string;
     profileImage: string | null;
     position: Parts | null;
+    positionLabel: PartLabels | null;
     role: Role | null;
     retrospection: string;
 };
@@ -184,6 +185,7 @@ export function mapMemberToProjectParticipant(member: Member): ProjectParticipan
         username: member.name,
         profileImage: member.imageUrl || null,
         position: member.position || null,
+        positionLabel: positionEnumToLabel[member.position as Parts] || null,
         role: member.role || null,
         retrospection: "",
     };

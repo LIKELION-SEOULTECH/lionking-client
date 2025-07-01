@@ -25,8 +25,11 @@ export const projectValidationSchema = Yup.object({
         .required("랜딩 이미지를 업로드해주세요"),
     projectRecaps: Yup.array().of(
         Yup.object({
-            memberId: Yup.number().required(),
-            username: Yup.string().required(),
+            member: Yup.object({
+                memberId: Yup.number().required(),
+                username: Yup.string().required(),
+                positionLabel: Yup.string(),
+            }),
             content: Yup.string()
                 .required("회고 내용을 입력해주세요")
                 .max(300, "최대 300자까지 입력 가능합니다"),
@@ -44,7 +47,7 @@ export function generatePostProjectRequest(form: ProjectFormValues): PostProject
         projectDescription: form.projectDescription,
         videoLink: form.projectVideo || "",
         memberRetrospection: form.projectRecaps?.map((retrospection) => ({
-            memberId: retrospection.memberId,
+            memberId: retrospection.member.memberId,
             retrospection: retrospection.content,
         }))!,
         memberIds: form.projectMembers.map((member) => member.memberId),
