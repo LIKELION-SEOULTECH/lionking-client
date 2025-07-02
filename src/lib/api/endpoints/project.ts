@@ -1,7 +1,8 @@
 "use server";
 
 import { createFetchClient } from "@/lib/api/fetchJson";
-import { type Project, type ProjectTypeEnum } from "@/types";
+import { ProjectPreviewMetadata, type Project, type ProjectTypeEnum } from "@/types";
+import { projectMetaMapper } from "../mappers/projectMeta.mapper";
 
 type MemberRetrospection = {
     memberId: number;
@@ -91,4 +92,43 @@ export async function get_number_of_projects(memberId: string | number): Promise
         .catch((_e) => {
             return 0;
         });
+}
+
+export async function get_projects_metadata_by_user_id(
+    memberId: number
+): Promise<ProjectPreviewMetadata[]> {
+    const fetchJson = await createFetchClient();
+
+    let projectIds: number[] = [];
+    try {
+        const res = await fetchJson(`/api/v1/participation/${memberId}`, {
+            method: "GET",
+        });
+
+        const data = res.data as {
+            projectIds: number[];
+            count: number;
+        };
+
+        projectIds = data.projectIds ?? [];
+    } catch (error) {
+        return [];
+    }
+
+    if (projectIds.length === 0) return [];
+
+    let allProjects: ProjectPreviewMetadata[] = [];
+    try {
+        const res = await fetchJson("/api/v1/projects", {
+            method: "GET",
+        });
+
+        allProjects = res.data.map(projectMetaMapper);
+    } catch (error) {
+        return [];
+    }
+
+    const matchedProjects = allProjects.filter((project) => projectIds.includes(project.projectId));
+
+    return matchedProjects.length > 0 ? matchedProjects : [];
 }

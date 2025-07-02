@@ -154,7 +154,7 @@ export type ProjectCardVariants = "PROJECT_PAGE" | "MEMBER_PAGE";
 export type ProjectPreviewBadgeType = "NONE" | "BEST" | "TEXT";
 
 export type ProjectPreviewMetadata = {
-    projectId: string | number;
+    projectId: number;
     title: string;
     description: string;
     projectYear: string;

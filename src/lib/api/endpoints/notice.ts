@@ -1,11 +1,24 @@
+"use server";
+
 import { createFetchClient } from "@/lib/api/fetchJson";
+import { mapNotice, NoticeDto } from "../mappers/notice.mapper";
 
 export async function get_notice() {
     const fetchJson = await createFetchClient();
 
-    return fetchJson("/api/v1/notice", {
+    const response = await fetchJson("/api/v1/notice", {
         method: "GET",
+    }).then((res) => {
+        if (!res || !res.data) return [];
+        try {
+            return (res.data as NoticeDto[]).map(mapNotice);
+        } catch (e) {
+            console.warn("get_notice failed:", e);
+            return [];
+        }
     });
+
+    return response;
 }
 
 export async function get_notice_noticeId(noticeId: string | number) {
