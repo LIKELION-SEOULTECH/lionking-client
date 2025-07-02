@@ -81,7 +81,7 @@ export type BlogContent = {
     blogId: number | string;
     title: string;
     author: {
-        id: number | string;
+        id: number;
         name: string;
         position: Parts;
     };
@@ -89,8 +89,7 @@ export type BlogContent = {
     content: string;
     createdAt: string;
     blogType: BlogTypeFilters;
-    goal: string[];
-    summary: string[];
+    summary: string;
 };
 
 export type News = {

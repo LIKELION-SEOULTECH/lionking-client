@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 import BlogContentRenderer from "./components/BlogContentRenderer";
 import BlogShareButton from "./components/BlogShareButton";
 import BlogSuggestion from "./components/BlogSuggestion";
@@ -17,11 +17,11 @@ export default async function BlogDetailPage({
         blog = await get_blog_blogId(blogId);
     } catch (error) {
         console.error(error);
-        return notFound();
+        return redirect("/archive/blog");
     }
 
     if (!blog || blog.blogType !== type) {
-        return notFound();
+        return redirect("/archive/blog");
     }
 
     return (
