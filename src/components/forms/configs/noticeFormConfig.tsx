@@ -9,7 +9,7 @@ const noticeSchema = Yup.object({
     attachments: Yup.array().of(Yup.string()).required("첨부파일을 업로드해주세요"),
 });
 
-type NoticeFormValues = Yup.InferType<typeof noticeSchema>;
+export type NoticeFormValues = Yup.InferType<typeof noticeSchema>;
 
 export const noticeFormConfig: GenericFormPageConfig<NoticeFormValues> = {
     banner: {
@@ -80,14 +80,33 @@ export const noticeFormConfig: GenericFormPageConfig<NoticeFormValues> = {
         },
         validationSchema: noticeSchema,
         onSubmit: async (values) => {
-            console.log("Notice submitted:", values);
-            await new Promise((resolve) => setTimeout(resolve, 2000));
+            const payload = {
+                noticeType: values.noticeType === "important" ? "IMPORTANT" : "GENERAL",
+                title: values.title,
+                content: values.content,
+                contentMedia: (values.attachments as string[]).map((k) => ({
+                    s3Key: k,
+                    mediaType: "IMAGE",
+                })),
+            };
+
+            const res = await fetch("/api/notice", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+            });
+
+            if (!res.ok) {
+                const { message } = await res.json();
+                throw new Error(message);
+            }
         },
+
         submitButtonText: "공지하기",
         successConfig: {
             title: "공지사항이 등록되었습니다.",
             buttonLabel: "공지사항 목록 보기",
-            href: "/dashboard/notice",
+            href: "/notice",
         },
     },
 };
