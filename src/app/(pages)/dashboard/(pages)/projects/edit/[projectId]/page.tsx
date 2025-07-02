@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { redirect, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Formik } from "formik";
 import { AnimatePresence, motion } from "motion/react";
@@ -13,6 +13,7 @@ import {
 } from "@/components/forms/configs/projectFormConfig";
 import { get_projects_projectId } from "@/lib/api/endpoints/project";
 import { projectToFormValues } from "@/lib/api/mappers/project.mapper";
+import { LoaderCircle } from "lucide-react";
 
 export default function EditProjectPage() {
     const params = useParams<{ projectId: string }>();
@@ -22,24 +23,38 @@ export default function EditProjectPage() {
     const { banner, form } = getProjectFormConfig({ isEdit: true, projectId });
 
     const [initialValues, setInitialValues] = useState<ProjectFormValues | null>(null);
+    const [projectNotFound, setProjectNotFound] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
-            if (projectId) {
-                const project = await get_projects_projectId(projectId);
-                const data: ProjectFormValues = await projectToFormValues(project);
+            if (!projectId) return;
 
-                setInitialValues({
-                    ...form.initialValues,
-                    ...data,
-                });
+            const project = await get_projects_projectId(projectId);
+
+            if (!project) {
+                setProjectNotFound(true);
+                return;
             }
+
+            const data: ProjectFormValues = await projectToFormValues(project);
+
+            setInitialValues({
+                ...form.initialValues,
+                ...data,
+            });
         };
 
         fetchData();
     }, [projectId]);
 
-    if (!initialValues) return <div className="py-40 text-center">불러오는 중...</div>;
+    if (projectNotFound) return redirect("/archive/projects");
+
+    if (!initialValues)
+        return (
+            <div className="flex items-center justify-center w-full text-center py-50">
+                <LoaderCircle className="animate-spin" />
+            </div>
+        );
 
     return (
         <AnimatePresence mode="wait">

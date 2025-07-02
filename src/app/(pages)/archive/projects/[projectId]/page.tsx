@@ -4,6 +4,7 @@ import ProjectDetailRecap from "./components/ProjectDetailRecap";
 import { get_projects, get_projects_projectId } from "@/lib/api/endpoints/project";
 import type { Project } from "@/types";
 import { parsePublicUrlFromPresignedUrl } from "@/lib/utils";
+import { redirect } from "next/navigation";
 
 export default async function ProjectDetailPage({
     params,
@@ -13,6 +14,10 @@ export default async function ProjectDetailPage({
     const { projectId } = await params;
 
     const project = await get_projects_projectId(projectId);
+
+    if (!project) {
+        return redirect("/archive/projects");
+    }
 
     return (
         <>
