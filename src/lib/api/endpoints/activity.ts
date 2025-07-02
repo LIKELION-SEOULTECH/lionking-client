@@ -1,7 +1,7 @@
 "use server";
 
 import { createFetchClient } from "@/lib/api/fetchJson";
-import { News } from "@/types";
+import { News, NewsRequest } from "@/types";
 
 export async function get_activity() {
     const fetchJson = await createFetchClient();
@@ -31,7 +31,7 @@ export async function get_activity_activityId(activityId: string | number) {
     return response.data as News;
 }
 
-export async function post_activity(authorId: string | number, body: News) {
+export async function post_activity(authorId: string | number, body: NewsRequest) {
     const fetchJson = await createFetchClient();
 
     return fetchJson(`/api/v1/admin/activity/${authorId}`, {
@@ -54,7 +54,7 @@ export async function delete_activity_activityId(activityId: string | number) {
     return response;
 }
 
-export async function patch_activity_activityId(activityId: string | number, body: News) {
+export async function patch_activity_activityId(activityId: string | number, body: NewsRequest) {
     const fetchJson = await createFetchClient();
 
     return fetchJson(`/api/v1/admin/activity/${activityId}`, {

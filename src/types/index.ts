@@ -105,6 +105,17 @@ export type News = {
     }[];
 };
 
+export type NewsRequest = {
+    title: string;
+    content: string;
+    contentMedia: {
+        s3Key: string;
+        mediaType: "IMAGE" | "VIDEO";
+        mediaOwner: string;
+        ownerId: number | string;
+    }[];
+};
+
 export type ProjectTypeFilters =
     | "활동"
     | "아이디어톤"

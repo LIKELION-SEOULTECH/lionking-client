@@ -3,7 +3,7 @@ import ImageWriteSVG from "@/assets/icons/img_write.svg";
 import ProjectIcon from "@/assets/icons/img_folder.svg";
 import SearchIcon from "@/assets/icons/search.svg";
 
-type ViewType = "blogs" | "projects" | "posts" | "user";
+type ViewType = "blogs" | "projects" | "posts" | "user" | "gallery";
 
 const defaultViewAssets: Record<ViewType, { icon: React.ReactNode; message: string }> = {
     blogs: {
@@ -21,6 +21,10 @@ const defaultViewAssets: Record<ViewType, { icon: React.ReactNode; message: stri
     user: {
         icon: <SearchIcon />,
         message: "사용자를 찾을 수 없어요!",
+    },
+    gallery: {
+        icon: <ImageWriteSVG />,
+        message: "아직 활동 기록이 없어요!",
     },
 };
 

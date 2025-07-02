@@ -1,78 +1,55 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
 import ArrowLeft from "@/assets/icons/circlearrow_left.svg";
 import ArrowRight from "@/assets/icons/circlearrow_right.svg";
-import EditDeleteMenu from "@/components/EditDeleteMenu";
+import { News } from "@/types";
+import { getFullS3Url } from "@/lib/utils";
+import GalleryEditButton from "./GalleryEditButton";
 
 interface GalleryInfoProps {
-    galleryId: string;
-    title: string;
-    date: string;
-    description: string[];
-    photos: string[];
+    gallery: News;
 }
 
-export default function GalleryInfo({
-    galleryId,
-    title,
-    date,
-    description,
-    photos,
-}: GalleryInfoProps) {
-    const router = useRouter();
+export default function GalleryInfo({ gallery }: GalleryInfoProps) {
     const [idx, setIdx] = useState(0);
 
-    const prev = () => setIdx((i) => (i - 1 + photos.length) % photos.length);
-    const next = () => setIdx((i) => (i + 1) % photos.length);
-
-    const doDelete = async () => {
-        // TODO: 실제 API 호출
-        console.log("Deleting gallery", galleryId);
-        router.push("/gallery");
-    };
+    const prev = () =>
+        setIdx((i) => (i - 1 + gallery.contentMedia.length) % gallery.contentMedia.length);
+    const next = () => setIdx((i) => (i + 1) % gallery.contentMedia.length);
 
     return (
-        <section className="w-full bg-white pt-[120px] px-[190px] pb-[200px]">
-            <div className="flex flex-col items-center gap-[79px]">
-                {/* 사진 캐러셀 */}
-                <div className="flex items-center gap-[32px]">
-                    <button onClick={prev} className="w-[58px] h-[58px]">
+        <section className="w-full bg-white">
+            <div className="w-full max-w-[1100px] flex flex-col items-center gap-20 pt-15">
+                <div className="w-full flex items-center gap-4">
+                    <button onClick={prev} className="scale-[0.6] lg:scale-[0.8] cursor-pointer">
                         <ArrowLeft />
                     </button>
-                    <div className="w-[880px] h-[440px] overflow-hidden">
+                    <div className="w-full h-auto min-h-80 overflow-hidden">
                         <img
-                            src={photos[idx] || "/static/images/placeholder.png"}
-                            alt={`${title} ${idx + 1}`}
+                            src={
+                                getFullS3Url(gallery.contentMedia[idx].s3Key) ||
+                                "/static/images/placeholder.png"
+                            }
+                            alt={`${gallery.title} ${idx + 1}`}
                             className="w-full h-full object-cover"
                         />
                     </div>
-                    <button onClick={next} className="w-[58px] h-[58px]">
+                    <button onClick={next} className="scale-[0.6] lg:scale-[0.8] cursor-pointer">
                         <ArrowRight />
                     </button>
                 </div>
 
-                {/* 제목 · 작성일 · 메뉴 */}
-                <div className="w-[880px] flex flex-col gap-[79px]">
+                <div className="w-full flex flex-col gap-8">
                     <div className="w-full relative flex justify-between items-start">
                         <div className="flex flex-col gap-[2px]">
-                            <h1 className="body1_sb text-gray-900">{title}</h1>
-                            <span className="sub2_sb text-[#787471]">{date}</span>
+                            <h1 className="body2_sb text-black">{gallery.title}</h1>
+                            {/* <span className="sub2_sb text-[#787471]">{date}</span> */}
                         </div>
-                        <EditDeleteMenu
-                            editUrl={`/gallery/${galleryId}/edit`}
-                            onDelete={doDelete}
-                            resourceName="활동 기록"
-                        />
+                        <GalleryEditButton galleryId={gallery.id} />
                     </div>
 
-                    {/* 본문 */}
-                    <div className="body3_m text-gray-700 space-y-2">
-                        {description.map((p, i) => (
-                            <p key={i}>{p}</p>
-                        ))}
-                    </div>
+                    <p className="body3_r text-gray-6">{gallery.content}</p>
                 </div>
             </div>
         </section>

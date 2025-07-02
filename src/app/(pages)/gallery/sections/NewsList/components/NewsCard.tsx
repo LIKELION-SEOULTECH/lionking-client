@@ -5,6 +5,7 @@ import { motion } from "motion/react";
 import useHoverAnimation from "@/hooks/animations/useHoverAnimation";
 import type { News } from "@/types";
 import { getFullS3Url } from "@/lib/utils";
+import Link from "next/link";
 
 export default function NewsCard(news: News) {
     const { ref } = useHoverAnimation<HTMLDivElement>();
@@ -15,9 +16,11 @@ export default function NewsCard(news: News) {
             ref={ref}
             className="relative flex flex-col w-[330px] bg-gray-6 hover:bg-gray-6/50 rounded-[20px] overflow-hidden cursor-pointer transition-colors duration-200"
         >
-            <NewsCardTopImage imageSrc={thumbnail} />
+            <Link className="w-full h-full" href={`/gallery/${news.id}`}>
+                <NewsCardTopImage imageSrc={thumbnail} />
 
-            <NewsCardBottomInformation news={news} />
+                <NewsCardBottomInformation news={news} />
+            </Link>
         </motion.div>
     );
 }
