@@ -45,8 +45,8 @@ export async function get_projects_projectId(projectId: string | number) {
         method: "GET",
     });
 
-    if (response.status === 404) {
-        throw new Error("Project not found");
+    if (!response || !response.data) {
+        return null;
     }
 
     return response.data as Project;
@@ -55,9 +55,15 @@ export async function get_projects_projectId(projectId: string | number) {
 export async function delete_projects_projectId(projectId: string | number) {
     const fetchJson = await createFetchClient();
 
-    return fetchJson(`/api/v1/projects/${projectId}`, {
+    const response = await fetchJson(`/api/v1/projects/${projectId}`, {
         method: "DELETE",
     });
+
+    if (!response || !response.data) {
+        return null;
+    }
+
+    return response;
 }
 
 export async function patch_projects_projectId(projectId: string | number, body: any) {

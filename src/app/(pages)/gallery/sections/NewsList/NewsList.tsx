@@ -1,60 +1,71 @@
 "use client";
 
-import newsMock from "@/__mocks__/newsMock";
-import NewsCards from "./components/NewsCards";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/autoplay";
+import { useRef, useEffect, useState } from "react";
+import { useHorizontalLoop } from "@/hooks/animations/useHorizontalLoop";
+import { motion, MotionProps } from "motion/react";
+import NewsCard from "./components/NewsCard";
+import { News } from "@/types";
 
-export default function NewsList() {
-    const data = newsMock;
+type NewsCardListProps = {
+    items: News[];
+    speed?: number;
+};
+
+export default function NewsCardList({ items, speed = 100 }: NewsCardListProps) {
+    const groupRef = useRef<HTMLDivElement>(null);
+    const [groupWidth, setGroupWidth] = useState(0);
+
+    useEffect(() => {
+        if (groupRef.current) {
+            setGroupWidth(groupRef.current.offsetWidth);
+        }
+    }, [items]);
+
+    const { x, setPaused } = useHorizontalLoop({
+        speed,
+        width: groupWidth,
+    });
+
+    const handleMouseEnter = () => setPaused(true);
+    const handleMouseLeave = () => setPaused(false);
+    const handleDragStart = () => setPaused(true);
+    const handleDragEnd: MotionProps["onDragEnd"] = (_event, info) => {
+        x.set(x.get() + info.offset.x);
+        setPaused(false);
+    };
+
+    const allItems = [...items, ...items, ...items, ...items];
 
     return (
-        <section
-            className="
-        bg-[#111]       /* 섹션 배경을 전체 화면으로 */
-        w-full
-        overflow-visible
-        pt-[120px]
-        pb-[152px]
-      "
-        >
-            {/* 내부 컨텐츠만 1440px 로 제한 */}
-            <div className="mx-auto max-w-[1440px] px-0">
-                <h2
-                    className="
-            text-2xl font-bold text-white
-            h-[45px]
-            mb-[72px]
-            px-0
-          "
-                >
+        <>
+            <div className="w-screen">
+                <h2 className="w-full max-w-[1100px] text-white head3_sb mx-auto">
                     멋사의 최근 소식
                 </h2>
-
-                <div className="h-[490px] w-full overflow-visible px-0">
-                    <Swiper
-                        modules={[Autoplay]}
-                        slidesPerView="auto"
-                        centeredSlides={true}
-                        spaceBetween={32}
-                        loop={true}
-                        autoplay={{ delay: 3000, disableOnInteraction: false }}
-                        slidesOffsetBefore={275}
-                        slidesOffsetAfter={190}
-                        className="!overflow-visible !px-0 !mx-0"
-                    >
-                        {data
-                            .slice(0, 4) /* 최신 4개만 */
-                            .map((item) => (
-                                <SwiperSlide key={item.id} className="!w-[514px] !h-[490px] !px-0">
-                                    <NewsCards item={item} />
-                                </SwiperSlide>
-                            ))}
-                    </Swiper>
-                </div>
             </div>
-        </section>
+
+            <div
+                className="relative w-screen py-4 overflow-hidden"
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+            >
+                <motion.div
+                    ref={groupRef}
+                    className="flex gap-x-9"
+                    style={{ x }}
+                    drag="x"
+                    dragConstraints={{ left: -groupWidth, right: 0 }}
+                    dragElastic={0.1}
+                    onDragStart={handleDragStart}
+                    onDragEnd={handleDragEnd}
+                >
+                    {allItems.map((item, i) => (
+                        <div key={i}>
+                            <NewsCard {...item} />
+                        </div>
+                    ))}
+                </motion.div>
+            </div>
+        </>
     );
 }

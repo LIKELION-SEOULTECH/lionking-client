@@ -94,11 +94,26 @@ export type BlogContent = {
 };
 
 export type News = {
-    id: string;
+    id: number;
+    authorId: number;
     title: string;
-    description: string;
-    date: string;
-    thumbnailUrl: string;
+    content: string;
+    contentMedia: {
+        id: number;
+        s3Key: string;
+        mediaType: "IMAGE" | "VIDEO";
+    }[];
+};
+
+export type NewsRequest = {
+    title: string;
+    content: string;
+    contentMedia: {
+        s3Key: string;
+        mediaType: "IMAGE" | "VIDEO";
+        mediaOwner: string;
+        ownerId: number | string;
+    }[];
 };
 
 export type ProjectTypeFilters =

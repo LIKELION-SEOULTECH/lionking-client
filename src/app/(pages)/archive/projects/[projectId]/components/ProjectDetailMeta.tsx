@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { projectTypeEnumToLabel, type Project } from "@/types";
 import { parsePublicUrlFromPresignedUrl } from "@/lib/utils";
+import ProjectEditButton from "./ProjectEditButton";
 
 type ProjectDetailProps = {
     project: Project;
@@ -12,7 +13,10 @@ export default function ProjectDetailMeta({ project }: ProjectDetailProps) {
     return (
         <div className="flex flex-col items-start justify-start w-full gap-10">
             <div className="flex flex-col items-start justify-start w-full gap-8">
-                <h1 className="text-white head3_sb">{project.title}</h1>
+                <div className="flex items-center justify-between w-full">
+                    <h1 className="text-white head3_sb">{project.title}</h1>
+                    <ProjectEditButton projectId={project.id} />
+                </div>
                 <div className="flex items-center justify-between w-full">
                     <div className="flex items-center justify-start gap-3">
                         <ProjectDetailPageTagItem tag={`${project.generation}기`} />
