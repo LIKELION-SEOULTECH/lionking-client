@@ -85,8 +85,6 @@ export function getProjectFormConfig({
             onSubmit: async (values) => {
                 const reqBody = generatePostProjectRequest(values);
 
-                console.log("Request Body:", reqBody);
-
                 const url = isEdit ? `/api/projects/${projectId}` : `/api/projects`;
 
                 const method = isEdit ? "PATCH" : "POST";
