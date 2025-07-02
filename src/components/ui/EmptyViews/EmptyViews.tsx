@@ -3,7 +3,7 @@ import ImageWriteSVG from "@/assets/icons/img_write.svg";
 import ProjectIcon from "@/assets/icons/img_folder.svg";
 import SearchIcon from "@/assets/icons/search.svg";
 
-type ViewType = "blogs" | "projects" | "posts" | "user" | "gallery";
+type ViewType = "blogs" | "projects" | "posts" | "user" | "gallery" | "notice";
 
 const defaultViewAssets: Record<ViewType, { icon: React.ReactNode; message: string }> = {
     blogs: {
@@ -25,6 +25,10 @@ const defaultViewAssets: Record<ViewType, { icon: React.ReactNode; message: stri
     gallery: {
         icon: <ImageWriteSVG />,
         message: "아직 활동 기록이 없어요!",
+    },
+    notice: {
+        icon: <ImageWriteSVG />,
+        message: "아직 공지사항이 없어요!",
     },
 };
 

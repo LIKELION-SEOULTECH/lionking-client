@@ -1,13 +1,10 @@
 import { NextResponse, NextRequest } from "next/server";
 import { get_notice, create_admin_notice, CreateNoticeInput } from "@/lib/api/endpoints/notice";
-import { mapNotice } from "@/lib/api/mappers/notice.mapper";
 import type { Role } from "@/types";
 
 export async function GET() {
     try {
-        // 백엔드 → /api/v1/notice
-        const raw = await get_notice(); // { code, message, data: [...] }
-        const data = Array.isArray(raw?.data) ? raw.data.map(mapNotice) : [];
+        const data = await get_notice();
         return NextResponse.json(data, { status: 200 });
     } catch (err) {
         console.error("[api/notice] proxy error:", err);
