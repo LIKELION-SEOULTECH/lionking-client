@@ -1,3 +1,5 @@
+"use server";
+
 import { createFetchClient } from "@/lib/api/fetchJson";
 import { blogMapper, blogMetaMapper } from "../mappers/blog.mapper";
 import { PostPreviewMetadata } from "@/types";
@@ -7,10 +9,10 @@ export type PostBlogRequest = {
     title: string;
     content: string;
     thumbnailImage: string;
-    contentMedia?: {
-        s3Key: string;
-        mediaType: "IMAGE";
-    }[];
+    // contentMedia?: {
+    //     s3Key: string;
+    //     mediaType: "IMAGE";
+    // }[];
 };
 
 export async function post_blog_authorId(authorId: string | number, body: PostBlogRequest) {
@@ -42,9 +44,15 @@ export async function get_blog_blogId(blogId: string | number) {
 export async function delete_blog_blogId(blogId: string | number) {
     const fetchJson = await createFetchClient();
 
-    return fetchJson(`/api/v1/blog/${blogId}`, {
+    const response = await fetchJson(`/api/v1/blog/${blogId}`, {
         method: "DELETE",
     });
+
+    if (!response || !response.data) {
+        return null;
+    }
+
+    return response;
 }
 
 export async function patch_blog_blogId(blogId: string | number, body: any) {

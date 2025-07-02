@@ -1,3 +1,4 @@
+import { PostBlogRequest } from "@/lib/api/endpoints/blog";
 import { ReactNode } from "react";
 import * as Yup from "yup";
 
@@ -53,5 +54,4 @@ export interface GenericFormPageConfig<V extends Record<string, unknown>> {
         icon?: ReactNode;
     };
     form: FormConfig<V>;
-    isBlog?: boolean;
 }

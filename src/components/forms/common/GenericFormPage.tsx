@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Formik } from "formik";
 import { AnimatePresence, motion } from "motion/react";
 import SuccessPage from "../views/SuccessPage";
-import SummaryPage from "../views/SummaryPage";
 import GenericBanner from "@/components/banners/GenericBanner";
 import GenericFormBuilder from "./GenericFormBuilder";
 import { GenericFormPageConfig } from "../types/FormConfig.types";
@@ -17,7 +16,7 @@ export default function GenericFormPage<V extends Record<string, unknown>>({
     initialOverride?: Partial<V>;
 }) {
     const [isSuccess, setIsSuccess] = useState(false);
-    const { banner, form, isBlog } = config;
+    const { banner, form } = config;
 
     const initialValues: V = {
         ...form.initialValues,
@@ -42,51 +41,46 @@ export default function GenericFormPage<V extends Record<string, unknown>>({
                         transition={{ duration: 0.5, delay: 0.2 }}
                     >
                         <motion.div
-                            initial={isBlog ? { opacity: 0 } : { scale: 0 }}
-                            animate={isBlog ? { opacity: 1 } : { scale: 1 }}
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
                             transition={{
-                                type: isBlog ? "tween" : "spring",
-                                duration: isBlog ? 0.4 : undefined,
-                                ease: isBlog ? "easeOut" : undefined,
-                                stiffness: isBlog ? undefined : 200,
-                                damping: isBlog ? undefined : 20,
+                                type: "spring",
+                                duration: undefined,
+                                ease: undefined,
+                                stiffness: 200,
+                                damping: 20,
                                 delay: 0.3,
                             }}
                         >
-                            {isBlog ? (
-                                <SummaryPage />
-                            ) : (
-                                <SuccessPage
-                                    title={form.successConfig?.title || "등록이 완료되었습니다."}
-                                    buttonLabel={form.successConfig?.buttonLabel || "목록 보기"}
-                                    href={form.successConfig?.href || "/"}
-                                />
-                            )}
+                            <SuccessPage
+                                title={form.successConfig?.title || "등록이 완료되었습니다."}
+                                buttonLabel={form.successConfig?.buttonLabel || "목록 보기"}
+                                href={form.successConfig?.href || "/"}
+                            />
                         </motion.div>
 
-                        {!isBlog &&
-                            [...Array(20)].map((_, i) => (
-                                <motion.div
-                                    key={i}
-                                    className="absolute w-2 h-2 bg-orange-main rounded-full"
-                                    initial={{
-                                        top: "50%",
-                                        left: "50%",
-                                        scale: 0,
-                                    }}
-                                    animate={{
-                                        top: `${Math.random() * 100}%`,
-                                        left: `${Math.random() * 100}%`,
-                                        scale: [0, 1.5, 0],
-                                        rotate: Math.random() * 360,
-                                    }}
-                                    transition={{
-                                        duration: 2,
-                                        delay: 0.5 + i * 0.05,
-                                        ease: "easeOut",
-                                    }}
-                                />
-                            ))}
+                        {[...Array(20)].map((_, i) => (
+                            <motion.div
+                                key={i}
+                                className="absolute w-2 h-2 bg-orange-main rounded-full"
+                                initial={{
+                                    top: "50%",
+                                    left: "50%",
+                                    scale: 0,
+                                }}
+                                animate={{
+                                    top: `${Math.random() * 100}%`,
+                                    left: `${Math.random() * 100}%`,
+                                    scale: [0, 1.5, 0],
+                                    rotate: Math.random() * 360,
+                                }}
+                                transition={{
+                                    duration: 2,
+                                    delay: 0.5 + i * 0.05,
+                                    ease: "easeOut",
+                                }}
+                            />
+                        ))}
                     </motion.div>
                 </>
             ) : (

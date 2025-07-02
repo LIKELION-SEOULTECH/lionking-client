@@ -1,15 +1,9 @@
-"use client";
-
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { positionEnumToLabel, PostPreviewMetadata } from "@/types";
 import { previewItemVariants, PostPreviewLayout, styleMap } from "./PostPreviewItemVariants";
-import KebabMenuDropdown from "../KebabMenuDropdown";
-import { delete_blog_blogId } from "@/lib/api/endpoints/blog";
-import { useRouter } from "next/navigation";
-import { useAuth } from "@/hooks/auth/useAuth";
-import { toast } from "sonner";
+import PostEditButton from "./PostEditButton";
 
 export type PostPreviewItemProps = PostPreviewMetadata & {
     layout: PostPreviewLayout;
@@ -29,9 +23,6 @@ export default function PostPreviewItem({
     imageUrl = "/static/images/placeholder.png",
     withAction = false,
 }: PostPreviewItemProps) {
-    const router = useRouter();
-    const { isAuthenticated, user } = useAuth();
-
     const styles = styleMap[layout];
 
     const isHorizontal = layout.startsWith("horizontal");
@@ -76,25 +67,7 @@ export default function PostPreviewItem({
                             <div className="flex items-center justify-between w-full">
                                 <p className={styles.part}>{positionEnumToLabel[part]}</p>
 
-                                {isAuthenticated && user && (
-                                    <KebabMenuDropdown
-                                        items={[
-                                            {
-                                                label: "수정하기",
-                                                onClick: () =>
-                                                    router.push(`/dashboard/blog/edit/${postId}`),
-                                            },
-                                            {
-                                                label: "삭제하기",
-                                                onClick: async () => {
-                                                    delete_blog_blogId(postId);
-                                                    toast.success("글이 삭제되었습니다.");
-                                                    router.refresh();
-                                                },
-                                            },
-                                        ]}
-                                    />
-                                )}
+                                <PostEditButton postId={postId} />
                             </div>
                         )}
                         <div className="flex flex-col gap-4">
