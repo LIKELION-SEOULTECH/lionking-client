@@ -28,7 +28,7 @@ export default function MobileProfileSection({ user, onSignout }: MobileProfileS
                 transition={{ duration: 0.1 }}
             >
                 <div className="flex items-center justify-between gap-3">
-                    <motion.div className="relative size-10 rounded-full overflow-hidden">
+                    <motion.div className="relative overflow-hidden rounded-full size-10">
                         <Image
                             src={user.imageUrl ?? "/static/images/placeholder_profile.svg"}
                             alt={`${user.name}의 프로필 이미지`}
@@ -36,7 +36,7 @@ export default function MobileProfileSection({ user, onSignout }: MobileProfileS
                             fill
                         />
                     </motion.div>
-                    <div className="h-full flex flex-col items-start justify-center text-white">
+                    <div className="flex flex-col items-start justify-center h-full text-white">
                         <p className="sub3_sb">{user.name}</p>
                         <p className="body6_r text-gray-2">{user.roleLabel}</p>
                     </div>

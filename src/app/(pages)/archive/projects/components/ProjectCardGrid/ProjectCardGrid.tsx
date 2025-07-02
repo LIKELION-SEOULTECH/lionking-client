@@ -20,7 +20,7 @@ export default async function ProjectCardGrid({
     const projects: ProjectPreviewMetadata[] = data.map(projectMetaMapper);
 
     return (
-        <div className="w-full flex justify-center">
+        <div className="flex justify-center w-full">
             <div className="w-full max-w-[1100px] flex flex-col items-center py-[140px] px-4 sm:px-6 lg:px-0 gap-15">
                 <ProjectCardGridClient projectType={projectType} generation={generation} />
 

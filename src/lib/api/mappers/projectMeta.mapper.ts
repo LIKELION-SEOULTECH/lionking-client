@@ -1,3 +1,4 @@
+import { parsePublicUrlFromPresignedUrl } from "@/lib/utils";
 import { ProjectPreviewMetadata, ProjectTypeEnum, projectTypeEnumToLabel } from "@/types";
 
 export function projectMetaMapper(project: any): ProjectPreviewMetadata {
@@ -6,7 +7,7 @@ export function projectMetaMapper(project: any): ProjectPreviewMetadata {
         title: project.title,
         description: project.description,
         projectYear: `${project.generation}기`,
-        imageUrl: project.thumbnailurl,
+        imageUrl: parsePublicUrlFromPresignedUrl(project.thumbnailurl),
         badges: [
             {
                 type: "TEXT",

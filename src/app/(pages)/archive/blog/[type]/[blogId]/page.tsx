@@ -11,13 +11,16 @@ export default async function BlogDetailPage({
 }) {
     const { type, blogId } = await params;
 
-    const blog = await get_blog_blogId(blogId);
+    let blog;
 
-    if (!blog) {
+    try {
+        blog = await get_blog_blogId(blogId);
+    } catch (error) {
+        console.error(error);
         return notFound();
     }
 
-    if (blog.blogType !== type) {
+    if (!blog || blog.blogType !== type) {
         return notFound();
     }
 
@@ -32,7 +35,7 @@ export default async function BlogDetailPage({
             />
 
             <div className="relative w-full">
-                <div className="absolute left-1/2 -translate-x-1/2 w-screen h-5 bg-gray-1" />
+                <div className="absolute w-screen h-5 -translate-x-1/2 left-1/2 bg-gray-1" />
             </div>
 
             <BlogSuggestion currentBlogId={blogId} />
@@ -40,13 +43,22 @@ export default async function BlogDetailPage({
     );
 }
 
-export function generateStaticParams() {
-    const allBlogIds = get_blog().then((blogs) => {
-        return blogs.map((blog) => ({
-            type: blog.postType,
-            blogId: blog.postId.toString(),
-        }));
-    });
+export async function generateStaticParams() {
+    const blogs = await (async () => {
+        try {
+            const result = await get_blog();
+            return result ?? [];
+        } catch {
+            return [];
+        }
+    })();
 
-    return allBlogIds;
+    if (!blogs || !Array.isArray(blogs)) {
+        return [];
+    }
+
+    return blogs.map((blog) => ({
+        type: blog.postType,
+        blogId: blog.postId.toString(),
+    }));
 }

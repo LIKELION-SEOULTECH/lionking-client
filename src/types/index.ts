@@ -18,7 +18,7 @@ export type PostTypes = "session" | "article";
 export type PostPreviewMetadata = {
     postId: string | number;
     postType: PostTypes;
-    part: Parts | string;
+    part: Parts;
     title: string;
     description: string;
     date: string;
@@ -83,12 +83,11 @@ export type BlogContent = {
     author: {
         id: number | string;
         name: string;
-        position: Parts | string;
+        position: Parts;
     };
     thumbnail: string;
     content: string;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt: string;
     blogType: BlogTypeFilters;
     goal: string[];
     summary: string[];

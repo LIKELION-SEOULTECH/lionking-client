@@ -76,38 +76,38 @@ export async function createFetchClient() {
             headers?: Record<string, string>;
             withAuth?: boolean;
         } = {}
-    ): Promise<T> {
+    ): Promise<T | null> {
         const { withAuth = false, ...restOptions } = options;
-        let response: Response;
 
-        if (withAuth) {
-            response = await makeRequestWithAuthHandling(endpoint, restOptions);
-        } else {
-            response = await fetch(`${getBaseUrl()}${endpoint}`, {
-                method: restOptions.method || "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    ...restOptions.headers,
-                },
-                body: restOptions.body ? JSON.stringify(restOptions.body) : undefined,
-            });
+        try {
+            const url = `${getBaseUrl()}${endpoint}`;
+
+            const response = withAuth
+                ? await makeRequestWithAuthHandling(endpoint, restOptions)
+                : await fetch(url, {
+                      method: restOptions.method || "GET",
+                      headers: {
+                          "Content-Type": "application/json",
+                          ...restOptions.headers,
+                      },
+                      body: restOptions.body ? JSON.stringify(restOptions.body) : undefined,
+                      credentials: "include",
+                  });
+
+            if (response.status === 204) return null;
+
+            const data = await response.json().catch(() => null);
+
+            if (!response.ok) {
+                console.warn(`Request failed: ${response.status} ${url}`, data);
+                return null;
+            }
+
+            return data;
+        } catch (err) {
+            console.warn(`Error: ${endpoint}`, err);
+            return null;
         }
-
-        if (!response.ok) {
-            let message = `Error ${response.status}`;
-            try {
-                const err = await response.json();
-                message = err.message || JSON.stringify(err);
-            } catch {}
-            if (withAuth) redirect("/login");
-            throw new Error(message);
-        }
-
-        if (response.status === 204) {
-            return undefined as T;
-        }
-
-        return response.json();
     }
 
     return fetchJson;
