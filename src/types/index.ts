@@ -81,7 +81,7 @@ export type BlogContent = {
     blogId: number | string;
     title: string;
     author: {
-        id: number | string;
+        id: number;
         name: string;
         position: Parts;
     };
@@ -89,8 +89,7 @@ export type BlogContent = {
     content: string;
     createdAt: string;
     blogType: BlogTypeFilters;
-    goal: string[];
-    summary: string[];
+    summary: string;
 };
 
 export type News = {
@@ -155,7 +154,7 @@ export type ProjectCardVariants = "PROJECT_PAGE" | "MEMBER_PAGE";
 export type ProjectPreviewBadgeType = "NONE" | "BEST" | "TEXT";
 
 export type ProjectPreviewMetadata = {
-    projectId: string | number;
+    projectId: number;
     title: string;
     description: string;
     projectYear: string;

@@ -1,7 +1,5 @@
-// src/app/(pages)/notice/[noticeId]/components/DetailBody.tsx
 "use client";
 
-import React from "react";
 import { useRouter, useParams } from "next/navigation";
 import DownloadIcon from "@/assets/icons/download.svg";
 import EditDeleteMenu from "@/components/EditDeleteMenu";

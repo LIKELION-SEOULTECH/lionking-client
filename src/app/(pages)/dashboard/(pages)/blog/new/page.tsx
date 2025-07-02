@@ -1,7 +1,7 @@
 "use client";
 
 import GenericFormPage from "@/components/forms/common/GenericFormPage";
-import { blogFormConfig } from "@/components/forms/configs/blogFormConfig";
+import { getBlogFormConfig } from "@/components/forms/configs/blogFormConfig";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { redirect } from "next/navigation";
 
@@ -17,6 +17,9 @@ export default function NewBlogPage() {
     if (!isAuthenticated) {
         redirect("/login");
     }
+    const blogFormConfig = getBlogFormConfig({
+        isEdit: false,
+    });
     return (
         <GenericFormPage
             config={blogFormConfig}
