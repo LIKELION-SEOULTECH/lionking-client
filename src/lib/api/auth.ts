@@ -18,16 +18,17 @@ export async function refreshToken(): Promise<boolean> {
 
 export async function getMe() {
     const fetchJson = await createFetchClient();
-    try {
-        const res = await fetchJson("/api/v1/auth/me", {
-            method: "GET",
-            withAuth: true,
-        }).then((res) => res.data as AuthMeResponse);
 
-        const mappedUser = authVerifyMapper(res);
-        return mappedUser;
-    } catch (error) {
-        console.error("getMe failed:", error);
+    const res = await fetchJson<{ data?: AuthMeResponse }>("/api/v1/auth/me", {
+        method: "GET",
+        withAuth: true,
+    });
+
+    if (!res || !res.data) {
+        console.error("getMe failed: no data");
         redirect("/login");
     }
+
+    const mappedUser = authVerifyMapper(res.data);
+    return mappedUser;
 }

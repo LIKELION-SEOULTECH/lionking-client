@@ -21,6 +21,10 @@ export async function POST(req: NextRequest) {
             body: { loginId, password },
         });
 
+        if (!response || !response.data) {
+            return NextResponse.json({ success: false, error: "Login failed" }, { status: 500 });
+        }
+
         const { accessToken, refreshToken } = response.data;
 
         const res = NextResponse.json({ success: true });

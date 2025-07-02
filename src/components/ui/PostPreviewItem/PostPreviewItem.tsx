@@ -8,6 +8,8 @@ import { previewItemVariants, PostPreviewLayout, styleMap } from "./PostPreviewI
 import KebabMenuDropdown from "../KebabMenuDropdown";
 import { delete_blog_blogId } from "@/lib/api/endpoints/blog";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/auth/useAuth";
+import { toast } from "sonner";
 
 export type PostPreviewItemProps = PostPreviewMetadata & {
     layout: PostPreviewLayout;
@@ -28,6 +30,7 @@ export default function PostPreviewItem({
     withAction = false,
 }: PostPreviewItemProps) {
     const router = useRouter();
+    const { isAuthenticated, user } = useAuth();
 
     const styles = styleMap[layout];
 
@@ -73,17 +76,19 @@ export default function PostPreviewItem({
                             <div className="flex items-center justify-between w-full">
                                 <p className={styles.part}>{positionEnumToLabel[part]}</p>
 
-                                {withAction && (
+                                {isAuthenticated && user && (
                                     <KebabMenuDropdown
                                         items={[
                                             {
                                                 label: "수정하기",
-                                                onClick: () => alert("수정!"),
+                                                onClick: () =>
+                                                    router.push(`/dashboard/blog/edit/${postId}`),
                                             },
                                             {
                                                 label: "삭제하기",
                                                 onClick: async () => {
                                                     delete_blog_blogId(postId);
+                                                    toast.success("글이 삭제되었습니다.");
                                                     router.refresh();
                                                 },
                                             },

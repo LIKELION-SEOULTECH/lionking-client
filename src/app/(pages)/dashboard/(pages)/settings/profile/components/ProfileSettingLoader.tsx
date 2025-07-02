@@ -11,6 +11,7 @@ import { use, useTransition } from "react";
 import { Member } from "@/types";
 import { put_member_memberId } from "@/lib/api/endpoints/member";
 import { toast } from "sonner";
+import { redirect } from "next/navigation";
 
 export default function ProfileSettingLoader({
     memberDataPromise,
@@ -44,6 +45,7 @@ export default function ProfileSettingLoader({
             const result = await put_member_memberId(memberId, payload);
             if (result.success) {
                 toast.success(result.message);
+                redirect("/dashboard");
             } else {
                 toast.error(result.message);
             }

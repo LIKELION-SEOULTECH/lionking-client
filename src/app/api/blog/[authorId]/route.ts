@@ -11,6 +11,13 @@ export async function POST(
 
         const res = await post_blog_authorId(authorId, body);
 
+        if (!res || !res.status) {
+            return NextResponse.json(
+                { message: "서버 응답이 없습니다. 블로그 등록에 실패했습니다." },
+                { status: 502 }
+            );
+        }
+
         if (res.status === 201) {
             return NextResponse.json(res.data, { status: 201 });
         } else {

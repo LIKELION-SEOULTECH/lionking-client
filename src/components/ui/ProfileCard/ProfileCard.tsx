@@ -15,6 +15,7 @@ import {
     ProfileCardInfoTextLayoutVariants,
 } from "./ProfileCardVariants";
 import Link from "next/link";
+import { toast } from "sonner";
 
 export default function ProfileCard({ member, size, transparency }: ProfileCardProps) {
     const { id } = member;
@@ -68,7 +69,7 @@ export default function ProfileCard({ member, size, transparency }: ProfileCardP
 
 function MembersGridItemInfo({ member, size }: ProfileCardInfoProps) {
     const { id, name, profileIntro, major, userTags } = member;
-    const [copied, setCopied] = useState(false);
+    const [_copied, setCopied] = useState(false);
 
     const handleShare = async () => {
         const url = `${window.location.origin}/about/members/${id}`;
@@ -81,15 +82,18 @@ function MembersGridItemInfo({ member, size }: ProfileCardInfoProps) {
                     url,
                 });
             } catch (err) {
-                console.error("공유 실패:", err);
+                toast.error(
+                    "공유에 실패했습니다! " + (err instanceof Error ? err.message : "오류 발생")
+                );
             }
         } else {
             try {
                 await navigator.clipboard.writeText(url);
                 setCopied(true);
+                toast.success("URL이 클립보드에 복사되었습니다!");
                 setTimeout(() => setCopied(false), 2000);
             } catch (err) {
-                alert(`URL 복사에 실패했습니다! ${err}`);
+                toast.error(`URL 복사에 실패했습니다! ${err}`);
             }
         }
     };

@@ -12,17 +12,17 @@ export default function ProfilePanel({ member }: ProfilePanelProps) {
         <div className="grid grid-cols-1 md:grid-cols-[1fr_1.2fr] lg:grid-cols-1 gap-4 lg:gap-6 w-full lg:max-w-[350px]">
             <ProfileCard member={member} size="large" transparency="transparent" />
 
-            <div className="grid grid-cols-1 gap-4 lg:gap-6 w-full">
+            <div className="grid w-full grid-cols-1 gap-4 lg:gap-6">
                 <ProfilePanelSection>
                     <ProfilePanelSubSection title="소개">
-                        <div className="w-full flex flex-col items-start justify-center gap-5">
+                        <div className="flex flex-col items-start justify-center w-full gap-5">
                             <div className="flex flex-wrap gap-2">
                                 {profileIntroTags &&
                                     profileIntroTags.map((tag) => (
                                         <ProfileTagItem key={tag} tag={tag} />
                                     ))}
                             </div>
-                            <p>{profileIntro ?? "비밀이에요 🤫"}</p>
+                            <p>{profileIntro ?? "아직 프로필 소개가 작성되지 않았습니다."}</p>
                         </div>
                     </ProfilePanelSubSection>
                     {profileIntroSkills && profileIntroSkills.length > 0 && (
@@ -35,10 +35,10 @@ export default function ProfilePanel({ member }: ProfilePanelProps) {
                 {profileExternalLinks && profileExternalLinks.length > 0 && (
                     <ProfilePanelSection>
                         <ProfilePanelSubSection title="LINKS">
-                            <div className="w-full flex flex-col items-start justify-center gap-2">
+                            <div className="flex flex-col items-start justify-center w-full gap-2">
                                 {profileExternalLinks.map((link, idx) => (
                                     <div
-                                        className="w-full flex flex-col items-start justify-center gap-2"
+                                        className="flex flex-col items-start justify-center w-full gap-2"
                                         key={link.type}
                                     >
                                         <ProfileExternalLinkItem {...link} />
@@ -67,9 +67,9 @@ function ProfilePanelSection({ children }: { children: React.ReactNode }) {
 
 function ProfilePanelSubSection({ title, children }: { title: string; children: React.ReactNode }) {
     return (
-        <div className="w-full flex flex-col items-start justify-center gap-4 text-white">
+        <div className="flex flex-col items-start justify-center w-full gap-4 text-white">
             <p className="sub2_sb">{title}</p>
-            <div className="w-full flex flex-col items-start justify-center body5_r">
+            <div className="flex flex-col items-start justify-center w-full body5_r">
                 {children}
             </div>
         </div>
@@ -88,11 +88,11 @@ function ProfileExternalLinkItem({ type, url }: { type: string; url: string }) {
     return (
         <a
             href={url}
-            className="w-full flex items-center justify-between"
+            className="flex items-center justify-between w-full"
             target="_blank"
             rel="noopener noreferrer"
         >
-            <p className="body5_r text-white hover:underline">{type}</p>
+            <p className="text-white body5_r hover:underline">{type}</p>
             <ArrowUpGrayIcon />
         </a>
     );

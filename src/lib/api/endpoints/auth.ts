@@ -17,49 +17,54 @@ type LoginResponse = {
     };
 };
 
-export async function post_auth_login(body: LoginRequest): Promise<LoginResponse> {
+export async function post_auth_login(body: LoginRequest): Promise<LoginResponse | null> {
     const fetchJson = await createFetchClient();
 
-    return fetchJson("/api/v1/auth/login", {
+    const res = await fetchJson<LoginResponse>("/api/v1/auth/login", {
         method: "POST",
         body: JSON.stringify(body),
     });
+    return res ?? null;
 }
 
-export async function post_auth_logout(): Promise<{ code: string; message: string }> {
+export async function post_auth_logout(): Promise<{ code: string; message: string } | null> {
     const fetchJson = await createFetchClient();
 
-    return fetchJson("/api/v1/auth/logout", {
+    const res = await fetchJson<{ code: string; message: string }>("/api/v1/auth/logout", {
         method: "POST",
     });
+    return res ?? null;
 }
 
-export async function post_auth_reissue(): Promise<LoginResponse> {
+export async function post_auth_reissue(): Promise<LoginResponse | null> {
     const fetchJson = await createFetchClient();
     const refresh = await getCookie("refresh_token");
 
-    return fetchJson("/api/v1/auth/reissue", {
+    const res = await fetchJson<LoginResponse>("/api/v1/auth/reissue", {
         method: "POST",
         headers: {
             "X-Refresh-Token": refresh || "",
         },
         withAuth: true,
     });
+    return res ?? null;
 }
 
-export async function get_auth_me() {
+export async function get_auth_me(): Promise<any | null> {
     const fetchJson = await createFetchClient();
-
-    return fetchJson("/api/v1/auth/me", {
+    const res = await fetchJson("/api/v1/auth/me", {
         method: "GET",
     });
+    return res ?? null;
 }
 
 export async function get_authenticated_userid(): Promise<number> {
     const fetchJson = await createFetchClient();
 
-    return fetchJson("/api/v1/auth/me", {
+    const res = await fetchJson<{ data?: { id?: number } }>("/api/v1/auth/me", {
         method: "GET",
         withAuth: true,
-    }).then((res) => res.data.id);
+    });
+
+    return res?.data?.id ?? 0;
 }

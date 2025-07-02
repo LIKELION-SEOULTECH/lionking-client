@@ -7,13 +7,13 @@ import { PostPreviewMetadata } from "@/types";
 import Link from "next/link";
 
 type DashboardPublishedBlogsProps = {
-    publishedBlogs: PostPreviewMetadata[];
+    publishedBlogs: PostPreviewMetadata[] | null;
 };
 
 export default function DashboardPublishedBlogs({ publishedBlogs }: DashboardPublishedBlogsProps) {
     return (
         <div className="w-full pt-7 px-0 lg:px-9 pb-11 flex flex-col items-center justify-center gap-[35px] bg-white rounded-[20px] shadow-none lg:shadow-sm">
-            <div className="w-full flex items-center justify-between">
+            <div className="flex items-center justify-between w-full">
                 <h2 className="sub2_sb text-gray-8">내가 작성한 블로그</h2>
                 <Link href="/dashboard/published">
                     <button className="sub3_sb text-gray-4 bg-gray-1 hover:bg-gray-2/80 flex items-center justify-center py-2 pl-3.5 pr-2 rounded-full cursor-pointer transition-colors duration-200">
@@ -23,7 +23,7 @@ export default function DashboardPublishedBlogs({ publishedBlogs }: DashboardPub
                 </Link>
             </div>
 
-            <div className="w-full flex flex-col items-start justify-start gap-10">
+            <div className="flex flex-col items-start justify-start w-full gap-10">
                 {publishedBlogs && publishedBlogs.length > 0 ? (
                     publishedBlogs.map((blog, idx) => (
                         <PostPreviewItem
@@ -42,7 +42,7 @@ export default function DashboardPublishedBlogs({ publishedBlogs }: DashboardPub
                         />
                     ))
                 ) : (
-                    <div className="w-full flex items-center justify-center py-36">
+                    <div className="flex items-center justify-center w-full py-36">
                         <EmptyViews for="blogs" />
                     </div>
                 )}
