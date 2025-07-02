@@ -25,9 +25,18 @@ export async function post_blog_authorId(authorId: string | number, body: PostBl
 export async function get_blog_blogId(blogId: string | number) {
     const fetchJson = await createFetchClient();
 
-    return fetchJson(`/api/v1/blog/${blogId}`, {
+    const res = await fetchJson(`/api/v1/blog/${blogId}`, {
         method: "GET",
-    }).then((res) => blogMapper(res.data));
+    });
+
+    if (!res || !res.data) return null;
+
+    try {
+        return blogMapper(res.data);
+    } catch (e) {
+        console.warn("blogMapper failed:", e);
+        return null;
+    }
 }
 
 export async function delete_blog_blogId(blogId: string | number) {
@@ -50,15 +59,33 @@ export async function patch_blog_blogId(blogId: string | number, body: any) {
 export async function get_blog() {
     const fetchJson = await createFetchClient();
 
-    return fetchJson("/api/v1/blog", {
+    const res = await fetchJson(`/api/v1/blog`, {
         method: "GET",
-    }).then((res) => res.data.map(blogMetaMapper) as PostPreviewMetadata[]);
+    });
+
+    if (!res || !res.data) return null;
+
+    try {
+        return res.data.map(blogMetaMapper) as PostPreviewMetadata[];
+    } catch (e) {
+        console.warn("blogMetaMapper failed:", e);
+        return null;
+    }
 }
 
 export async function get_blog_author_authorId(authorId: string | number) {
     const fetchJson = await createFetchClient();
 
-    return fetchJson(`/api/v1/blog/author/${authorId}`, {
+    const res = await fetchJson(`/api/v1/blog/author/${authorId}`, {
         method: "GET",
-    }).then((res) => res.data.map(blogMetaMapper) as PostPreviewMetadata[]);
+    });
+
+    if (!res || !res.data) return null;
+
+    try {
+        return res.data.map(blogMetaMapper) as PostPreviewMetadata[];
+    } catch (e) {
+        console.warn("blogMetaMapper failed:", e);
+        return null;
+    }
 }

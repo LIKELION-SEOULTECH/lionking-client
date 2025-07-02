@@ -9,15 +9,22 @@ export default async function DashboardViewAllPublishedPage() {
 
     if (!me) return redirect("/login");
 
-    const publishedBlogs = await get_blog_author_authorId(me.id);
+    const publishedBlogs = await (async () => {
+        try {
+            const result = await get_blog_author_authorId(me.id);
+            return result ?? [];
+        } catch {
+            return [];
+        }
+    })();
 
     return (
-        <div className="bg-white text-black overflow-hidden">
+        <div className="overflow-hidden text-black bg-white">
             <div className="w-full max-w-[1100px] mx-auto px-6 lg:px-4 xl:px-0 pt-30 pb-32">
                 <div className="flex flex-col items-center justify-center w-full gap-12.5">
-                    <h1 className="head3_sb text-black w-full">내 블로그 관리</h1>
+                    <h1 className="w-full text-black head3_sb">내 블로그 관리</h1>
 
-                    <div className="w-full flex flex-col items-center justify-center gap-9">
+                    <div className="flex flex-col items-center justify-center w-full gap-9">
                         {publishedBlogs && publishedBlogs.length > 0 ? (
                             publishedBlogs.map((blog, idx) => (
                                 <PostPreviewItem

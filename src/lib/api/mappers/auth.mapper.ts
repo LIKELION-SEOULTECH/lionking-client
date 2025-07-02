@@ -1,4 +1,4 @@
-import { Member, Parts, Role, roleEnumToLabel, User } from "@/types";
+import { Member, Parts, Role, roleEnumToLabel } from "@/types";
 
 export type AuthMeResponse = {
     id: number;

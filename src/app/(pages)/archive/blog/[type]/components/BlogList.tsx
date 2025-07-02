@@ -11,7 +11,14 @@ type BlogListProps = {
 };
 
 export default async function BlogList({ selectedBlogType }: BlogListProps) {
-    const allPosts = await get_blog();
+    const allPosts = await (async () => {
+        try {
+            const result = await get_blog();
+            return result ?? [];
+        } catch {
+            return [];
+        }
+    })();
 
     const blogTypeLabelMap: Record<BlogTypeFilters, string> = {
         all: "전체",

@@ -13,9 +13,22 @@ export default async function DashboardPage() {
 
     if (!me) return redirect("/login");
 
-    const publishedBlogs = await get_blog_author_authorId(me.id);
+    const publishedBlogs = await (async () => {
+        try {
+            const result = await get_blog_author_authorId(me.id);
+            return result ?? [];
+        } catch {
+            return [];
+        }
+    })();
 
-    const projectNumbers = await get_number_of_projects(me.id);
+    const projectNumbers = await (async () => {
+        try {
+            return await get_number_of_projects(me.id);
+        } catch {
+            return 0;
+        }
+    })();
 
     const metrics = [
         {
@@ -25,7 +38,7 @@ export default async function DashboardPage() {
         },
         {
             subheading: "내가 작성한 글",
-            num: publishedBlogs.length ?? 0,
+            num: publishedBlogs ? publishedBlogs.length : 0,
             suffix: "개",
         },
         {
