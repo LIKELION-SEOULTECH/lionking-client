@@ -5,6 +5,8 @@ import ProjectCardStatic from "@/components/ui/ProjectCardStatic";
 import { projectMetaMapper } from "@/lib/api/mappers/projectMeta.mapper";
 import EmptyViews from "@/components/ui/EmptyViews";
 
+export const revalidate = 60;
+
 export default async function ProjectCardGrid({
     searchParams,
 }: {
