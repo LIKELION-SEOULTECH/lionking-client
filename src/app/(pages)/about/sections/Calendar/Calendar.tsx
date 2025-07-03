@@ -20,7 +20,7 @@ export default function Calendar() {
             {/* 이 div를 기준으로 버튼을 절대 위치시킵니다 */}
             <div className="relative w-full flex justify-center">
                 {/* 캘린더 고정 너비 */}
-                <div className="flex-shrink-0 w-[840px]">
+                <div className="flex-shrink-0 w-[900px]">
                     <CalendarView month={month} />
                 </div>
 

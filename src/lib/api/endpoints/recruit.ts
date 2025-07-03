@@ -7,3 +7,12 @@ export async function get_recruit() {
         method: "GET",
     });
 }
+
+export async function post_recruit_subscribe(email: string) {
+    const fetchJson = await createFetchClient();
+    return fetchJson("/api/recruit/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+    });
+}
