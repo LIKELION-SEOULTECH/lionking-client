@@ -4,12 +4,12 @@ import Image from "next/image";
 import { motion } from "motion/react";
 import useHoverAnimation from "@/hooks/animations/useHoverAnimation";
 import type { News } from "@/types";
-import { getFullS3Url } from "@/lib/utils";
+import { extractSummary, getFullS3Url } from "@/lib/utils";
 import Link from "next/link";
 
 export default function NewsCard(news: News) {
     const { ref } = useHoverAnimation<HTMLDivElement>();
-    const thumbnail = getFullS3Url(news.contentMedia[0].s3Key) ?? "/static/images/330x186.svg";
+    const thumbnail = getFullS3Url(news.contentMedia[0]?.s3Key) || "/static/images/placeholder.png";
 
     return (
         <motion.div
@@ -48,12 +48,12 @@ function NewsCardBottomInformation({ news }: NewsCardBottomInformationProps) {
     return (
         <div className="flex flex-col w-full gap-[3px] items-start justify-center px-4.5 py-5">
             <div className="flex items-center justify-between w-full">
-                <p className="text-white body3_m">{news.title}</p>
+                <p className="text-white body3_m">{extractSummary(news.title, 13)}</p>
 
                 <NewsDateBadge date="" />
             </div>
 
-            <p className="body5_r text-gray-2">{news.content}</p>
+            <p className="body5_r text-gray-2">{extractSummary(news.content, 23)}</p>
         </div>
     );
 }

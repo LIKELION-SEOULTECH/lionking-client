@@ -24,7 +24,7 @@ export default async function GalleryDetailPage({
 
     return (
         <main className="w-full bg-white">
-            <section className="max-w-screen-lg mx-auto px-6 py-8">
+            <section className="max-w-screen-lg mx-auto px-6 pt-8 pb-50">
                 <GalleryInfo gallery={content} />
             </section>
 

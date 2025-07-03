@@ -7,7 +7,7 @@ import { News } from "@/types";
 import { getFullS3Url } from "@/lib/utils";
 
 export default function ActivityCard(news: News) {
-    const thumbnail = getFullS3Url(news.contentMedia[0].s3Key) ?? "/static/images/placeholder.png";
+    const thumbnail = getFullS3Url(news.contentMedia[0]?.s3Key) || "/static/images/placeholder.png";
 
     return (
         <Link href={`/gallery/${news.id}`} className=" block w-full h-65 group">
