@@ -4,6 +4,7 @@ import ProjectCardStatic from "@/components/ui/ProjectCardStatic";
 // import ProjectCardGridClient from "./ProjectCardGridClient";
 import { projectMetaMapper } from "@/lib/api/mappers/projectMeta.mapper";
 import EmptyViews from "@/components/ui/EmptyViews";
+import { extractSummary } from "@/lib/utils";
 
 export const revalidate = 60;
 
@@ -40,8 +41,8 @@ export default async function ProjectCardGrid({
                         <ProjectCardStatic
                             key={project.projectId}
                             projectId={project.projectId}
-                            title={project.title}
-                            description={project.description}
+                            title={extractSummary(project.title, 13)}
+                            description={extractSummary(project.description, 23)}
                             projectYear={project.projectYear}
                             imageUrl={project.imageUrl}
                             badges={project.badges}

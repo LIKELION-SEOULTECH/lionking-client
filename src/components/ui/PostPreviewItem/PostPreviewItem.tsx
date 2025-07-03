@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn, extractSummary } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { positionEnumToLabel, PostPreviewMetadata } from "@/types";
@@ -82,7 +82,7 @@ export default function PostPreviewItem({
                             >
                                 <p className={styles.title}>{title}</p>
                             </Link>
-                            <p className={styles.desc}>{description}</p>
+                            <p className={styles.desc}>{extractSummary(description, 23)}</p>
                         </div>
                     </div>
 

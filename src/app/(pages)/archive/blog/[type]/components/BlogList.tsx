@@ -57,6 +57,7 @@ export default async function BlogList({ selectedBlogType }: BlogListProps) {
                             authorName={post.authorName}
                             authorId={post.authorId}
                             postHref={`/archive/blog/${selectedBlogType}/${post.postId}`}
+                            imageUrl={post.imageUrl}
                         />
                     ))
                 ) : (
