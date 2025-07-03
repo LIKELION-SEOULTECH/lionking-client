@@ -6,7 +6,14 @@ const nextConfig: NextConfig = {
         dirs: ["src"],
     },
     images: {
-        domains: ["lionking-bucket2.s3.ap-northeast-2.amazonaws.com"],
+        remotePatterns: [
+            {
+                protocol: "https",
+                hostname: "lionking-bucket2.s3.ap-northeast-2.amazonaws.com",
+                port: "",
+                pathname: "/**",
+            },
+        ],
     },
     webpack: (config) => {
         config.module.rules.push({
@@ -31,6 +38,10 @@ const nextConfig: NextConfig = {
         {
             source: "/",
             destination: "/home",
+        },
+        {
+            source: "/api/mixed/:path*",
+            destination: "http://15.164.107.219:8080/api/v1/:path*",
         },
     ],
 };
