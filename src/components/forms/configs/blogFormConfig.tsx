@@ -107,8 +107,8 @@ export function getBlogFormConfig({
                 toast.info("블로그 요약 중이니까 끄지 말고 기다려.");
 
                 const url = isEdit
-                    ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/blog/${blogId}`
-                    : `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/blog/${values.authorId}`;
+                    ? `/api/mixed/blog/${blogId}`
+                    : `/api/mixed/blog/${values.authorId}`;
 
                 const method = isEdit ? "PATCH" : "POST";
 
