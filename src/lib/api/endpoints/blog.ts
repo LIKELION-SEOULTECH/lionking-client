@@ -18,7 +18,7 @@ export type PostBlogRequest = {
 export async function post_blog_authorId(authorId: string | number, body: PostBlogRequest) {
     const fetchJson = await createFetchClient();
 
-    return fetchJson(`/api/v1/blog/${authorId}`, {
+    fetchJson(`/api/v1/blog/${authorId}`, {
         method: "POST",
         body,
     });

@@ -104,11 +104,11 @@ export function getBlogFormConfig({
             onSubmit: async (values) => {
                 const reqBody = generatePostBlogRequest(values);
 
-                toast.info("블로그 요약 중이니까 끄지 말고 기다려.");
+                toast.info(
+                    "블로그 글이 등록되었습니다. AI가 요약을 완료하면 곧 확인할 수 있습니다."
+                );
 
-                const url = isEdit
-                    ? `/api/mixed/blog/${blogId}`
-                    : `/api/mixed/blog/${values.authorId}`;
+                const url = isEdit ? `/api/blog/${blogId}` : `/api/blog/${values.authorId}`;
 
                 const method = isEdit ? "PATCH" : "POST";
 
