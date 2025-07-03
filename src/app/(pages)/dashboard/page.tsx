@@ -62,10 +62,17 @@ export default async function DashboardPage() {
 
                                 <div className="flex-col items-start justify-start hidden w-full gap-4 lg:flex">
                                     <div className="w-full flex flex-col items-start justify-start gap-2.5">
-                                        {/* <DashboardActionButton label="새 글 작성하기" /> */}
                                         <Link className="w-full" href="/dashboard/settings/profile">
                                             <DashboardActionButton label="프로필 수정하기" />
                                         </Link>
+                                        {me && me.role === "REPRESENTATIVE" && (
+                                            <Link
+                                                className="w-full"
+                                                href="/dashboard/members/role-edit"
+                                            >
+                                                <DashboardActionButton label="맴버 관리하기" />
+                                            </Link>
+                                        )}
                                     </div>
 
                                     <div className="flex flex-col items-center justify-center w-full">
@@ -79,11 +86,14 @@ export default async function DashboardPage() {
 
                         <div className="flex flex-col items-start justify-start w-full gap-10">
                             <div className="w-full lg:hidden flex flex-col items-start justify-start gap-2.5">
-                                {/* <DashboardActionButton label="새 글 작성하기" /> */}
-
                                 <Link className="w-full" href="/dashboard/settings/profile">
                                     <DashboardActionButton label="프로필 수정하기" />
                                 </Link>
+                                {me && me.role === "REPRESENTATIVE" && (
+                                    <Link className="w-full" href="/dashboard/members/role-edit">
+                                        <DashboardActionButton label="맴버 관리하기" />
+                                    </Link>
+                                )}
                             </div>
 
                             <DashboardMetricCardRow metrics={metrics} />

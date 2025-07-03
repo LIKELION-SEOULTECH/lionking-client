@@ -39,9 +39,8 @@ export default function DetailBody({
     };
 
     return (
-        <div className="w-screen relative">
-            <div className="flex flex-col gap-[50px] px-[190px] pt-[80px] pb-[120px]">
-                {/* 우측 상단: 수정/삭제 메뉴 */}
+        <div className="w-full max-w-[1100px] mx-auto relative">
+            <div className="flex flex-col gap-[50px] px-6 lg:px-0 pt-[80px] pb-[120px]">
                 <div className="self-end relative">
                     <EditDeleteMenu
                         editUrl={`/notice/${noticeId}/edit`}
@@ -50,7 +49,6 @@ export default function DetailBody({
                     />
                 </div>
 
-                {/* 본문 + 첨부파일 영역 */}
                 <div className="flex flex-col gap-[70px]">
                     <div>
                         {content.map((para, idx) => (
@@ -66,7 +64,12 @@ export default function DetailBody({
                                 <p className="text-gray-900">{attachment.name}</p>
                                 <p className="text-gray-500 text-[10px]">{attachment.size}</p>
                             </div>
-                            <a href={attachment.url} download className="ml-auto">
+                            <a
+                                href={attachment.url}
+                                download={attachment.name}
+                                target="_blank"
+                                className="ml-auto"
+                            >
                                 <DownloadIcon className="w-[40px] h-[40px] text-gray-600 hover:text-gray-800" />
                             </a>
                         </div>

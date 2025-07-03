@@ -51,7 +51,12 @@ export default function PostPreviewItem({
             <div className={cn(previewItemVariants({ layout }))}>
                 <div className={imageWrapperClass}>
                     <Link href={`/archive/blog/${postType}/${postId}`}>
-                        <Image src={imageUrl} alt={title} fill className="object-cover" />
+                        <Image
+                            src={imageUrl}
+                            alt={title}
+                            fill
+                            className="object-cover rounded-[10px]"
+                        />
                     </Link>
                 </div>
 

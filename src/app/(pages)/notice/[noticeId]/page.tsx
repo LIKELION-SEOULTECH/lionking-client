@@ -26,9 +26,11 @@ export default async function NoticeDetailPage({
     const attachment =
         notice.contentMedia.length > 0
             ? {
-                  name: notice.contentMedia[0].s3Key.split("/").pop() || "첨부파일",
+                  name: notice.contentMedia[0]?.s3Key.split("/").pop() || "첨부파일",
                   size: "",
-                  url: `https://lionking-bucket2.s3.ap-northeast-2.amazonaws.com/${notice.contentMedia[0].s3Key}`,
+                  url: notice.contentMedia[0]?.s3Key.startsWith("https://")
+                      ? notice.contentMedia[0].s3Key
+                      : `https://lionking-bucket2.s3.ap-northeast-2.amazonaws.com/${notice.contentMedia[0].s3Key}`,
               }
             : undefined;
 

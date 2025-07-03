@@ -38,6 +38,7 @@ export default function DashboardPublishedBlogs({ publishedBlogs }: DashboardPub
                             authorId={blog.authorId}
                             authorName={blog.authorName}
                             postHref={`/archive/blog/session/${blog.postId}`}
+                            imageUrl={blog.imageUrl}
                             withAction
                         />
                     ))

@@ -28,7 +28,7 @@ export default function GalleryInfo({ gallery }: GalleryInfoProps) {
                     <div className="w-full h-auto min-h-80 overflow-hidden">
                         <img
                             src={
-                                getFullS3Url(gallery.contentMedia[idx].s3Key) ||
+                                getFullS3Url(gallery.contentMedia[idx]?.s3Key) ||
                                 "/static/images/placeholder.png"
                             }
                             alt={`${gallery.title} ${idx + 1}`}
