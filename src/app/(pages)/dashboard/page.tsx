@@ -8,6 +8,8 @@ import { redirect } from "next/navigation";
 import { get_blog_author_authorId } from "@/lib/api/endpoints/blog";
 import { get_number_of_projects } from "@/lib/api/endpoints/project";
 
+export const revalidate = 60;
+
 export default async function DashboardPage() {
     const me = await getMe();
 
