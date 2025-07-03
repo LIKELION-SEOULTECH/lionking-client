@@ -4,6 +4,8 @@ import Activities from "./sections/Activities";
 import { get_activity } from "@/lib/api/endpoints/activity";
 import EmptyViews from "@/components/ui/EmptyViews";
 
+export const revalidate = 60;
+
 export default async function GalleryPage() {
     const activities = await (async () => {
         try {

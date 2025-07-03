@@ -5,6 +5,8 @@ import { get_member, get_member_memberId } from "@/lib/api/endpoints/member";
 import { get_blog_author_authorId } from "@/lib/api/endpoints/blog";
 import { get_projects_metadata_by_user_id } from "@/lib/api/endpoints/project";
 
+export const revalidate = 60;
+
 export default async function MemberPage({ params }: { params: Promise<{ userId: string }> }) {
     const { userId } = await params;
     const member = await get_member_memberId(userId);

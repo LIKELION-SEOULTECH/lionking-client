@@ -3,6 +3,8 @@ import ArchiveBlogBanner from "./components/ArchiveBlogBanner";
 import ArchivePostPreviewDisplay from "./components/ArchiveBlogPreviewDisplay";
 import { get_blog } from "@/lib/api/endpoints/blog";
 
+export const revalidate = 60;
+
 export default async function ArchiveBlogPage() {
     const blogs = await (async () => {
         try {
