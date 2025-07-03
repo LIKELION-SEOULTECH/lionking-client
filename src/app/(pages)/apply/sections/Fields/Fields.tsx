@@ -1,8 +1,3 @@
-// src/app/(pages)/apply/sections/Fields/Fields.tsx
-"use client";
-
-import React from "react";
-
 type Field = {
     title: string;
     subtitle: string;
@@ -44,35 +39,23 @@ const fields: Field[] = [
 
 export default function Fields() {
     return (
-        <section className="relative w-full">
-            <div className="pt-[200px] flex flex-col items-center">
-                {/* 섹션 타이틀 */}
-                <h2 className="head2_b text-white text-[32px]">모집 분야</h2>
+        <section className="relative w-full px-4 md:px-6">
+            <div className="pt-[120px] flex flex-col items-center">
+                <h2 className="head2_b text-white text-[32px] text-center">모집 분야</h2>
 
-                {/* 카드 그리드 */}
-                <div className="mt-[60px] grid grid-cols-3 gap-[32px]">
+                <div className="mt-[60px] w-full max-w-[1060px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {fields.map((field) => (
                         <div
                             key={field.title}
-                            className="
-                group relative w-[332px] h-[310px] rounded-[20px] overflow-hidden
-                bg-white/10 transition-all duration-300 hover:bg-transparent
-                before:absolute before:inset-0 before:rounded-[20px]
-                before:content-[''] before:opacity-0 group-hover:before:opacity-100
-                before:transition-opacity before:duration-300
-                before:shadow-[inset_0_0_0_1px_linear-gradient(135deg,#E3BEA2_0%,#6C3004_100%)]
-              "
+                            className="group relative w-full h-[240px] md:h-[310px] rounded-[20px] overflow-hidden bg-white/10 transition-all duration-300 hover:bg-transparent border-[1px] border-transparent border-solid group-hover:[border-image:linear-gradient(135deg,#FFF0E4,#753200)_1]"
                         >
-                            {/* Hover Fill */}
                             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 rounded-[20px] bg-gradient-to-br from-[#A14C09] to-[#592B09] transition-opacity duration-300" />
-
-                            {/* 콘텐츠 */}
                             <div className="relative z-10 flex flex-col h-full px-[27px] py-[29px] rounded-[20px]">
                                 <h3 className="head3_sb text-white text-[32px]">{field.title}</h3>
                                 <p className="body5_r text-white/70 text-[16px] mt-[6px]">
                                     {field.subtitle}
                                 </p>
-                                <p className="body4_m text-white/70 text-[16px] mt-[105px] whitespace-pre-line group-hover:text-white">
+                                <p className="body4_m text-white/70 text-[16px] mt-auto whitespace-pre-line group-hover:text-white">
                                     {field.description}
                                 </p>
                             </div>
