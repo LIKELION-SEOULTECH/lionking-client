@@ -4,7 +4,7 @@ import ViewMoreButton from "./components/ViewMoreButton";
 import type { ProjectCardProps } from "./components/ProjectCard";
 
 const mockProjects: ProjectCardProps[] = Array.from({ length: 7 }, (_, i) => ({
-    imageSrc: "/static/images/330x186.svg",
+    imageSrc: "/static/images/placeholder_logo.png",
     information: {
         projectName: `서비스명 ${i + 1}`,
         projectDescription: "서비스 한 줄 설명을 적어주세요",
