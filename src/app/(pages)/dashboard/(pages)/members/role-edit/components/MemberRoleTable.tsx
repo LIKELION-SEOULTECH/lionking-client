@@ -4,9 +4,9 @@
 import React, { useEffect, useState } from "react";
 import MemberRoleRow from "./MemberRoleRow";
 import ChevronDownGray from "@/assets/icons/chevron-down-gray.svg";
-import type { Member } from "@/types";
+import type { Member, Role } from "@/types";
 
-/* 서버-측 프록시(/api/members)에서 멤버 목록 가져오기 */
+/** 서버-측 프록시(/api/members)에서 멤버 목록 가져오기 */
 async function fetchMembers(): Promise<Member[]> {
     const res = await fetch("/api/members", { cache: "no-store" });
     if (!res.ok) throw new Error(`status ${res.status}`);
@@ -18,7 +18,7 @@ export default function MemberRoleTable() {
     const [rows, setRows] = useState<Member[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    /* 컴포넌트 마운트 시 한 번만 호출 */
+    /** 컴포넌트 마운트 시 한 번만 호출 */
     useEffect(() => {
         let cancelled = false;
 
@@ -56,17 +56,14 @@ export default function MemberRoleTable() {
             >
                 <span>No.</span>
                 <span>이름</span>
-
                 <div className="flex items-center gap-[10px]">
                     <span>파트</span>
                     <ChevronDownGray className="w-6 h-6" />
                 </div>
-
                 <div className="flex items-center gap-[10px]">
                     <span>기수</span>
                     <ChevronDownGray className="w-6 h-6" />
                 </div>
-
                 <div className="flex items-center gap-[10px]">
                     <span>권한</span>
                     <ChevronDownGray className="w-6 h-6" />
@@ -80,12 +77,16 @@ export default function MemberRoleTable() {
                     data={{
                         id: m.id,
                         name: m.name,
-                        part: m.positionLabel ?? "-", // 예: "백엔드"
+                        part: m.positionLabel ?? "-",
                         gen: "13기", // 서버에서 고정 처리
                         role: m.roleLabel, // 예: "운영진"
                     }}
                     onUpdate={(d) =>
-                        setRows((prev) => prev.map((p) => (p.id === d.id ? { ...p, ...d } : p)))
+                        setRows((prev) =>
+                            prev.map((p) =>
+                                p.id === d.id ? { ...p, ...d, role: d.role as Role } : p
+                            )
+                        )
                     }
                 />
             ))}

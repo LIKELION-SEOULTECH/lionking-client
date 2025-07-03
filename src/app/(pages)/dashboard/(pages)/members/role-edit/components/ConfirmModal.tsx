@@ -9,17 +9,19 @@ import {
 import { Parts, Role } from "@/types";
 import { useState } from "react";
 
+/* 라벨 → ENUM 매핑 */
+import { roleLabelToEnum, partLabelToEnum } from "@/lib/api/mappers/member-map";
+
 type FieldType = "role" | "position" | "generation";
 
 interface Props {
     visible: boolean;
     memberId: number;
-    memberName: string; // 예) "홍길동"
-    field: FieldType; // "role" | "position" | "generation"
-    selectedValue: string; // 예) "운영진", "DESIGN", "13"
+    memberName: string;
+    field: FieldType;
+    selectedValue: string; // 테이블에 보이는 라벨
     onCancel: () => void;
-    /** 성공 시 상위 컴포넌트의 로컬 state 를 갱신하기 위한 콜백 */
-    onSuccess: (value: string) => void;
+    onSuccess: (value: string) => void; // 성공 시 라벨 그대로 전달
 }
 
 export default function ConfirmModal({
@@ -32,41 +34,44 @@ export default function ConfirmModal({
     onSuccess,
 }: Props) {
     const [loading, setLoading] = useState(false);
-
     if (!visible) return null;
 
     /* --------------------------- Confirm Handler -------------------------- */
     const handleConfirm = async () => {
-        console.log("[Modal] field:", field, "selected:", selectedValue);
         if (loading) return;
         setLoading(true);
 
         try {
             switch (field) {
-                case "role":
-                    await patchMemberRole(memberId, selectedValue as Role);
+                case "role": {
+                    const enumVal = roleLabelToEnum[selectedValue as keyof typeof roleLabelToEnum];
+                    await patchMemberRole(memberId, enumVal as Role);
                     break;
-                case "position":
-                    await patchMemberPosition(memberId, selectedValue as Parts);
+                }
+                case "position": {
+                    const enumVal = partLabelToEnum[selectedValue as keyof typeof partLabelToEnum];
+                    await patchMemberPosition(memberId, enumVal as Parts);
                     break;
-                case "generation":
-                    await patchMemberGeneration(memberId, Number(selectedValue));
+                }
+                case "generation": {
+                    // "13기" → 13
+                    const num = Number(selectedValue.replace(/[^0-9]/g, ""));
+                    await patchMemberGeneration(memberId, num);
                     break;
+                }
                 default:
                     throw new Error("Unknown field type");
             }
 
-            // 로컬 테이블 상태 갱신
-            onSuccess(selectedValue);
-            onCancel(); // 모달 닫기
-        } catch (e) {
-            console.error(e);
+            onSuccess(selectedValue); // 테이블에는 한글 라벨 유지
+            onCancel();
+        } catch (err) {
+            console.error(err);
             alert("변경에 실패했습니다.");
         } finally {
             setLoading(false);
         }
     };
-
     /* --------------------------------------------------------------------- */
 
     return (
