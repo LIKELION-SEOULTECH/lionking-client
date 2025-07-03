@@ -2,19 +2,19 @@ import CardNumber from "./CardNumber";
 
 const CardNumberContent = [
     {
-        num: 99,
-        suffix: "년",
+        num: 2022,
+        suffix: "",
         decimals: 0,
-        subheading: "운영기간",
+        subheading: "Since",
     },
     {
-        num: 99,
+        num: 55,
         suffix: "명",
         decimals: 0,
         subheading: "함께한 회원",
     },
     {
-        num: 99,
+        num: 30,
         suffix: "+",
         decimals: 0,
         subheading: "프로젝트",
