@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import React from "react";
 
 import NoticeBanner from "./components/NoticeBanner";
 import DetailBody from "./components/DetailBody";
@@ -8,6 +7,8 @@ import AccordionList from "./components/AccordionList";
 import { get_notice_noticeId } from "@/lib/api/endpoints/notice";
 import { mapNoticeDetail } from "@/lib/api/mappers/notice.mapper";
 import type { NoticeDetail } from "@/lib/api/mappers/notice.mapper";
+
+export const revalidate = 60;
 
 export default async function NoticeDetailPage({
     params,

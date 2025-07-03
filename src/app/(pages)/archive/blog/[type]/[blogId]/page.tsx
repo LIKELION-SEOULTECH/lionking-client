@@ -4,6 +4,8 @@ import BlogShareButton from "./components/BlogShareButton";
 import BlogSuggestion from "./components/BlogSuggestion";
 import { get_blog, get_blog_blogId } from "@/lib/api/endpoints/blog";
 
+export const revalidate = 60;
+
 export default async function BlogDetailPage({
     params,
 }: {

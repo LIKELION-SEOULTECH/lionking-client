@@ -6,6 +6,7 @@ import { figmaPaintToCSS } from "@/lib/figmaToCss";
 import { gradientDark, gradientLight, gradientMedium } from "@/design/gradients";
 import CurvesSVG from "@/assets/banner/curves.svg";
 import RightArrowSVG from "@/assets/banner/ic_arrow2_right_orange.svg";
+import { ApplicationLetterButton } from "../ui/ApplicationLetterButton";
 
 type ApplicationBottomBannerProps = {
     year: string;
@@ -56,10 +57,11 @@ export default function ApplicationBottomBanner({ year, theme }: ApplicationBott
                         <br /> 멋사와 함께 성장하고 싶다면?
                     </p>
 
-                    <div className="sub2_sb bg-white text-gray-7 px-5 md:px-6.25 py-2.5 md:py-3.5 rounded-full flex items-center justify-center gap-2 hover:bg-white/70 border border-white hover:border-orange-main cursor-pointer transition-colors duration-200">
+                    {/* <div className="sub2_sb bg-white text-gray-7 px-5 md:px-6.25 py-2.5 md:py-3.5 rounded-full flex items-center justify-center gap-2 hover:bg-white/70 border border-white hover:border-orange-main cursor-pointer transition-colors duration-200">
                         <span>{year} 모집 알림 신청</span>
                         <RightArrowSVG />
-                    </div>
+                    </div> */}
+                    <ApplicationLetterButton />
                 </div>
             </div>
         </div>

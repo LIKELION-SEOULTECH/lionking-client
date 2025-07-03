@@ -1,8 +1,9 @@
 import AttachmentIcon from "@/assets/icons/attachment.svg";
-import ImgWriteIcon from "@/assets/icons/img_write.svg";
 import { get_notice } from "@/lib/api/endpoints/notice";
 import EmptyViews from "@/components/ui/EmptyViews";
 import Link from "next/link";
+
+export const revalidate = 60;
 
 export default async function NoticeList() {
     const notice = await get_notice();

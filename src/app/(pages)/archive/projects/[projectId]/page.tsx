@@ -6,6 +6,8 @@ import type { Project } from "@/types";
 import { parsePublicUrlFromPresignedUrl } from "@/lib/utils";
 import { redirect } from "next/navigation";
 
+export const revalidate = 60;
+
 export default async function ProjectDetailPage({
     params,
 }: {

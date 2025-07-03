@@ -4,6 +4,15 @@ import { motion } from "motion/react";
 import { StaggerParent, StaggerChild } from "@/components/animations/AppearStagger";
 import TypeLogo from "@/components/ui/TypeLogo";
 import ArrowRightIcon from "@/assets/ic_arrow2_right_white.svg";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/Dialog";
+import { ApplicationLetterButton } from "@/components/ui/ApplicationLetterButton";
 
 const slideUpFade = {
     initial: { opacity: 0, y: 20 },
@@ -45,14 +54,5 @@ export default function HeroText() {
                 </StaggerChild>
             </div>
         </StaggerParent>
-    );
-}
-
-function ApplicationLetterButton() {
-    return (
-        <button className="flex items-center justify-center gap-2 bg-orange-main text-white sub2_sb px-[25px] py-2.5 md:py-3 lg:py-3.5 rounded-full cursor-pointer hover:bg-orange-main/90 transition-colors duration-200">
-            <span>14기 모집 알림 신청</span>
-            <ArrowRightIcon />
-        </button>
     );
 }

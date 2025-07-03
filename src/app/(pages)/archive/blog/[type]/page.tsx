@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 import BlogList from "./components/BlogList";
 import ArchiveBlogBanner from "../components/ArchiveBlogBanner";
 
+export const revalidate = 60;
+
 export default async function ArchiveBlogArticlePage({
     params,
 }: {
