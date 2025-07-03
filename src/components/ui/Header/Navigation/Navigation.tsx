@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
-import { navigationLinks } from "./navigationLinks";
+import { navigationLinks } from "../navigationLinks";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 
 export default function Navigation() {

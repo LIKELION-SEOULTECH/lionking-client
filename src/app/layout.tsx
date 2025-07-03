@@ -2,11 +2,10 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Pretendard } from "@/fonts/loadFonts";
 import NextTopLoader from "nextjs-toploader";
-import WithMockServer from "@/mocks/msw/WithMockServer";
 
 import Header from "@/components/ui/Header";
 import Footer from "@/components/ui/Footer";
-import { QueryProvider } from "./providers/QueryProvider";
+import { Toaster } from "@/components/ui/Toast";
 
 export default function RootLayout({
     children,
@@ -15,14 +14,16 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="ko">
-            <body className={`${Pretendard.className} mx-auto overflow-x-hidden`}>
-                <QueryProvider>
-                    <NextTopLoader color="#FF7710" showSpinner={false} height={1} zIndex={50000} />
-                    <Header />
-                    <main role="main">{children}</main>
-                    <Footer />
-                    <WithMockServer />
-                </QueryProvider>
+            <body
+                className={`${Pretendard.className} min-h-[100vh] flex flex-col overflow-x-hidden break-keep`}
+            >
+                <NextTopLoader color="#FF7710" showSpinner={false} height={1} zIndex={50000} />
+                <Header />
+                <main role="main" className="flex-1">
+                    {children}
+                </main>
+                <Toaster />
+                <Footer />
             </body>
         </html>
     );

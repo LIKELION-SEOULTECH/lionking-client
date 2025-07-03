@@ -1,14 +1,18 @@
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import { PostPreviewMetadata } from "@/types";
+import { positionEnumToLabel, PostPreviewMetadata } from "@/types";
 import { previewItemVariants, PostPreviewLayout, styleMap } from "./PostPreviewItemVariants";
+import PostEditButton from "./PostEditButton";
 
 export type PostPreviewItemProps = PostPreviewMetadata & {
     layout: PostPreviewLayout;
+    withAction?: boolean;
 };
 
 export default function PostPreviewItem({
+    postId,
+    postType,
     layout = "vertical_small",
     part,
     title,
@@ -17,7 +21,7 @@ export default function PostPreviewItem({
     authorName,
     authorId,
     imageUrl = "/static/images/placeholder.png",
-    postHref = "",
+    withAction = false,
 }: PostPreviewItemProps) {
     const styles = styleMap[layout];
 
@@ -37,13 +41,16 @@ export default function PostPreviewItem({
     );
 
     return (
-        <div className="w-full relative flex flex-col items-center justify-center">
+        <div
+            className="relative flex flex-col items-center justify-center w-full"
+            data-id={`post-preview-${postId}`}
+        >
             {layout === "horizontal_fill_large" && (
                 <div className="w-full h-[1px] bg-gray-2 hidden lg:block" />
             )}
             <div className={cn(previewItemVariants({ layout }))}>
                 <div className={imageWrapperClass}>
-                    <Link href={postHref}>
+                    <Link href={`/archive/blog/${postType}/${postId}`}>
                         <Image src={imageUrl} alt={title} fill className="object-cover" />
                     </Link>
                 </div>
@@ -55,10 +62,19 @@ export default function PostPreviewItem({
                         isVerticalCompactDark && "px-4.5 pb-4"
                     )}
                 >
-                    <div className="flex flex-col gap-2">
-                        {styles.partPosition == "TOP" && <p className={styles.part}>{part}</p>}
+                    <div className="flex flex-col w-full gap-2">
+                        {styles.partPosition == "TOP" && (
+                            <div className="flex items-center justify-between w-full">
+                                <p className={styles.part}>{positionEnumToLabel[part]}</p>
+
+                                <PostEditButton postId={postId} />
+                            </div>
+                        )}
                         <div className="flex flex-col gap-4">
-                            <Link href={postHref} className={cn(styles.title, "hover:underline")}>
+                            <Link
+                                href={`/archive/blog/${postType}/${postId}`}
+                                className={cn(styles.title, "hover:underline")}
+                            >
                                 <p className={styles.title}>{title}</p>
                             </Link>
                             <p className={styles.desc}>{description}</p>
@@ -77,7 +93,9 @@ export default function PostPreviewItem({
                                 <div className="h-[17px] w-[1.5px] bg-gray-3" />
                                 <div className="flex items-center gap-1">
                                     {styles.partPosition == "BOTTOM" && (
-                                        <span className={cn(styles.part)}>{part}</span>
+                                        <span className={cn(styles.part)}>
+                                            {positionEnumToLabel[part]}
+                                        </span>
                                     )}
                                     <Link
                                         href={`/about/members/${authorId}`}

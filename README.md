@@ -7,6 +7,7 @@
 
 <span style="display:block; height: 8px;"></span>
 
+![build-badge](https://github.com/LIKELION-SEOULTECH/lionking-client/actions/workflows/run_build.yml/badge.svg)
 ![vitest-badge](https://github.com/LIKELION-SEOULTECH/lionking-client/actions/workflows/run_tests.yml/badge.svg)
 
 </div>

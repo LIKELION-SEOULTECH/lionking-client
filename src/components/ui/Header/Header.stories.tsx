@@ -14,17 +14,7 @@ type Story = StoryObj<typeof Header>;
 export const Default: Story = {
     render: (args) => (
         <div className="max-w-7xl mx-auto px-4">
-            <Header {...args} />
+            <Header />
         </div>
     ),
-    args: {
-        isLoggedIn: false,
-    },
-    argTypes: {
-        isLoggedIn: {
-            control: {
-                type: "boolean",
-            },
-        },
-    },
 };

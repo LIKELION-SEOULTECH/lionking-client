@@ -1,11 +1,10 @@
 import Section from "@/components/ui/Section";
 import CardNumberRow from "./components/CardNumberRow";
 import RecordSectionBackground from "./components/RecordSectionBackground";
-import MainPageBackground from "@/assets/main_bg.svg";
 
 export default function Record() {
     return (
-        <div className="relative w-screen left-1/2 transform -translate-x-1/2 h-screen">
+        <div className="relative w-full mx-auto">
             <RecordSectionBackground />
 
             <Section
@@ -13,9 +12,7 @@ export default function Record() {
                 displayTitle={["서울과학기술대학교", "멋쟁이사자처럼이 걸어온 길"]}
                 className="relative z-10 py-[200px]"
             >
-                <div className="relative">
-                    <MainPageBackground className="absolute top-0 left-1/2 -translate-x-1/2 w-screen pointer-events-none select-none z-0" />
-
+                <div className="relative w-full">
                     <CardNumberRow />
                 </div>
             </Section>

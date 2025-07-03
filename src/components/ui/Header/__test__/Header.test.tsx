@@ -4,6 +4,11 @@ import Header from "../Header";
 
 vi.mock("next/navigation", () => ({
     usePathname: () => "/about",
+    useRouter: () => ({
+        push: vi.fn(),
+        replace: vi.fn(),
+        prefetch: vi.fn(),
+    }),
 }));
 
 test("Header renders correctly", () => {

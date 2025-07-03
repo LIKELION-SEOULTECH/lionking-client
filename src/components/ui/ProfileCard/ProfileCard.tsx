@@ -15,6 +15,7 @@ import {
     ProfileCardInfoTextLayoutVariants,
 } from "./ProfileCardVariants";
 import Link from "next/link";
+import { toast } from "sonner";
 
 export default function ProfileCard({ member, size, transparency }: ProfileCardProps) {
     const { id } = member;
@@ -30,7 +31,7 @@ export default function ProfileCard({ member, size, transparency }: ProfileCardP
             >
                 {size !== "large" && (
                     <motion.div
-                        className="absolute inset-0 bg-black z-10"
+                        className="absolute inset-0 z-10 bg-black"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: isHovered ? 0.4 : 0 }}
                         transition={{ duration: 0.3 }}
@@ -40,7 +41,7 @@ export default function ProfileCard({ member, size, transparency }: ProfileCardP
                 <div className={cn(ProfileCardImageVariants({ size }))}>
                     {size !== "large" && (
                         <motion.div
-                            className="absolute inset-0 flex items-center justify-center z-10"
+                            className="absolute inset-0 z-10 flex items-center justify-center"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{
                                 opacity: isHovered ? 1 : 0,
@@ -57,7 +58,7 @@ export default function ProfileCard({ member, size, transparency }: ProfileCardP
                         </motion.div>
                     )}
 
-                    <Image src="/static/images/placeholder.png" alt="Profile Image" fill />
+                    <Image src="/static/images/default_profile.svg" alt="Profile Image" fill />
                 </div>
 
                 <MembersGridItemInfo member={member} size={size} />
@@ -67,7 +68,36 @@ export default function ProfileCard({ member, size, transparency }: ProfileCardP
 }
 
 function MembersGridItemInfo({ member, size }: ProfileCardInfoProps) {
-    const { name, major, userTags } = member;
+    const { id, name, profileIntro, major, userTags } = member;
+    const [_copied, setCopied] = useState(false);
+
+    const handleShare = async () => {
+        const url = `${window.location.origin}/about/members/${id}`;
+
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: name,
+                    text: profileIntro,
+                    url,
+                });
+            } catch (err) {
+                toast.error(
+                    "공유에 실패했습니다! " + (err instanceof Error ? err.message : "오류 발생")
+                );
+            }
+        } else {
+            try {
+                await navigator.clipboard.writeText(url);
+                setCopied(true);
+                toast.success("URL이 클립보드에 복사되었습니다!");
+                setTimeout(() => setCopied(false), 2000);
+            } catch (err) {
+                toast.error(`URL 복사에 실패했습니다! ${err}`);
+            }
+        }
+    };
+
     return (
         <div className={cn(ProfileCardInfoGlobalLayoutVariants({ size }))}>
             <div className="w-full flex items-center justify-center gap-2.5">
@@ -80,14 +110,16 @@ function MembersGridItemInfo({ member, size }: ProfileCardInfoProps) {
                 {size === "large" ? (
                     <>
                         <div className="flex items-center justify-center gap-2">
-                            <p className="head5_sb text-white">{name}</p>
-                            <ShareIcon />
+                            <p className="text-white head5_sb">{name}</p>
+                            <button onClick={handleShare} className="cursor-pointer">
+                                <ShareIcon />
+                            </button>
                         </div>
                         <p className="body3_r text-gray-1">{major}</p>
                     </>
                 ) : (
                     <>
-                        <p className="sub1_sb text-white">{name}</p>
+                        <p className="text-white sub1_sb">{name}</p>
                         <p className="body5_r text-gray-1">{major}</p>
                     </>
                 )}

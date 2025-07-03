@@ -4,12 +4,13 @@ import { StaggerChild, StaggerParent } from "@/components/animations/AppearStagg
 import { cn } from "@/lib/utils";
 
 type SectionProps = {
-    displayName: string;
-    displayTitle: string | string[];
+    displayName?: string;
+    displayTitle?: string | string[];
     displayDescription?: string | string[];
     theme?: "DARK" | "LIGHT";
     children: React.ReactNode;
     className?: string;
+    ref?: React.Ref<HTMLDivElement>;
 };
 
 export default function Section({
@@ -19,20 +20,22 @@ export default function Section({
     theme = "DARK",
     children,
     className = "",
+    ref,
 }: SectionProps) {
     return (
         <section
             className={cn(
                 className,
-                theme == "DARK" ? "bg-gray-8" : "bg-white",
+                theme == "DARK" ? "" : "bg-white",
                 "w-full flex flex-col items-center justify-center gap-18"
             )}
+            ref={ref}
         >
-            <StaggerParent delay={0.1} stagger={0.2} once={false}>
+            <StaggerParent delay={0.1} stagger={0.2} once={true}>
                 <div className="flex flex-col items-center justify-center gap-7">
                     <div className="flex flex-col items-center justify-center gap-5">
                         <StaggerChild>
-                            <h2 className="sub1_sb text-orange-main">{displayName}</h2>
+                            <h2 className="sub1_sb text-orange-main break-keep">{displayName}</h2>
                         </StaggerChild>
                         {/* eslint-disable indent */}
                         <StaggerChild>
@@ -44,7 +47,7 @@ export default function Section({
                                     )}
                                 >
                                     {displayTitle.map((title, index) => (
-                                        <span key={index} className="block">
+                                        <span key={index} className="block break">
                                             {title}
                                         </span>
                                     ))}
@@ -52,7 +55,7 @@ export default function Section({
                             ) : (
                                 <h1
                                     className={cn(
-                                        "text-center head3_sb",
+                                        "text-center head3_sb break-keep",
                                         theme === "DARK" ? "text-white" : "text-black"
                                     )}
                                 >
@@ -70,7 +73,7 @@ export default function Section({
                                 >
                                     {Array.isArray(displayDescription)
                                         ? displayDescription.map((desc, idx) => (
-                                              <span key={idx} className="block">
+                                              <span key={idx} className="block break-keep">
                                                   {desc}
                                               </span>
                                           ))

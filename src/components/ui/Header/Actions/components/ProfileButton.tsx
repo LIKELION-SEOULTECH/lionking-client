@@ -1,11 +1,15 @@
 "use client";
-
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import ProfileDropdown from "./ProfileDropdown";
 import ProfileEmpty from "@/assets/profile_empty.svg";
+import { Member } from "@/types";
 
-export default function ProfileButton() {
+type ProfileButtonProps = {
+    authenticatedUser: Member | undefined;
+};
+
+export default function ProfileButton({ authenticatedUser }: ProfileButtonProps) {
     const [isOpen, setIsOpen] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -16,7 +20,6 @@ export default function ProfileButton() {
                 setIsOpen(false);
             }
         }
-
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
@@ -39,16 +42,17 @@ export default function ProfileButton() {
                 cancelClose();
                 setIsOpen(true);
             }}
-            onMouseLeave={delayedClose}
+            onMouseLeave={() => {
+                delayedClose();
+            }}
         >
             <button
                 onClick={() => setIsOpen((prev) => !prev)}
                 className="flex justify-start items-center gap-2 focus:outline-none"
             >
                 <ProfileEmpty />
-                <div className="sub5_sb">김사자</div>
+                <div className="sub5_sb">{authenticatedUser?.name}</div>
             </button>
-
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
@@ -59,21 +63,17 @@ export default function ProfileButton() {
                         transition={{ duration: 0.15, ease: "easeOut" }}
                         className="absolute right-0 top-full mt-7 min-w-[241px]"
                     >
-                        <ProfileDropdown
-                            name="김사자"
-                            role="운영진"
-                            imageSrc="/static/images/placeholder.png"
-                            onClicks={{
-                                myPage: () => {
-                                    console.log("마이페이지");
-                                    setIsOpen(false);
-                                },
-                                logout: () => {
-                                    console.log("로그아웃");
-                                    setIsOpen(false);
-                                },
-                            }}
-                        />
+                        {authenticatedUser && (
+                            <ProfileDropdown
+                                member={authenticatedUser}
+                                onClicks={{
+                                    signout: async () => {
+                                        await fetch("/api/logout", { method: "POST" });
+                                        window.location.href = "/";
+                                    },
+                                }}
+                            />
+                        )}
                     </motion.div>
                 )}
             </AnimatePresence>

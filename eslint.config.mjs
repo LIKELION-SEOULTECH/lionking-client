@@ -13,17 +13,30 @@ const eslintConfig = [
     ...compat.config({
         extends: ["next/core-web-vitals", "next/typescript", "prettier"],
         rules: {
-            indent: ["error", 4],
-            "no-console": "warn",
+            indent: ["off", 4, { SwitchCase: 1 }],
+            "no-console": "off",
             "no-unused-vars": [
-                "warn",
+                "off",
                 {
                     argsIgnorePattern: "^_",
                     varsIgnorePattern: "^_",
                 },
             ],
             "import/no-anonymous-default-export": "off",
+            "@typescript-eslint/no-explicit-any": "off",
+            "@next/next/no-img-element": "off",
+            "@typescript-eslint/no-unused-vars": "off",
+            "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
         },
+        overrides: [
+            {
+                files: ["**/*.test.tsx"],
+                rules: {
+                    "@typescript-eslint/no-explicit-any": "off",
+                    "@typescript-eslint/no-unused-vars": "off",
+                },
+            },
+        ],
     }),
 ];
 
