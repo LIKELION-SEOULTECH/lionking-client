@@ -1,7 +1,7 @@
-// src/app/(pages)/apply/sections/FAQ/FAQ.tsx
 "use client";
 
 import React, { useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import ChevronDownIcon from "@/assets/icons/chevron-down.svg";
 
 const faqData = [
@@ -31,39 +31,42 @@ export default function FAQ() {
     const [openIndex, setOpenIndex] = useState<number | null>(null);
 
     return (
-        <section className="relative w-full pt-[300px] pb-[200px] flex flex-col items-center">
-            {/* 섹션 타이틀 */}
+        <section className="relative w-full pt-[300px] pb-[200px] flex flex-col items-center px-4">
             <h2 className="head2_b text-white">FAQ</h2>
 
-            {/* 리스트 컨테이너 */}
-            <div className="mt-[80px] flex flex-col items-center space-y-[24px]">
+            <div className="mt-20 w-full max-w-[1060px] flex flex-col space-y-6">
                 {faqData.map((item, idx) => {
-                    const isOpen = idx === openIndex;
+                    const isOpen = openIndex === idx;
+
                     return (
                         <div
                             key={idx}
-                            className={`
-                w-[1060px] bg-gray-7 rounded-[10px]
-                p-[24px] px-[34px]
-                transition-all duration-300
-                cursor-pointer
-              `}
+                            className="w-full bg-gray-7 rounded-[10px] px-6 py-5 transition-all duration-200 cursor-pointer"
                             onClick={() => setOpenIndex(isOpen ? null : idx)}
                         >
-                            {/* 질문 + 아이콘 */}
                             <div className="flex justify-between items-center">
-                                <p className="body2_sb text-white">{item.question}</p>
+                                <p className="sub2_sb text-white">{item.question}</p>
                                 <ChevronDownIcon
-                                    className={`w-[24px] h-[24px] transition-transform duration-200 ${
+                                    className={`w-6 h-6 transition-transform duration-200 ${
                                         isOpen ? "rotate-180" : ""
                                     }`}
                                 />
                             </div>
 
-                            {/* 답변 */}
-                            {isOpen && (
-                                <p className="body2_sb text-[#C4C4C4] mt-[24px]">{item.answer}</p>
-                            )}
+                            <AnimatePresence initial={false}>
+                                {isOpen && (
+                                    <motion.div
+                                        key="answer"
+                                        initial={{ height: 0, opacity: 0 }}
+                                        animate={{ height: "auto", opacity: 1 }}
+                                        exit={{ height: 0, opacity: 0 }}
+                                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                                        className="overflow-hidden"
+                                    >
+                                        <p className="body4_m text-gray-3 mt-6">{item.answer}</p>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
                         </div>
                     );
                 })}
